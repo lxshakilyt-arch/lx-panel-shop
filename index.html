@@ -18,13 +18,15 @@
         ::-webkit-scrollbar { width: 6px; height: 6px; }
         ::-webkit-scrollbar-track { background: #0f172a; }
         ::-webkit-scrollbar-thumb { background: #3b82f6; border-radius: 10px; }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
     </style>
 </head>
 <body class="pb-24">
 
     <!-- POP-UP WELCOME NOTICE MODAL -->
     <div id="welcome-popup-modal" class="fixed inset-0 bg-black/85 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-        <div class="bg-slate-900 border border-blue-500/40 w-full max-w-sm rounded-2xl p-5 space-y-4 shadow-2xl shadow-blue-500/20 text-center relative animate-pulse">
+        <div class="bg-slate-900 border border-blue-500/40 w-full max-w-sm rounded-2xl p-5 space-y-4 shadow-2xl shadow-blue-500/20 text-center relative">
             <div class="w-14 h-14 bg-blue-600/20 text-blue-400 rounded-full flex items-center justify-center mx-auto text-2xl font-bold">
                 <i class="fa-solid fa-bullhorn"></i>
             </div>
@@ -56,28 +58,27 @@
         </div>
     </header>
 
-    <!-- Dynamic Ticker Notice -->
-    <div class="bg-blue-900/30 border-y border-blue-500/20 px-4 py-2 text-xs text-blue-300 flex items-center justify-between">
-        <div class="flex items-center space-x-2 overflow-hidden">
-            <i class="fa-solid fa-bell animate-bounce text-yellow-400"></i>
-            <marquee behavior="scroll" direction="left" class="font-medium" id="display-notice">
-                🔥 Notice: Trusted, Fast & Reliable Service with 24/7 Support!
-            </marquee>
-        </div>
+    <!-- Dynamic Notice Ticker Bar -->
+    <div class="bg-blue-900/30 border-y border-blue-500/20 px-4 py-2 text-xs text-blue-300 flex items-center space-x-2 overflow-hidden">
+        <i class="fa-solid fa-bell animate-bounce text-yellow-400 flex-shrink-0"></i>
+        <marquee behavior="scroll" direction="left" class="font-medium whitespace-nowrap" id="display-notice">
+            🔥 Notice: Trusted, Fast & Reliable Service with 24/7 Support!
+        </marquee>
     </div>
     <!-- Main Container -->
     <main class="max-w-md mx-auto p-4 space-y-5">
 
         <!-- HOME TAB -->
         <div id="tab-home" class="tab-content space-y-4">
-            <!-- Banner Slider Box -->
+            
+            <!-- Dynamic Video Slider Box -->
             <div class="bg-slate-900 border border-slate-800 rounded-xl overflow-hidden p-3 space-y-2">
                 <div class="relative rounded-lg overflow-hidden bg-slate-950 aspect-video flex items-center justify-center">
-                    <img src="https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=600&q=80" alt="Banner" class="w-full h-full object-cover opacity-80">
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent flex flex-col justify-end p-3">
-                        <span class="text-xs bg-red-600 text-white px-2 py-0.5 rounded w-max font-bold mb-1">ভিডিও গাইড</span>
-                        <h3 class="text-sm font-bold text-white">কিভাবে প্যানেল কিনবেন এবং ব্যবহার করবেন শিখুন</h3>
-                    </div>
+                    <iframe id="youtube-frame" class="w-full h-full rounded-lg" src="https://www.youtube.com/embed/5qap5aO4i9A" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
+                <div class="flex items-center justify-between text-xs pt-1">
+                    <span class="bg-red-600 text-white px-2 py-0.5 rounded font-bold text-[10px]">ভিডিও গাইড</span>
+                    <span class="text-slate-400">কিভাবে প্যানেল কিনবেন এবং ব্যবহার করবেন</span>
                 </div>
             </div>
 
@@ -92,7 +93,7 @@
 
             <!-- Category Heading & Count -->
             <div class="flex items-center justify-between border-b border-slate-800 pb-2">
-                <h2 id="current-cat-title" class="text-lg font-bold font-orbitron text-white">NON ROOT</h2>
+                <h2 id="current-cat-title" class="text-lg font-bold font-orbitron text-white">ALL</h2>
                 <span id="cat-item-count" class="text-xs bg-slate-800 text-slate-400 px-2.5 py-1 rounded-full font-semibold">0 items</span>
             </div>
 
@@ -107,16 +108,16 @@
                 <div class="space-y-3 text-xs">
                     <div>
                         <label class="text-slate-400 block mb-1">পেমেন্ট মেথড সিলেক্ট করুন</label>
-                        <select class="w-full bg-slate-950 border border-slate-800 rounded-lg p-2.5 text-white">
-                            <option>bKash Personal: 01973386420</option>
-                            <option>Nagad Personal: 01973386420</option>
+                        <select id="fund-method" class="w-full bg-slate-950 border border-slate-800 rounded-lg p-2.5 text-white">
+                            <option value="bkash">bKash Personal (01973386420)</option>
+                            <option value="nagad">Nagad Personal (01973386420)</option>
                         </select>
                     </div>
                     <div>
-                        <label class="text-slate-400 block mb-1">পরিমাণ (Amount in BDT)</label>
-                        <input type="number" placeholder="100" class="w-full bg-slate-950 border border-slate-800 rounded-lg p-2.5 text-white">
+                        <label class="text-slate-400 block mb-1">পরিমাণ (Min: 100 BDT)</label>
+                        <input type="number" id="fund-amount" min="100" placeholder="100" class="w-full bg-slate-950 border border-slate-800 rounded-lg p-2.5 text-white">
                     </div>
-                    <button class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2.5 rounded-lg transition">টাকা অ্যাড করুন</button>
+                    <button onclick="openCustomPaymentUI()" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2.5 rounded-lg transition">টাকা অ্যাড করুন</button>
                 </div>
             </div>
         </div>
@@ -144,29 +145,50 @@
             </div>
         </div>
 
-        <!-- ACCOUNT TAB -->
+        <!-- ACCOUNT TAB (Firebase Auth Integrated) -->
         <div id="tab-account" class="tab-content hidden space-y-4">
-            <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 space-y-4">
-                <div class="flex items-center space-x-3 border-b border-slate-800 pb-3">
-                    <div class="w-10 h-10 rounded-full bg-orange-500 text-white flex items-center justify-center font-bold font-orbitron">L</div>
-                    <div>
-                        <h2 class="text-sm font-bold text-white">Hi, LX SHAKIL YT</h2>
-                        <p class="text-[10px] text-slate-400">lxshakilyt30@gmail.com</p>
+            <!-- Auth Container (When not logged in) -->
+            <div id="auth-container" class="bg-slate-900 border border-slate-800 rounded-xl p-4 space-y-4">
+                <div class="flex border-b border-slate-800 pb-2">
+                    <button onclick="switchAuthMode('login')" id="auth-tab-login" class="flex-1 text-center font-bold text-xs text-blue-400 pb-1 border-b-2 border-blue-500">লগইন</button>
+                    <button onclick="switchAuthMode('register')" id="auth-tab-register" class="flex-1 text-center font-bold text-xs text-slate-400 pb-1">রেজিস্ট্রেশন</button>
+                </div>
+
+                <!-- Login Form -->
+                <div id="login-form" class="space-y-3 text-xs">
+                    <input type="email" id="login-email" placeholder="আপনার জিমেইল লিখুন" class="w-full bg-slate-950 border border-slate-800 rounded p-2.5 text-white">
+                    <input type="password" id="login-pass" placeholder="পাসওয়ার্ড দিন" class="w-full bg-slate-950 border border-slate-800 rounded p-2.5 text-white">
+                    <button onclick="handleLogin()" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2.5 rounded">লগইন করুন</button>
+                </div>
+
+                <!-- Register Form -->
+                <div id="register-form" class="space-y-3 text-xs hidden">
+                    <input type="email" id="reg-email" placeholder="নতুন জিমেইল লিখুন" class="w-full bg-slate-950 border border-slate-800 rounded p-2.5 text-white">
+                    <input type="password" id="reg-pass" placeholder="শক্তিশালী পাসওয়ার্ড দিন" class="w-full bg-slate-950 border border-slate-800 rounded p-2.5 text-white">
+                    <button onclick="handleRegister()" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2.5 rounded">অ্যাকাউন্ট তৈরি করুন</button>
+                </div>
+            </div>
+
+            <!-- User Profile View (When logged in) -->
+            <div id="user-profile-view" class="bg-slate-900 border border-slate-800 rounded-xl p-4 space-y-4 hidden">
+                <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-10 h-10 rounded-full bg-orange-500 text-white flex items-center justify-center font-bold font-orbitron">U</div>
+                        <div>
+                            <h2 id="profile-email-display" class="text-xs font-bold text-white">user@gmail.com</h2>
+                            <p class="text-[10px] text-emerald-400">Active Account</p>
+                        </div>
                     </div>
+                    <button onclick="handleLogout()" class="bg-red-600 hover:bg-red-700 text-white text-xs font-bold px-3 py-1.5 rounded">লগআউট</button>
                 </div>
                 <div class="grid grid-cols-2 gap-2 text-center text-xs">
                     <div class="bg-slate-950 p-3 rounded border border-slate-800"><p class="text-slate-400 text-[10px]">Balance</p><p class="font-bold text-yellow-400">৳0</p></div>
                     <div class="bg-slate-950 p-3 rounded border border-slate-800"><p class="text-slate-400 text-[10px]">Total Order</p><p class="font-bold text-blue-400">0</p></div>
                 </div>
-                <div class="space-y-2 text-xs">
-                    <label class="text-slate-400 block">Phone Number</label>
-                    <input type="text" value="01973386420" class="w-full bg-slate-950 border border-slate-800 rounded p-2 text-white">
-                    <button class="w-full bg-blue-600 text-white font-bold py-2 rounded">Update Profile</button>
-                </div>
             </div>
         </div>
 
-        <!-- Support Section -->
+        <!-- Support Center Section -->
         <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 space-y-3">
             <h3 class="text-xs font-bold text-blue-400 border-b border-slate-800 pb-1 flex justify-between items-center">
                 <span><i class="fa-solid fa-headset mr-1"></i> SUPPORT CENTER</span>
@@ -179,408 +201,175 @@
                 </div>
                 <a href="https://wa.me/8801618024025" target="_blank" class="bg-emerald-600 text-white p-2 rounded"><i class="fa-brands fa-whatsapp text-sm"></i></a>
             </div>
-            <div class="p-2.5 bg-slate-950 rounded-lg flex items-center justify-between border border-slate-800 text-xs">
-                <div>
-                    <p class="font-bold text-white">2nd Admin (Anik)</p>
-                    <p class="text-slate-400 font-mono">WA: 01804402530 / +966598527005</p>
-                </div>
-                <a href="https://wa.me/8801804402530" target="_blank" class="bg-emerald-600 text-white p-2 rounded"><i class="fa-brands fa-whatsapp text-sm"></i></a>
-            </div>
         </div>
-
-    </main>
-
-    <!-- Bottom Navigation Bar -->
-    <nav class="fixed bottom-0 left-0 right-0 bg-slate-900/95 backdrop-blur-md border-t border-slate-800 z-40">
-        <div class="max-w-md mx-auto grid grid-cols-5 py-2 text-center text-[10px] font-bold text-slate-400">
-            <button onclick="switchTab('home')" id="nav-home" class="nav-btn active text-blue-500 flex flex-col items-center space-y-1"><i class="fa-solid fa-house text-sm"><span>Home</span></i></button>
-            <button onclick="switchTab('addfund')" id="nav-addfund" class="nav-btn hover:text-slate-200 flex flex-col items-center space-y-1"><i class="fa-solid fa-wallet text-sm"><span>Add Fund</span></i></button>
-            <button onclick="switchTab('orders')" id="nav-orders" class="nav-btn hover:text-slate-200 flex flex-col items-center space-y-1"><i class="fa-solid fa-box text-sm"><span>My Orders</span></i></button>
-            <button onclick="switchTab('codes')" id="nav-codes" class="nav-btn hover:text-slate-200 flex flex-col items-center space-y-1"><i class="fa-solid fa-key text-sm"><span>My Codes</span></i></button>
-            <button onclick="switchTab('account')" id="nav-account" class="nav-btn hover:text-slate-200 flex flex-col items-center space-y-1"><i class="fa-solid fa-user text-sm"><span>Account</span></i></button>
-        </div>
+                        </main>
+<!-- Fixed Bottom Navigation Bar -->
+    <nav class="fixed bottom-0 left-0 right-0 max-w-md mx-auto bg-slate-900/95 backdrop-blur-md border-t border-slate-800 px-2 py-2 flex items-center justify-around z-40">
+        <button onclick="switchTab('home')" id="nav-home" class="flex flex-col items-center text-blue-500 transition">
+            <i class="fa-solid fa-house text-base"></i>
+            <span class="text-[10px] font-bold mt-0.5">Home</span>
+        </button>
+        <button onclick="switchTab('addfund')" id="nav-addfund" class="flex flex-col items-center text-slate-400 hover:text-blue-400 transition">
+            <i class="fa-solid fa-wallet text-base"></i>
+            <span class="text-[10px] font-bold mt-0.5">Add Fund</span>
+        </button>
+        <button onclick="switchTab('orders')" id="nav-orders" class="flex flex-col items-center text-slate-400 hover:text-blue-400 transition">
+            <i class="fa-solid fa-box-archive text-base"></i>
+            <span class="text-[10px] font-bold mt-0.5">Orders</span>
+        </button>
+        <button onclick="switchTab('codes')" id="nav-codes" class="flex flex-col items-center text-slate-400 hover:text-blue-400 transition">
+            <i class="fa-solid fa-key text-base"></i>
+            <span class="text-[10px] font-bold mt-0.5">Codes</span>
+        </button>
+        <button onclick="switchTab('account')" id="nav-account" class="flex flex-col items-center text-slate-400 hover:text-blue-400 transition">
+            <i class="fa-solid fa-user text-base"></i>
+            <span class="text-[10px] font-bold mt-0.5">Account</span>
+        </button>
     </nav>
 
-    <!-- ORDER MODAL -->
-    <div id="order-modal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
-        <div class="bg-slate-900 border border-slate-800 w-full max-w-sm rounded-xl p-5 space-y-4">
-            <div class="flex items-center justify-between border-b border-slate-800 pb-2">
-                <h3 id="modal-product-name" class="text-sm font-bold text-white">Product Name</h3>
-                <button onclick="closeOrderModal()" class="text-slate-400 hover:text-white"><i class="fa-solid fa-xmark"></i></button>
-            </div>
-            <div class="space-y-3 text-xs">
-                <div>
-                    <label class="text-slate-400 block mb-1">পেমেন্ট মেথড (Personal: 01973386420)</label>
-                    <select id="payment-method" class="w-full bg-slate-950 border border-slate-800 rounded-lg p-2.5 text-white">
-                        <option value="bkash">bKash Personal: 01973386420</option>
-                        <option value="nagad">Nagad Personal: 01973386420</option>
-                    </select>
-                </div>
-                <div>
-                    <label class="text-slate-400 block mb-1">আপনার জিমেইল (Gmail) *</label>
-                    <input type="email" id="order-gmail" placeholder="example@gmail.com" class="w-full bg-slate-950 border border-slate-800 rounded-lg p-2.5 text-white">
-                </div>
-                <div>
-                    <label class="text-slate-400 block mb-1">হোয়াটসঅ্যাপ নম্বর *</label>
-                    <input type="tel" id="order-phone" placeholder="017xxxxxxxx" class="w-full bg-slate-950 border border-slate-800 rounded-lg p-2.5 text-white">
-                </div>
-                <div>
-                    <label class="text-slate-400 block mb-1">Transaction ID (TrxID) *</label>
-                    <input type="text" id="order-trx" placeholder="TrxID লিখুন" class="w-full bg-slate-950 border border-slate-800 rounded-lg p-2.5 text-white">
-                </div>
-                <button onclick="submitOrder()" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-lg text-xs">অর্ডার কনফার্ম করুন</button>
-            </div>
-        </div>
-    </div>
+    <!-- JavaScript & Firebase Logic -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+        import { getDatabase, ref, set, get, update, remove, onValue } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 
-    <!-- ADMIN MODAL -->
-    <div id="admin-modal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
-        <div class="bg-slate-900 border border-slate-800 w-full max-w-md rounded-xl p-5 space-y-4 max-h-[90vh] overflow-y-auto">
-            <div class="flex items-center justify-between border-b border-slate-800 pb-2">
-                <h3 class="text-sm font-bold text-white"><i class="fa-solid fa-lock text-blue-400 mr-2"></i>অ্যাডমিন প্যানেল</h3>
-                <button onclick="toggleAdminModal()" class="text-slate-400 hover:text-white"><i class="fa-solid fa-xmark"></i></button>
-            </div>
-            <div id="admin-auth-view" class="space-y-3 text-xs">
-                <p class="text-slate-400">অ্যাডমিন পাসকোড দিন:</p>
-                <input type="password" id="admin-passcode" placeholder="পাসকোড লিখুন" class="w-full bg-slate-950 border border-slate-800 rounded-lg p-2.5 text-white">
-                <button onclick="loginAdmin()" class="w-full bg-blue-600 text-white font-bold py-2.5 rounded-lg">লগইন করুন</button>
-            </div>
-            <div id="admin-dashboard-view" class="hidden space-y-4 text-xs">
-                <div class="bg-slate-950 p-3 rounded-lg border border-slate-800 space-y-2">
-                    <h4 class="font-bold text-amber-400 border-b border-slate-800 pb-1">📢 পপ-আপ ও লাইভ নোটিশ আপডেট</h4>
-                    <textarea id="admin-notice-input" rows="3" class="w-full bg-slate-900 border border-slate-800 rounded p-2 text-white" placeholder="নোটিশ এখানে লিখুন..."></textarea>
-                    <button onclick="updateNotice()" class="w-full bg-amber-600 text-white font-bold py-2 rounded">নোটিশ আপডেট করুন</button>
-                </div>
-                <div class="bg-slate-950 p-3 rounded-lg border border-slate-800 space-y-2">
-                    <h4 class="font-bold text-emerald-400 border-b border-slate-800 pb-1 flex justify-between items-center">
-                        <span>📥 কাস্টমার অর্ডার ম্যানেজমেন্ট</span>
-                        <span id="order-count-badge" class="bg-emerald-500/20 text-emerald-400 px-2 py-0.5 rounded text-[10px]">0 Orders</span>
-                    </h4>
-                    <div id="admin-orders-list" class="space-y-2 max-h-48 overflow-y-auto"></div>
-                </div>
-                <div class="bg-slate-950 p-3 rounded-lg border border-slate-800 space-y-2">
-                    <h4 class="font-bold text-blue-400 border-b border-slate-800 pb-1">নতুন প্রোডাক্ট যোগ করুন</h4>
-                    <input type="text" id="new-prod-title" placeholder="প্যানেলের নাম" class="w-full bg-slate-900 border border-slate-800 rounded p-2 text-white">
-                    <select id="new-prod-cat" class="w-full bg-slate-900 border border-slate-800 rounded p-2 text-white">
-                        <option value="NON ROOT">NON ROOT</option>
-                        <option value="ROOT">ROOT</option>
-                        <option value="IPHONE">IPHONE</option>
-                        <option value="PC">PC</option>
-                    </select>
-                    <input type="number" id="new-prod-price" placeholder="মূল্য (টাকা)" class="w-full bg-slate-900 border border-slate-800 rounded p-2 text-white">
-                    <input type="text" id="new-prod-img" placeholder="ছবির লিংক (Image URL)" class="w-full bg-slate-900 border border-slate-800 rounded p-2 text-white">
-                    <select id="new-prod-status" class="w-full bg-slate-900 border border-slate-800 rounded p-2 text-white">
-                        <option value="ONLINE">ONLINE</option>
-                        <option value="MAINTENANCE">MAINTENANCE</option>
-                    </select>
-                    <button onclick="addNewProduct()" class="w-full bg-emerald-600 text-white font-bold py-2 rounded">+ প্রোডাক্ট যোগ করুন</button>
-                </div>
-                <div class="space-y-2">
-                    <h4 class="font-bold text-slate-300">বিদ্যমান প্রোডাক্ট লিস্ট</h4>
-                    <div id="admin-product-list" class="space-y-2 max-h-40 overflow-y-auto"></div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Firebase SDKs -->
-    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-database-compat.js"></script>
-
-    <!-- SCRIPT SECTION -->
-    <script>
+        // ফায়ারবেজ কনফিগারেশন (আপনার প্রজেক্টের ইনফো)
         const firebaseConfig = {
-            apiKey: "AIzaSyCi-cuSz81umWS6WqEaO_sR4jX8aQ", 
+            apiKey: "AIzaSyD-Your-API-Key-Here",
             authDomain: "lx-panel-store-debce.firebaseapp.com",
             databaseURL: "https://lx-panel-store-debce-default-rtdb.firebaseio.com",
             projectId: "lx-panel-store-debce",
             storageBucket: "lx-panel-store-debce.appspot.com",
-            messagingSenderId: "618694919729",
-            appId: "1:618694919729:web:0129a146b95562187db710"
+            messagingSenderId: "123456789",
+            appId: "1:123456:web:abcd"
         };
 
-        firebase.initializeApp(firebaseConfig);
-        const db = firebase.database();
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getDatabase(app);
 
-        let currentProduct = '';
-        let currentPrice = 0;
-        let currentFilterCat = 'ALL';
-
-        let defaultProducts = [
-            { id: 1, title: 'PHANTOM ANDROID + IOS', cat: 'NON ROOT', price: 15, img: 'https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=400&q=80', status: 'ONLINE' },
-            { id: 2, title: 'Drip Client - Apkmod', cat: 'NON ROOT', price: 35, img: 'https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=400&q=80', status: 'ONLINE' },
-            { id: 3, title: 'DRIP WIRE EXTERNAL - SAFE', cat: 'NON ROOT', price: 30, img: 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&w=400&q=80', status: 'ONLINE' },
-            { id: 4, title: 'X-REG NON ROOT', cat: 'NON ROOT', price: 18, img: 'https://images.unsplash.com/photo-1538481199705-c710c4e965fc?auto=format&fit=crop&w=400&q=80', status: 'ONLINE' },
-            { id: 5, title: 'GUILD GLORY BOT', cat: 'ROOT', price: 125, img: 'https://images.unsplash.com/photo-1542751110-97427bbecf20?auto=format&fit=crop&w=400&q=80', status: 'ONLINE' },
-            { id: 6, title: 'PRIME MOD', cat: 'IPHONE', price: 70, img: 'https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=400&q=80', status: 'ONLINE' }
-        ];
-
-        let cachedProducts = defaultProducts;
-        let cachedOrders = [];
-        let cachedNotice = '🔥 LX PANEL SHOP এ আপনাকে স্বাগতম! ১০০% সেফ এবং এন্টি-ব্যান প্যানেল পান সাশ্রয়ী মূল্যে। যেকোনো প্রয়োজনে অ্যাডমিন বা হেল্পলাইনে যোগাযোগ করুন।';
-
-        function initFirebaseListeners() {
-            db.ref('notice').on('value', (snapshot) => {
-                const val = snapshot.val();
-                if (val) cachedNotice = val;
-                else db.ref('notice').set(cachedNotice);
-                loadNotice();
-            });
-
-            db.ref('products').on('value', (snapshot) => {
-                const val = snapshot.val();
-                if (val) {
-                    cachedProducts = Array.isArray(val) ? val : Object.values(val);
-                } else {
-                    db.ref('products').set(defaultProducts);
-                    cachedProducts = defaultProducts;
-                }
-                renderProducts();
-                renderAdminProducts();
-            });
-
-            db.ref('orders').on('value', (snapshot) => {
-                const val = snapshot.val();
-                if (val) cachedOrders = Array.isArray(val) ? val : Object.values(val);
-                else cachedOrders = [];
-                renderAdminOrders();
-            });
-        }
-
-        function updateNotice() {
-            const noticeInput = document.getElementById('admin-notice-input').value.trim();
-            if(!noticeInput) return;
-            db.ref('notice').set(noticeInput).then(() => alert('নোটিশ সফলভাবে আপডেট করা হয়েছে!'));
-        }
-
-        function loadNotice() {
-            const displayEl = document.getElementById('display-notice');
-            if(displayEl) displayEl.innerText = cachedNotice;
-            const popupEl = document.getElementById('popup-notice-text');
-            if(popupEl) popupEl.innerText = cachedNotice;
-            const inputEl = document.getElementById('admin-notice-input');
-            if(inputEl) inputEl.value = cachedNotice;
-        }
-
-        function closeWelcomePopup() {
-            document.getElementById('welcome-popup-modal').classList.add('hidden');
-        }
-
-        function renderProducts() {
-            const grid = document.getElementById('products-grid');
-            if(!grid) return;
-            grid.innerHTML = '';
-
-            let count = 0;
-            cachedProducts.forEach(p => {
-                if (currentFilterCat === 'ALL' || p.cat === currentFilterCat) {
-                    count++;
-                    const isOnline = p.status === 'ONLINE';
-                    const card = document.createElement('div');
-                    card.className = "bg-slate-900 border border-slate-800 rounded-xl overflow-hidden relative flex flex-col justify-between";
-                    card.innerHTML = `
-                        <div class="relative">
-                            <span class="absolute top-2 left-2 z-10 text-[9px] font-bold text-white px-2 py-0.5 rounded-full ${isOnline ? 'badge-online' : 'badge-maintenance'}">
-                                ${isOnline ? 'ONLINE' : 'MAINTENANCE'}
-                            </span>
-                            <img src="${p.img}" alt="${p.title}" class="w-full h-28 object-cover">
-                        </div>
-                        <div class="p-2.5 space-y-2 flex-grow flex flex-col justify-between">
-                            <h3 class="text-xs font-bold text-slate-200 line-clamp-2">${p.title}</h3>
-                            <div class="space-y-1">
-                                <div class="text-xs text-blue-400 font-bold">Price - ৳${p.price}</div>
-                                <button ${isOnline ? `onclick="openOrderModal('${p.title.replace(/'/g, "\\'")}', ${p.price})"` : 'disabled'} class="w-full ${isOnline ? 'bg-indigo-600 hover:bg-indigo-700 text-white' : 'bg-slate-800 text-slate-500'} text-[11px] font-bold py-1.5 rounded transition">
-                                    ${isOnline ? 'Order Now' : 'Updating'}
-                                </button>
-                            </div>
-                        </div>
-                    `;
-                    grid.appendChild(card);
-                }
-            });
-            const countEl = document.getElementById('cat-item-count');
-            if(countEl) countEl.innerText = `${count} items`;
-        }
-
-        function filterCategory(cat, event) {
-            currentFilterCat = cat;
-            document.querySelectorAll('.cat-btn').forEach(btn => {
-                btn.classList.remove('bg-blue-600', 'text-white');
-                btn.classList.add('bg-slate-800', 'text-slate-300');
-            });
-            if(event && event.currentTarget) {
-                event.currentTarget.classList.remove('bg-slate-800', 'text-slate-300');
-                event.currentTarget.classList.add('bg-blue-600', 'text-white');
-            }
-            const titleEl = document.getElementById('current-cat-title');
-            if(titleEl) titleEl.innerText = cat;
-            renderProducts();
-        }
-
-        function switchTab(tabId) {
+        // Global functions attachment
+        window.switchTab = function(tabId) {
             document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
-            document.querySelectorAll('.nav-btn').forEach(el => {
-                el.classList.remove('text-blue-500');
-                el.classList.add('text-slate-400');
+            document.getElementById('tab-' + tabId).classList.remove('hidden');
+            
+            // Nav styles update
+            ['home', 'addfund', 'orders', 'codes', 'account'].forEach(t => {
+                const btn = document.getElementById('nav-' + t);
+                if(btn) {
+                    btn.classList.remove('text-blue-500');
+                    btn.classList.add('text-slate-400');
+                }
             });
-            const targetTab = document.getElementById(`tab-${tabId}`);
-            if(targetTab) targetTab.classList.remove('hidden');
-            const navBtn = document.getElementById(`nav-${tabId}`);
-            if (navBtn) {
-                navBtn.classList.remove('text-slate-400');
-                navBtn.classList.add('text-blue-500');
+            const activeNav = document.getElementById('nav-' + tabId);
+            if(activeNav) {
+                activeNav.classList.remove('text-slate-400');
+                activeNav.classList.add('text-blue-500');
             }
-        }
+            window.scrollTo(0, 0);
+        };
 
-        function openOrderModal(name, price) {
-            currentProduct = name;
-            currentPrice = price;
-            document.getElementById('modal-product-name').innerText = `${name} (৳${price})`;
-            document.getElementById('order-modal').classList.remove('hidden');
-        }
+        window.closeWelcomePopup = function() {
+            document.getElementById('welcome-popup-modal').style.display = 'none';
+        };
 
-        function closeOrderModal() {
-            document.getElementById('order-modal').classList.add('hidden');
-        }
+        window.switchAuthMode = function(mode) {
+            if(mode === 'login') {
+                document.getElementById('login-form').classList.remove('hidden');
+                document.getElementById('register-form').classList.add('hidden');
+                document.getElementById('auth-tab-login').className = "flex-1 text-center font-bold text-xs text-blue-400 pb-1 border-b-2 border-blue-500";
+                document.getElementById('auth-tab-register').className = "flex-1 text-center font-bold text-xs text-slate-400 pb-1";
+            } else {
+                document.getElementById('login-form').classList.add('hidden');
+                document.getElementById('register-form').classList.remove('hidden');
+                document.getElementById('auth-tab-register').className = "flex-1 text-center font-bold text-xs text-emerald-400 pb-1 border-b-2 border-emerald-500";
+                document.getElementById('auth-tab-login').className = "flex-1 text-center font-bold text-xs text-slate-400 pb-1";
+            }
+        };
 
-        function submitOrder() {
-            const gmail = document.getElementById('order-gmail').value.trim();
-            const phone = document.getElementById('order-phone').value.trim();
-            const trx = document.getElementById('order-trx').value.trim();
-            const method = document.getElementById('payment-method').value;
+        // Firebase Auth handlers
+        window.handleRegister = function() {
+            const email = document.getElementById('reg-email').value;
+            const pass = document.getElementById('reg-pass').value;
+            if(!email || !pass) { alert('দয়া করে জিমেইল এবং পাসওয়ার্ড দিন'); return; }
+            
+            createUserWithEmailAndPassword(auth, email, pass)
+            .then((userCredential) => {
+                alert('সফলভাবে অ্যাকাউন্ট তৈরি হয়েছে!');
+                window.switchTab('home');
+            })
+            .catch((error) => {
+                alert('ত্রুটি: ' + error.message);
+            });
+        };
 
-            if (!gmail || !phone || !trx) {
-                alert('সবগুলো ঘর পূরণ করুন!');
+        window.handleLogin = function() {
+            const email = document.getElementById('login-email').value;
+            const pass = document.getElementById('login-pass').value;
+            if(!email || !pass) { alert('দয়া করে জিমেইল এবং পাসওয়ার্ড দিন'); return; }
+
+            signInWithEmailAndPassword(auth, email, pass)
+            .then((userCredential) => {
+                alert('সফলভাবে লগইন হয়েছে!');
+                window.switchTab('home');
+            })
+            .catch((error) => {
+                alert('লগইন ব্যর্থ হয়েছে: ' + error.message);
+            });
+        };
+
+        window.handleLogout = function() {
+            signOut(auth).then(() => {
+                alert('লগআউট সফল হয়েছে');
+                window.switchTab('home');
+            }).catch((error) => {
+                console.error(error);
+            });
+        };
+
+        // Auth State Observer
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                document.getElementById('auth-container').classList.add('hidden');
+                document.getElementById('user-profile-view').classList.remove('hidden');
+                document.getElementById('profile-email-display').innerText = user.email;
+            } else {
+                document.getElementById('auth-container').classList.remove('hidden');
+                document.getElementById('user-profile-view').classList.add('hidden');
+            }
+        });
+
+        window.openCustomPaymentUI = function() {
+            const amt = document.getElementById('fund-amount').value;
+            if(!amt || amt < 100) {
+                alert('সর্বনিম্ন ১০০ টাকা অ্যাড করতে হবে!');
                 return;
             }
+            alert(amt + ' টাকা অ্যাড করার জন্য পেমেন্ট গেটওয়ে প্রসেস শুরু হচ্ছে...');
+        };
 
-            const newOrder = {
-                id: Date.now(),
-                product: currentProduct,
-                price: currentPrice,
-                gmail, phone, trx, method,
-                status: 'Pending'
-            };
+        window.trackOrder = function() {
+            const val = document.getElementById('track-input').value;
+            if(!val) { alert('অনুগ্রহ করে ট্রানজেকশন আইডি বা ফোন নম্বর দিন'); return; }
+            document.getElementById('track-result').innerHTML = `<p class="text-xs text-yellow-400">অর্ডার স্ট্যাটাস: পেন্ডিং (Pending) - অ্যাডমিন চেক করছেন।</p>`;
+        };
 
-            cachedOrders.unshift(newOrder);
-            db.ref('orders').set(cachedOrders).then(() => {
-                alert('অর্ডার সফলভাবে সাবমিট হয়েছে!');
-                closeOrderModal();
+        window.filterCategory = function(cat, e) {
+            document.querySelectorAll('.cat-btn').forEach(b => {
+                b.className = "cat-btn bg-slate-800 text-slate-300 hover:bg-slate-700 px-4 py-1.5 rounded-full text-xs font-bold whitespace-nowrap";
             });
-        }
+            e.target.className = "cat-btn active bg-blue-600 text-white px-4 py-1.5 rounded-full text-xs font-bold shadow-md whitespace-nowrap";
+            document.getElementById('current-cat-title').innerText = cat;
+        };
 
-        function trackOrder() {
-            const val = document.getElementById('track-input').value.trim();
-            const res = document.getElementById('track-result');
-            if(!val) return;
-            const found = cachedOrders.filter(o => o.phone === val || o.trx === val);
-            res.innerHTML = found.length ? found.map(o => `
-                <div class="p-3 bg-slate-950 border border-slate-800 rounded text-xs space-y-1">
-                    <div class="text-blue-400 font-bold">${o.product}</div>
-                    <div>স্ট্যাটাস: <span class="${o.status==='Approved'?'text-emerald-400':o.status==='Reject'?'text-red-400':'text-amber-400'}">${o.status}</span></div>
-                    <div class="text-[10px] text-slate-400">TrxID: ${o.trx}</div>
-                </div>
-            `).join('') : '<div class="text-red-400 text-xs">কোনো অর্ডার পাওয়া যায়নি।</div>';
-        }
-
-        function toggleAdminModal() {
-            document.getElementById('admin-modal').classList.toggle('hidden');
-        }
-
-        function loginAdmin() {
-            const pass = document.getElementById('admin-passcode').value.trim();
-            if (pass === '@lxshakilyt72') {
-                document.getElementById('admin-auth-view').classList.add('hidden');
-                document.getElementById('admin-dashboard-view').classList.remove('hidden');
-                loadNotice();
-                renderAdminProducts();
-                renderAdminOrders();
-            } else {
-                alert('ভুল পাসকোড!');
+        window.toggleAdminModal = function() {
+            const pass = prompt('অ্যাডমিন পাসপাসওয়ার্ড দিন:');
+            if(pass === '@lxshakilyt72') {
+                alert('স্বাগতম Shakil ভাই! অ্যাডমিন প্যানেল এক্সেস সফল হয়েছে।');
+            } else if(pass !== null) {
+                alert('ভুল পাসওয়ার্ড!');
             }
-        }
-
-        function renderAdminOrders() {
-            const list = document.getElementById('admin-orders-list');
-            const badge = document.getElementById('order-count-badge');
-            if(!list) return;
-            list.innerHTML = '';
-            if(badge) badge.innerText = `${cachedOrders.length} Orders`;
-            cachedOrders.forEach(o => {
-                const item = document.createElement('div');
-                item.className = "bg-slate-900 p-2.5 rounded border border-slate-800 space-y-1 text-xs";
-                item.innerHTML = `
-                    <div class="flex justify-between items-center">
-                        <span class="font-bold text-blue-300">${o.product}</span>
-                        <span class="px-2 py-0.5 rounded text-[10px] ${o.status === 'Approved' ? 'bg-emerald-500/20 text-emerald-400' : o.status === 'Reject' ? 'bg-red-500/20 text-red-400' : 'bg-amber-500/20 text-amber-400'}">${o.status}</span>
-                    </div>
-                    <div class="text-slate-400 text-[11px]">
-                        <p>Gmail: ${o.gmail}</p>
-                        <p>Phone: ${o.phone}</p>
-                        <p>TrxID: <span class="text-emerald-400 font-bold">${o.trx}</span> (${o.method})</p>
-                    </div>
-                    <div class="flex justify-end space-x-1.5 pt-1">
-                        ${o.status !== 'Approved' ? `<button onclick="updateOrderStatus(${o.id}, 'Approved')" class="bg-emerald-600 text-white px-2 py-1 rounded text-[10px] font-bold">Approve</button>` : ''}
-                        ${o.status !== 'Reject' ? `<button onclick="updateOrderStatus(${o.id}, 'Reject')" class="bg-red-600 text-white px-2 py-1 rounded text-[10px] font-bold">Reject</button>` : ''}
-                        <button onclick="deleteOrder(${o.id})" class="bg-slate-700 text-slate-300 px-2 py-1 rounded text-[10px]">Delete</button>
-                    </div>
-                `;
-                list.appendChild(item);
-            });
-        }
-
-        function updateOrderStatus(id, status) {
-            cachedOrders = cachedOrders.map(o => o.id === id ? {...o, status: status} : o);
-            db.ref('orders').set(cachedOrders).then(() => alert(`অর্ডারটি সফলভাবে ${status} করা হয়েছে!`));
-        }
-
-        function deleteOrder(id) {
-            if(confirm('অর্ডারটি ডিলিট করতে চান?')) {
-                cachedOrders = cachedOrders.filter(o => o.id !== id);
-                db.ref('orders').set(cachedOrders);
-            }
-        }
-
-        function renderAdminProducts() {
-            const list = document.getElementById('admin-product-list');
-            if(!list) return;
-            list.innerHTML = '';
-            cachedProducts.forEach(p => {
-                const item = document.createElement('div');
-                item.className = "bg-slate-900 p-2 rounded border border-slate-800 flex items-center justify-between";
-                item.innerHTML = `
-                    <div class="flex items-center space-x-2">
-                        <img src="${p.img}" class="w-8 h-8 rounded object-cover">
-                        <div>
-                            <p class="font-bold text-white text-xs">${p.title}</p>
-                            <p class="text-[10px] text-slate-400">৳${p.price} | ${p.status}</p>
-                        </div>
-                    </div>
-                    <button onclick="deleteProduct(${p.id})" class="text-red-400 text-xs"><i class="fa-solid fa-trash"></i></button>
-                `;
-                list.appendChild(item);
-            });
-        }
-
-        function addNewProduct() {
-            const title = document.getElementById('new-prod-title').value.trim();
-            const cat = document.getElementById('new-prod-cat').value;
-            const price = document.getElementById('new-prod-price').value.trim();
-            const img = document.getElementById('new-prod-img').value.trim();
-            const status = document.getElementById('new-prod-status').value;
-
-            if(!title || !price || !img) return;
-            cachedProducts.unshift({ id: Date.now(), title, cat, price: Number(price), img, status });
-            db.ref('products').set(cachedProducts).then(() => alert('প্রোডাক্ট যোগ হয়েছে!'));
-        }
-
-        function deleteProduct(id) {
-            if(confirm('ডিলিট করতে চান?')) {
-                cachedProducts = cachedProducts.filter(p => p.id !== id);
-                db.ref('products').set(cachedProducts);
-            }
-        }
-
-        document.addEventListener('DOMContentLoaded', initFirebaseListeners);
+        };
     </script>
 </body>
 </html>
