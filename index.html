@@ -70,7 +70,7 @@
             <!-- Products Grid -->
             <div id="products-grid" class="grid grid-cols-2 gap-3"></div>
 
-            <!-- Support Desk Section (Both Admins) -->
+            <!-- Support Desk Section (Both Admins with Exact Info) -->
             <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 space-y-4 mt-6">
                 <h3 class="text-sm font-bold text-blue-400 border-b border-slate-800 pb-2 flex items-center justify-between">
                     <span><i class="fa-solid fa-headset mr-2"></i>হেল্পডেস্ক ও সোশ্যাল মিডিয়া</span>
@@ -92,17 +92,19 @@
                     <!-- 2nd Admin -->
                     <div class="p-2.5 bg-slate-950 rounded-lg flex items-center justify-between border border-slate-800">
                         <div>
-                            <p class="font-bold text-white">2nd Admin / Support</p>
-                            <p class="text-[10px] text-blue-400 font-mono">Telegram: @lxshakilyt72</p>
+                            <p class="font-bold text-white">2nd Admin (Anik)</p>
+                            <p class="text-[10px] text-blue-400 font-mono">Telegram: @lxanikyt72</p>
                         </div>
                         <div class="flex space-x-2">
-                            <a href="https://wa.me/8801618024025" target="_blank" class="bg-emerald-600 text-white p-2 rounded-lg"><i class="fa-brands fa-whatsapp text-sm"></i></a>
-                            <a href="https://t.me/lxshakilyt72" target="_blank" class="bg-sky-600 text-white p-2 rounded-lg"><i class="fa-brands fa-telegram text-sm"></i></a>
+                            <a href="https://wa.me/8801804402530" target="_blank" class="bg-emerald-600 text-white p-2 rounded-lg" title="WhatsApp 1"><i class="fa-brands fa-whatsapp text-sm"></i></a>
+                            <a href="https://wa.me/966598527005" target="_blank" class="bg-emerald-600 text-white p-2 rounded-lg" title="WhatsApp 2"><i class="fa-brands fa-whatsapp text-sm"></i></a>
+                            <a href="https://t.me/lxanikyt72" target="_blank" class="bg-sky-600 text-white p-2 rounded-lg"><i class="fa-brands fa-telegram text-sm"></i></a>
                         </div>
                     </div>
                 </div>
             </div>
-             <!-- TUTORIAL TAB -->
+    </div>
+    <!-- TUTORIAL TAB -->
         <div id="tab-tutorial" class="tab-content hidden space-y-4">
             <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 space-y-3">
                 <h2 class="text-lg font-bold text-blue-400 border-b border-slate-800 pb-2">গাইড ও টিউটোরিয়াল ভিডিও</h2>
@@ -116,13 +118,14 @@
         <!-- TOPUP / TRACK TAB -->
         <div id="tab-topup" class="tab-content hidden space-y-4">
             <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 space-y-4">
-                <h2 class="text-lg font-bold text-blue-400 border-b border-slate-800 pb-2">অর্ডার ট্র্যাকিং সিস্টেম</h2>
-                <p class="text-xs text-slate-400">আপনার মোবাইল নম্বর বা TrxID দিয়ে অর্ডারের স্ট্যাটাস চেক করুন:</p>
+                <h2 class="text-lg font-bold text-blue-400 border-b border-slate-800 pb-2">অর্ডার ট্র্যাকিং ও হিস্ট্রি</h2>
+                <p class="text-xs text-slate-400">আপনার মোবাইল নম্বর বা TrxID দিয়ে আপনার সমস্ত অর্ডারের স্ট্যাটাস দেখুন:</p>
                 <div class="space-y-3">
                     <input type="text" id="track-input" placeholder="ফোন নম্বর / TrxID লিখুন" class="w-full bg-slate-950 border border-slate-800 rounded-lg p-3 text-xs text-white focus:outline-none focus:border-blue-500">
                     <button onclick="trackOrder()" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2.5 rounded-lg text-xs transition">অর্ডার খুঁজুন</button>
                 </div>
-                <div id="track-result" class="hidden p-3 bg-slate-950 border border-slate-800 rounded-lg space-y-2 text-xs"></div>
+                <!-- Multiple Orders List Container -->
+                <div id="track-result" class="space-y-2"></div>
             </div>
         </div>
 
@@ -194,13 +197,13 @@
     <div id="admin-modal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
         <div class="bg-slate-900 border border-slate-800 w-full max-w-md rounded-xl p-5 space-y-4 max-h-[90vh] overflow-y-auto">
             <div class="flex items-center justify-between border-b border-slate-800 pb-2">
-                <h3 class="text-sm font-bold text-white"><i class="fa-solid fa-lock text-blue-400 mr-2"></i>অ্যাডমিন প্যানেল (@lxshakilyt72)</h3>
+                <h3 class="text-sm font-bold text-white"><i class="fa-solid fa-lock text-blue-400 mr-2"></i>অ্যাডমিন প্যানেল</h3>
                 <button onclick="toggleAdminModal()" class="text-slate-400 hover:text-white"><i class="fa-solid fa-xmark"></i></button>
             </div>
 
-            <!-- Admin Passcode View -->
+            <!-- Admin Passcode View (Password Hidden) -->
             <div id="admin-auth-view" class="space-y-3 text-xs">
-                <p class="text-slate-400">পাসকোড দিন: <span class="text-blue-400 font-mono">@lxshakilyt72</span></p>
+                <p class="text-slate-400">অ্যাডমিন পাসকোড দিন:</p>
                 <input type="password" id="admin-passcode" placeholder="পাসকোড লিখুন" class="w-full bg-slate-950 border border-slate-800 rounded-lg p-2.5 text-white">
                 <button onclick="loginAdmin()" class="w-full bg-blue-600 text-white font-bold py-2.5 rounded-lg">লগইন করুন</button>
             </div>
@@ -251,7 +254,6 @@
             </div>
         </div>
     </div>
-</div>
     <!-- SCRIPT SECTION -->
     <script>
         let currentProduct = '';
@@ -432,18 +434,24 @@
                 return;
             }
             const orders = getOrders();
-            const found = orders.find(o => o.phone === val || o.trx === val);
+            const foundOrders = orders.filter(o => o.phone === val || o.trx === val);
 
             if(res) {
-                res.classList.remove('hidden');
-                if(found) {
-                    res.innerHTML = `
-                        <div class="text-blue-400 font-bold">প্রোডাক্ট: ${found.product}</div>
-                        <div class="text-slate-300">স্ট্যাটাস: <span class="${found.status === 'Approved' ? 'text-emerald-400 font-bold' : 'text-amber-400'}">${found.status}</span></div>
-                        <div class="text-slate-400 text-[10px]">TrxID: ${found.trx} | WhatsApp: ${found.phone}</div>
-                    `;
+                res.innerHTML = '';
+                if(foundOrders.length > 0) {
+                    let html = `<p class="text-emerald-400 font-bold mb-2">আপনার মোট ${foundOrders.length} টি অর্ডার পাওয়া গেছে:</p>`;
+                    foundOrders.forEach(found => {
+                        html += `
+                            <div class="p-3 bg-slate-950 border border-slate-800 rounded-lg space-y-1 text-xs mb-2">
+                                <div class="text-blue-400 font-bold">প্রোডাক্ট: ${found.product} (৳${found.price})</div>
+                                <div class="text-slate-300">স্ট্যাটাস: <span class="${found.status === 'Approved' ? 'text-emerald-400 font-bold' : 'text-amber-400'}">${found.status}</span></div>
+                                <div class="text-slate-400 text-[10px]">TrxID: ${found.trx} | WhatsApp: ${found.phone}</div>
+                            </div>
+                        `;
+                    });
+                    res.innerHTML = html;
                 } else {
-                    res.innerHTML = `<div class="text-red-400">দুঃখিত! এই তথ্য দিয়ে কোনো অর্ডার পাওয়া যায়নি।</div>`;
+                    res.innerHTML = `<div class="p-3 bg-slate-950 border border-slate-800 rounded-lg text-red-400 text-xs">দুঃখিত! এই তথ্য দিয়ে কোনো অর্ডার পাওয়া যায়নি।</div>`;
                 }
             }
         }
@@ -465,7 +473,7 @@
                 renderAdminProducts();
                 renderAdminOrders();
             } else {
-                alert('ভুল পাসকোড! সঠিক পাসকোড দিন (@lxshakilyt72)।');
+                alert('ভুল পাসকোড! সঠিক পাসকোড দিন।');
             }
         }
 
@@ -590,4 +598,3 @@
     </script>
 </body>
 </html>
-                                                                                                                                                                                
