@@ -13,8 +13,6 @@
     <style>
         body { font-family: 'Hind Siliguri', sans-serif; background-color: #0b0f19; color: #f3f4f6; }
         .font-orbitron { font-family: 'Orbitron', sans-serif; }
-        .badge-online { background-color: #10b981; }
-        .badge-maintenance { background-color: #ef4444; }
         ::-webkit-scrollbar { width: 6px; height: 6px; }
         ::-webkit-scrollbar-track { background: #0f172a; }
         ::-webkit-scrollbar-thumb { background: #3b82f6; border-radius: 10px; }
@@ -22,7 +20,7 @@
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
     </style>
 </head>
-<body class="pb-24">
+<body class="bg-[#0b0f19] text-gray-100 pb-24">
 
     <!-- POP-UP WELCOME NOTICE MODAL -->
     <div id="welcome-popup-modal" class="fixed inset-0 bg-black/85 backdrop-blur-sm z-50 flex items-center justify-center p-4">
@@ -51,7 +49,7 @@
         </div>
         <div class="flex items-center space-x-2">
             <button onclick="toggleAdminModal()" class="text-slate-400 hover:text-blue-400 transition p-2" title="Admin Login">
-                <i class="fa-solid fa-key"></i>
+                <i class="fa-solid fa-key text-yellow-400"></i>
             </button>
             <button onclick="switchTab('account')" class="bg-red-600 hover:bg-red-700 text-white text-xs font-bold px-3 py-1.5 rounded transition">LOGIN</button>
             <button onclick="switchTab('account')" class="bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-bold px-3 py-1.5 rounded border border-slate-700 transition">REGISTER</button>
@@ -61,24 +59,22 @@
     <!-- Dynamic Notice Ticker Bar -->
     <div class="bg-blue-900/30 border-y border-blue-500/20 px-4 py-2 text-xs text-blue-300 flex items-center space-x-2 overflow-hidden">
         <i class="fa-solid fa-bell animate-bounce text-yellow-400 flex-shrink-0"></i>
-        <marquee behavior="scroll" direction="left" class="font-medium whitespace-nowrap" id="display-notice">
-            🔥 Notice: Trusted, Fast & Reliable Service with 24/7 Support!
+        <marquee behavior="scroll" direction="left" class="font-medium whitespace-nowrap">
+            🔥 Notice: Trusted, Fast & Reliable Service with 24/7 Support! পেমেন্ট করার পর TrxID সাবমিট করুন।
         </marquee>
     </div>
-    <!-- Main Container -->
+<!-- Main Container -->
     <main class="max-w-md mx-auto p-4 space-y-5">
 
         <!-- HOME TAB -->
         <div id="tab-home" class="tab-content space-y-4">
-            
-            <!-- Dynamic Video Slider Box -->
             <div class="bg-slate-900 border border-slate-800 rounded-xl overflow-hidden p-3 space-y-2">
                 <div class="relative rounded-lg overflow-hidden bg-slate-950 aspect-video flex items-center justify-center">
-                    <iframe id="youtube-frame" class="w-full h-full rounded-lg" src="https://www.youtube.com/embed/5qap5aO4i9A" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    <iframe class="w-full h-full rounded-lg" src="https://www.youtube.com/embed/5qap5aO4i9A" title="YouTube video player" frameborder="0" allowfullscreen></iframe>
                 </div>
                 <div class="flex items-center justify-between text-xs pt-1">
                     <span class="bg-red-600 text-white px-2 py-0.5 rounded font-bold text-[10px]">ভিডিও গাইড</span>
-                    <span class="text-slate-400">কিভাবে প্যানেল কিনবেন এবং ব্যবহার করবেন</span>
+                    <span class="text-slate-400">কিভাবে প্যানেল ব্যবহার করবেন</span>
                 </div>
             </div>
 
@@ -91,119 +87,146 @@
                 <button onclick="filterCategory('PC', event)" class="cat-btn bg-slate-800 text-slate-300 hover:bg-slate-700 px-4 py-1.5 rounded-full text-xs font-bold whitespace-nowrap">PC</button>
             </div>
 
-            <!-- Category Heading & Count -->
-            <div class="flex items-center justify-between border-b border-slate-800 pb-2">
-                <h2 id="current-cat-title" class="text-lg font-bold font-orbitron text-white">ALL</h2>
-                <span id="cat-item-count" class="text-xs bg-slate-800 text-slate-400 px-2.5 py-1 rounded-full font-semibold">0 items</span>
+            <h2 id="current-cat-title" class="text-lg font-bold font-orbitron text-white border-b border-slate-800 pb-2">Available Panels</h2>
+            <div id="products-grid" class="grid grid-cols-2 gap-3">
+                <div class="bg-slate-900 border border-slate-800 rounded-xl p-3 space-y-2 text-xs">
+                    <div class="bg-slate-950 aspect-video rounded flex items-center justify-center font-orbitron text-blue-400 font-bold">LX NON-ROOT</div>
+                    <p class="font-bold text-white">Free Fire Safe Panel</p>
+                    <p class="text-yellow-400 font-bold">৳350 / Month</p>
+                    <button onclick="alert('অর্ডার করতে প্রথমে লগইন করুন এবং Add Fund থেকে টাকা পেমেন্ট সাবমিট করুন!')" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-1.5 rounded">কিনুন</button>
+                </div>
             </div>
-
-            <!-- Products Grid -->
-            <div id="products-grid" class="grid grid-cols-2 gap-3"></div>
         </div>
 
         <!-- ADD FUND TAB -->
         <div id="tab-addfund" class="tab-content hidden space-y-4">
-            <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 space-y-4">
-                <h2 class="text-base font-bold text-yellow-400 border-b border-slate-800 pb-2">Add Money / Balance Topup</h2>
-                <div class="space-y-3 text-xs">
+            <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 space-y-4 text-xs">
+                <h2 class="text-sm font-bold text-yellow-400 border-b border-slate-800 pb-2">Add Money / Manual Payment</h2>
+                <div class="bg-slate-950 p-3 rounded border border-slate-800 space-y-1">
+                    <p class="text-slate-300 font-bold">bKash / Nagad Personal Number:</p>
+                    <p class="text-emerald-400 font-mono text-sm font-black">01973386420</p>
+                    <p class="text-[10px] text-slate-400">প্রথমে সেন্ড মনি করে নিচের ঘরে ট্রানজেকশন আইডি ও পরিমাণ দিন।</p>
+                </div>
+                <div class="space-y-3">
                     <div>
-                        <label class="text-slate-400 block mb-1">পেমেন্ট মেথড সিলেক্ট করুন</label>
-                        <select id="fund-method" class="w-full bg-slate-950 border border-slate-800 rounded-lg p-2.5 text-white">
-                            <option value="bkash">bKash Personal (01973386420)</option>
-                            <option value="nagad">Nagad Personal (01973386420)</option>
+                        <label class="text-slate-400 block mb-1">পেমেন্ট মেথড</label>
+                        <select id="pay-method" class="w-full bg-slate-950 border border-slate-800 rounded p-2 text-white">
+                            <option value="bkash">bKash</option>
+                            <option value="nagad">Nagad</option>
                         </select>
                     </div>
                     <div>
-                        <label class="text-slate-400 block mb-1">পরিমাণ (Min: 100 BDT)</label>
-                        <input type="number" id="fund-amount" min="100" placeholder="100" class="w-full bg-slate-950 border border-slate-800 rounded-lg p-2.5 text-white">
+                        <label class="text-slate-400 block mb-1">টাকার পরিমাণ (BDT)</label>
+                        <input type="number" id="pay-amount" placeholder="350" class="w-full bg-slate-950 border border-slate-800 rounded p-2 text-white">
                     </div>
-                    <button onclick="openCustomPaymentUI()" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2.5 rounded-lg transition">টাকা অ্যাড করুন</button>
+                    <div>
+                        <label class="text-slate-400 block mb-1">TrxID (ট্রানজেকশন আইডি)</label>
+                        <input type="text" id="pay-trx" placeholder="9N7A..." class="w-full bg-slate-950 border border-slate-800 rounded p-2 text-white uppercase">
+                    </div>
+                    <button onclick="submitDeposit()" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2.5 rounded">পেমেন্ট সাবমিট করুন</button>
                 </div>
             </div>
         </div>
 
         <!-- MY ORDERS TAB -->
         <div id="tab-orders" class="tab-content hidden space-y-4">
-            <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 space-y-4">
-                <h2 class="text-base font-bold text-emerald-400 border-b border-slate-800 pb-2">My Orders / Tracking</h2>
-                <div class="space-y-3">
-                    <input type="text" id="track-input" placeholder="ফোন নম্বর বা TrxID লিখুন" class="w-full bg-slate-950 border border-slate-800 rounded-lg p-3 text-xs text-white">
-                    <button onclick="trackOrder()" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2.5 rounded-lg text-xs">অর্ডার খুঁজুন</button>
+            <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 space-y-4 text-xs">
+                <h2 class="text-sm font-bold text-emerald-400 border-b border-slate-800 pb-2">My Orders & Deposits</h2>
+                <div id="my-orders-list" class="space-y-2">
+                    <p class="text-slate-400 text-center py-4">কোনো অর্ডার বা পেমেন্ট হিস্ট্রি নেই।</p>
                 </div>
-                <div id="track-result" class="space-y-2"></div>
             </div>
         </div>
 
-        <!-- MY CODES TAB -->
+        <!-- CODES TAB -->
         <div id="tab-codes" class="tab-content hidden space-y-4">
-            <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 space-y-4 text-center">
-                <h2 class="text-base font-bold text-blue-400 border-b border-slate-800 pb-2">My Codes</h2>
-                <div class="py-8 space-y-2">
-                    <p class="text-xs text-slate-400">No code found !</p>
-                    <button onclick="switchTab('home')" class="bg-red-600 text-white text-xs font-bold px-4 py-2 rounded">ORDER NOW</button>
-                </div>
+            <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 space-y-4 text-center text-xs">
+                <h2 class="text-sm font-bold text-blue-400 border-b border-slate-800 pb-2">My Panel Codes</h2>
+                <p class="text-slate-400 py-6">আপনার কেনা প্যানেল কি বা কোড এখানে দেখতে পাবেন।</p>
             </div>
         </div>
 
-        <!-- ACCOUNT TAB (Firebase Auth Integrated) -->
+        <!-- ACCOUNT TAB -->
         <div id="tab-account" class="tab-content hidden space-y-4">
-            <!-- Auth Container (When not logged in) -->
-            <div id="auth-container" class="bg-slate-900 border border-slate-800 rounded-xl p-4 space-y-4">
+            <div id="auth-container" class="bg-slate-900 border border-slate-800 rounded-xl p-4 space-y-4 text-xs">
                 <div class="flex border-b border-slate-800 pb-2">
-                    <button onclick="switchAuthMode('login')" id="auth-tab-login" class="flex-1 text-center font-bold text-xs text-blue-400 pb-1 border-b-2 border-blue-500">লগইন</button>
-                    <button onclick="switchAuthMode('register')" id="auth-tab-register" class="flex-1 text-center font-bold text-xs text-slate-400 pb-1">রেজিস্ট্রেশন</button>
+                    <button onclick="switchAuthMode('login')" id="auth-tab-login" class="flex-1 text-center font-bold text-blue-400 pb-1 border-b-2 border-blue-500">লগইন</button>
+                    <button onclick="switchAuthMode('register')" id="auth-tab-register" class="flex-1 text-center font-bold text-slate-400 pb-1">রেজিস্ট্রেশন</button>
                 </div>
-
-                <!-- Login Form -->
-                <div id="login-form" class="space-y-3 text-xs">
-                    <input type="email" id="login-email" placeholder="আপনার জিমেইল লিখুন" class="w-full bg-slate-950 border border-slate-800 rounded p-2.5 text-white">
+                <div id="login-form" class="space-y-3">
+                    <input type="email" id="login-email" placeholder="জিমেইল লিখুন" class="w-full bg-slate-950 border border-slate-800 rounded p-2.5 text-white">
                     <input type="password" id="login-pass" placeholder="পাসওয়ার্ড দিন" class="w-full bg-slate-950 border border-slate-800 rounded p-2.5 text-white">
                     <button onclick="handleLogin()" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2.5 rounded">লগইন করুন</button>
                 </div>
-
-                <!-- Register Form -->
-                <div id="register-form" class="space-y-3 text-xs hidden">
+                <div id="register-form" class="space-y-3 hidden">
                     <input type="email" id="reg-email" placeholder="নতুন জিমেইল লিখুন" class="w-full bg-slate-950 border border-slate-800 rounded p-2.5 text-white">
-                    <input type="password" id="reg-pass" placeholder="শক্তিশালী পাসওয়ার্ড দিন" class="w-full bg-slate-950 border border-slate-800 rounded p-2.5 text-white">
+                    <input type="password" id="reg-pass" placeholder="পাসওয়ার্ড দিন" class="w-full bg-slate-950 border border-slate-800 rounded p-2.5 text-white">
                     <button onclick="handleRegister()" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2.5 rounded">অ্যাকাউন্ট তৈরি করুন</button>
                 </div>
             </div>
 
-            <!-- User Profile View (When logged in) -->
-            <div id="user-profile-view" class="bg-slate-900 border border-slate-800 rounded-xl p-4 space-y-4 hidden">
+            <div id="user-profile-view" class="bg-slate-900 border border-slate-800 rounded-xl p-4 space-y-4 hidden text-xs">
                 <div class="flex items-center justify-between border-b border-slate-800 pb-3">
-                    <div class="flex items-center space-x-3">
-                        <div class="w-10 h-10 rounded-full bg-orange-500 text-white flex items-center justify-center font-bold font-orbitron">U</div>
-                        <div>
-                            <h2 id="profile-email-display" class="text-xs font-bold text-white">user@gmail.com</h2>
-                            <p class="text-[10px] text-emerald-400">Active Account</p>
-                        </div>
+                    <div>
+                        <h2 id="profile-email" class="font-bold text-white">user@gmail.com</h2>
+                        <p class="text-[10px] text-emerald-400">Active Account</p>
                     </div>
-                    <button onclick="handleLogout()" class="bg-red-600 hover:bg-red-700 text-white text-xs font-bold px-3 py-1.5 rounded">লগআউট</button>
+                    <button onclick="handleLogout()" class="bg-red-600 text-white font-bold px-3 py-1.5 rounded">লগআউট</button>
                 </div>
-                <div class="grid grid-cols-2 gap-2 text-center text-xs">
-                    <div class="bg-slate-950 p-3 rounded border border-slate-800"><p class="text-slate-400 text-[10px]">Balance</p><p class="font-bold text-yellow-400">৳0</p></div>
-                    <div class="bg-slate-950 p-3 rounded border border-slate-800"><p class="text-slate-400 text-[10px]">Total Order</p><p class="font-bold text-blue-400">0</p></div>
+                <div class="grid grid-cols-2 gap-2 text-center">
+                    <div class="bg-slate-950 p-3 rounded border border-slate-800"><p class="text-slate-400">Balance</p><p class="font-bold text-yellow-400 text-sm">৳0</p></div>
+                    <div class="bg-slate-950 p-3 rounded border border-slate-800"><p class="text-slate-400">Total Order</p><p class="font-bold text-blue-400 text-sm">0</p></div>
                 </div>
             </div>
         </div>
 
-        <!-- Support Center Section -->
+        <!-- SUPPORT CENTER (Main & Correct 2nd Admin Info) -->
         <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 space-y-3">
             <h3 class="text-xs font-bold text-blue-400 border-b border-slate-800 pb-1 flex justify-between items-center">
                 <span><i class="fa-solid fa-headset mr-1"></i> SUPPORT CENTER</span>
-                <span class="text-[10px] text-emerald-400">9AM - 10PM</span>
+                <span class="text-[10px] text-emerald-400">24/7 ACTIVE</span>
             </h3>
+            
+            <!-- Main Admin -->
             <div class="p-2.5 bg-slate-950 rounded-lg flex items-center justify-between border border-slate-800 text-xs">
                 <div>
                     <p class="font-bold text-white">Main Admin (Shakil)</p>
-                    <p class="text-slate-400 font-mono">WA: 01618024025 | TG: @lxshakilyt72</p>
+                    <p class="text-slate-400 font-mono text-[11px]">WA: 01618024025 | TG: @lxshakilyt72</p>
                 </div>
-                <a href="https://wa.me/8801618024025" target="_blank" class="bg-emerald-600 text-white p-2 rounded"><i class="fa-brands fa-whatsapp text-sm"></i></a>
+                <a href="https://wa.me/8801618024025" target="_blank" class="bg-emerald-600 text-white p-2 rounded hover:opacity-90"><i class="fa-brands fa-whatsapp text-sm"></i></a>
+            </div>
+
+            <!-- 2nd Admin (Corrected Info) -->
+            <div class="p-2.5 bg-slate-950 rounded-lg flex items-center justify-between border border-slate-800 text-xs">
+                <div>
+                    <p class="font-bold text-white">2nd Admin / Support Leader</p>
+                    <p class="text-slate-400 font-mono text-[11px]">WA: 01804402530, +966598527005 | TG: @lxanikyt72</p>
+                </div>
+                <div class="flex space-x-1">
+                    <a href="https://wa.me/8801804402530" target="_blank" class="bg-emerald-600 text-white p-1.5 rounded hover:opacity-90" title="WhatsApp"><i class="fa-brands fa-whatsapp text-xs"></i></a>
+                    <a href="https://t.me/lxanikyt72" target="_blank" class="bg-blue-600 text-white p-1.5 rounded hover:opacity-90" title="Telegram"><i class="fa-brands fa-telegram text-xs"></i></a>
+                </div>
             </div>
         </div>
-                        </main>
-<!-- Fixed Bottom Navigation Bar -->
+
+        <!-- ADMIN DASHBOARD MODAL -->
+        <div id="admin-dashboard-modal" class="hidden fixed inset-0 bg-black/90 z-50 p-4 overflow-y-auto">
+            <div class="bg-slate-900 border border-yellow-500/50 max-w-lg mx-auto rounded-xl p-4 space-y-4 text-xs">
+                <div class="flex justify-between items-center border-b border-slate-800 pb-2">
+                    <h2 class="font-bold text-yellow-400 text-sm font-orbitron">👑 LX PANEL ADMIN DASHBOARD</h2>
+                    <button onclick="closeAdminDashboard()" class="text-red-500 font-bold px-2 py-1">✕ Close</button>
+                </div>
+                <div class="space-y-3">
+                    <h3 class="font-bold text-white">পেন্ডিং ডিপোজিট ও পেমেন্ট লিস্ট:</h3>
+                    <div id="admin-deposits-list" class="space-y-2 bg-slate-950 p-3 rounded border border-slate-800 max-h-60 overflow-y-auto">
+                        <p class="text-slate-400">কোনো নতুন পেমেন্ট রিকোয়েস্ট নেই।</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+    <!-- Fixed Bottom Navigation Bar -->
     <nav class="fixed bottom-0 left-0 right-0 max-w-md mx-auto bg-slate-900/95 backdrop-blur-md border-t border-slate-800 px-2 py-2 flex items-center justify-around z-40">
         <button onclick="switchTab('home')" id="nav-home" class="flex flex-col items-center text-blue-500 transition">
             <i class="fa-solid fa-house text-base"></i>
@@ -231,127 +254,188 @@
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-        import { getDatabase, ref, set, get, update, remove, onValue } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+        import { getDatabase, ref, set, push, onValue, update } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 
-        // ফায়ারবেজ কনফিগারেশন (আপনার প্রজেক্টের ইনফো)
         const firebaseConfig = {
-            apiKey: "AIzaSyD-Your-API-Key-Here",
+            apiKey: "AIzaSyCi-cuSz81umW",
             authDomain: "lx-panel-store-debce.firebaseapp.com",
             databaseURL: "https://lx-panel-store-debce-default-rtdb.firebaseio.com",
             projectId: "lx-panel-store-debce",
             storageBucket: "lx-panel-store-debce.appspot.com",
-            messagingSenderId: "123456789",
-            appId: "1:123456:web:abcd"
+            messagingSenderId: "618694919729",
+            appId: "1:618694919729:web:0129a146b95562187db710"
         };
 
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
         const db = getDatabase(app);
 
-        // Global functions attachment
-        window.switchTab = function(tabId) {
-            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
-            document.getElementById('tab-' + tabId).classList.remove('hidden');
-            
-            // Nav styles update
-            ['home', 'addfund', 'orders', 'codes', 'account'].forEach(t => {
-                const btn = document.getElementById('nav-' + t);
-                if(btn) {
-                    btn.classList.remove('text-blue-500');
-                    btn.classList.add('text-slate-400');
-                }
-            });
-            const activeNav = document.getElementById('nav-' + tabId);
-            if(activeNav) {
-                activeNav.classList.remove('text-slate-400');
-                activeNav.classList.add('text-blue-500');
-            }
-            window.scrollTo(0, 0);
-        };
+        let currentUser = null;
 
         window.closeWelcomePopup = function() {
             document.getElementById('welcome-popup-modal').style.display = 'none';
+        };
+
+        window.switchTab = function(tabId) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+            document.getElementById('tab-' + tabId).classList.remove('hidden');
+            ['home', 'addfund', 'orders', 'codes', 'account'].forEach(t => {
+                const btn = document.getElementById('nav-' + t);
+                if(btn) { btn.classList.remove('text-blue-500'); btn.classList.add('text-slate-400'); }
+            });
+            const activeNav = document.getElementById('nav-' + tabId);
+            if(activeNav) { activeNav.classList.remove('text-slate-400'); activeNav.classList.add('text-blue-500'); }
+            window.scrollTo(0, 0);
         };
 
         window.switchAuthMode = function(mode) {
             if(mode === 'login') {
                 document.getElementById('login-form').classList.remove('hidden');
                 document.getElementById('register-form').classList.add('hidden');
-                document.getElementById('auth-tab-login').className = "flex-1 text-center font-bold text-xs text-blue-400 pb-1 border-b-2 border-blue-500";
-                document.getElementById('auth-tab-register').className = "flex-1 text-center font-bold text-xs text-slate-400 pb-1";
+                document.getElementById('auth-tab-login').className = "flex-1 text-center font-bold text-blue-400 pb-1 border-b-2 border-blue-500";
+                document.getElementById('auth-tab-register').className = "flex-1 text-center font-bold text-slate-400 pb-1";
             } else {
                 document.getElementById('login-form').classList.add('hidden');
                 document.getElementById('register-form').classList.remove('hidden');
-                document.getElementById('auth-tab-register').className = "flex-1 text-center font-bold text-xs text-emerald-400 pb-1 border-b-2 border-emerald-500";
-                document.getElementById('auth-tab-login').className = "flex-1 text-center font-bold text-xs text-slate-400 pb-1";
+                document.getElementById('auth-tab-register').className = "flex-1 text-center font-bold text-emerald-400 pb-1 border-b-2 border-emerald-500";
+                document.getElementById('auth-tab-login').className = "flex-1 text-center font-bold text-slate-400 pb-1";
             }
         };
 
-        // Firebase Auth handlers
         window.handleRegister = function() {
             const email = document.getElementById('reg-email').value;
             const pass = document.getElementById('reg-pass').value;
             if(!email || !pass) { alert('দয়া করে জিমেইল এবং পাসওয়ার্ড দিন'); return; }
-            
             createUserWithEmailAndPassword(auth, email, pass)
-            .then((userCredential) => {
-                alert('সফলভাবে অ্যাকাউন্ট তৈরি হয়েছে!');
-                window.switchTab('home');
-            })
-            .catch((error) => {
-                alert('ত্রুটি: ' + error.message);
-            });
+            .then(() => { alert('সফলভাবে অ্যাকাউন্ট তৈরি হয়েছে!'); window.switchTab('home'); })
+            .catch((error) => { alert('ত্রুটি: ' + error.message); });
         };
 
         window.handleLogin = function() {
             const email = document.getElementById('login-email').value;
             const pass = document.getElementById('login-pass').value;
             if(!email || !pass) { alert('দয়া করে জিমেইল এবং পাসওয়ার্ড দিন'); return; }
-
             signInWithEmailAndPassword(auth, email, pass)
-            .then((userCredential) => {
-                alert('সফলভাবে লগইন হয়েছে!');
-                window.switchTab('home');
-            })
-            .catch((error) => {
-                alert('লগইন ব্যর্থ হয়েছে: ' + error.message);
-            });
+            .then(() => { alert('সফলভাবে লগইন হয়েছে!'); window.switchTab('home'); })
+            .catch((error) => { alert('লগইন ব্যর্থ: ' + error.message); });
         };
 
         window.handleLogout = function() {
-            signOut(auth).then(() => {
-                alert('লগআউট সফল হয়েছে');
-                window.switchTab('home');
-            }).catch((error) => {
-                console.error(error);
-            });
+            signOut(auth).then(() => { alert('লগআউট সফল'); window.switchTab('home'); });
         };
 
-        // Auth State Observer
         onAuthStateChanged(auth, (user) => {
+            currentUser = user;
             if (user) {
                 document.getElementById('auth-container').classList.add('hidden');
                 document.getElementById('user-profile-view').classList.remove('hidden');
-                document.getElementById('profile-email-display').innerText = user.email;
+                document.getElementById('profile-email').innerText = user.email;
+                loadUserOrders(user.uid);
             } else {
                 document.getElementById('auth-container').classList.remove('hidden');
                 document.getElementById('user-profile-view').classList.add('hidden');
             }
         });
 
-        window.openCustomPaymentUI = function() {
-            const amt = document.getElementById('fund-amount').value;
-            if(!amt || amt < 100) {
-                alert('সর্বনিম্ন ১০০ টাকা অ্যাড করতে হবে!');
+        window.submitDeposit = function() {
+            if(!currentUser) {
+                alert('টাকা অ্যাড করতে হলে প্রথমে লগইন করতে হবে!');
+                window.switchTab('account');
                 return;
             }
-            alert(amt + ' টাকা অ্যাড করার জন্য পেমেন্ট গেটওয়ে প্রসেস শুরু হচ্ছে...');
+            const method = document.getElementById('pay-method').value;
+            const amount = document.getElementById('pay-amount').value;
+            const trxID = document.getElementById('pay-trx').value.trim();
+
+            if(!amount || amount < 50 || !trxID) {
+                alert('সঠিক পরিমাণ এবং ট্রানজেকশন আইডি (TrxID) দিন!');
+                return;
+            }
+
+            const depositRef = ref(db, 'deposits');
+            const newDepositRef = push(depositRef);
+            set(newDepositRef, {
+                uid: currentUser.uid,
+                email: currentUser.email,
+                method: method,
+                amount: Number(amount),
+                trxID: trxID,
+                status: 'Pending',
+                date: new Date().toLocaleString()
+            }).then(() => {
+                alert('পেমেন্ট রিকোয়েস্ট সফলভাবে জমা হয়েছে! অ্যাডমিন চেক করে ব্যালেন্স অ্যাড করে দেবেন।');
+                document.getElementById('pay-amount').value = '';
+                document.getElementById('pay-trx').value = '';
+                window.switchTab('orders');
+            }).catch((err) => {
+                alert('ত্রুটি: ' + err.message);
+            });
         };
 
-        window.trackOrder = function() {
-            const val = document.getElementById('track-input').value;
-            if(!val) { alert('অনুগ্রহ করে ট্রানজেকশন আইডি বা ফোন নম্বর দিন'); return; }
-            document.getElementById('track-result').innerHTML = `<p class="text-xs text-yellow-400">অর্ডার স্ট্যাটাস: পেন্ডিং (Pending) - অ্যাডমিন চেক করছেন।</p>`;
+        function loadUserOrders(uid) {
+            const depositsRef = ref(db, 'deposits');
+            onValue(depositsRef, (snapshot) => {
+                const data = snapshot.val();
+                let html = '';
+                if(data) {
+                    Object.values(data).forEach(item => {
+                        if(item.uid === uid) {
+                            let badgeColor = item.status === 'Approved' ? 'text-emerald-400' : 'text-yellow-400';
+                            html += `<div class="bg-slate-950 p-2.5 rounded border border-slate-800 flex justify-between items-center">
+                                <div>
+                                    <p class="text-white font-bold">টাকা: ৳${item.amount} (${item.method.toUpperCase()})</p>
+                                    <p class="text-[10px] text-slate-400">TrxID: ${item.trxID} | Date: ${item.date}</p>
+                                </div>
+                                <span class="font-bold ${badgeColor}">${item.status}</span>
+                            </div>`;
+                        }
+                    });
+                }
+                document.getElementById('my-orders-list').innerHTML = html || '<p class="text-slate-400 text-center py-4">কোনো পেমেন্ট হিস্ট্রি নেই।</p>';
+            });
+        }
+
+        window.toggleAdminModal = function() {
+            const pass = prompt('অ্যাডমিন পাসওয়ার্ড দিন:');
+            if(pass === '@lxshakilyt72') {
+                document.getElementById('admin-dashboard-modal').classList.remove('hidden');
+                loadAdminDeposits();
+            } else if(pass !== null) {
+                alert('ভুল পাসওয়ার্ড!');
+            }
+        };
+
+        window.closeAdminDashboard = function() {
+            document.getElementById('admin-dashboard-modal').classList.add('hidden');
+        };
+
+        function loadAdminDeposits() {
+            const depositsRef = ref(db, 'deposits');
+            onValue(depositsRef, (snapshot) => {
+                const data = snapshot.val();
+                let html = '';
+                if(data) {
+                    Object.entries(data).forEach(([key, item]) => {
+                        if(item.status === 'Pending') {
+                            html += `<div class="bg-slate-900 p-2.5 rounded border border-slate-800 flex justify-between items-center">
+                                <div>
+                                    <p class="text-white"><b>${item.email}</b> - ৳${item.amount}</p>
+                                    <p class="text-[10px] text-yellow-400">TrxID: ${item.trxID} (${item.method})</p>
+                                </div>
+                                <button onclick="approveDeposit('${key}')" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-3 py-1 rounded text-[10px]">Approve</button>
+                            </div>`;
+                        }
+                    });
+                }
+                document.getElementById('admin-deposits-list').innerHTML = html || '<p class="text-slate-400">কোনো পেন্ডিং পেমেন্ট নেই।</p>';
+            });
+        }
+
+        window.approveDeposit = function(key) {
+            const updateRef = ref(db, 'deposits/' + key);
+            update(updateRef, { status: 'Approved' }).then(() => {
+                alert('পেমেন্ট অ্যাপ্রুভ করা হয়েছে!');
+            });
         };
 
         window.filterCategory = function(cat, e) {
@@ -361,15 +445,6 @@
             e.target.className = "cat-btn active bg-blue-600 text-white px-4 py-1.5 rounded-full text-xs font-bold shadow-md whitespace-nowrap";
             document.getElementById('current-cat-title').innerText = cat;
         };
-
-        window.toggleAdminModal = function() {
-            const pass = prompt('অ্যাডমিন পাসপাসওয়ার্ড দিন:');
-            if(pass === '@lxshakilyt72') {
-                alert('স্বাগতম Shakil ভাই! অ্যাডমিন প্যানেল এক্সেস সফল হয়েছে।');
-            } else if(pass !== null) {
-                alert('ভুল পাসওয়ার্ড!');
-            }
-        };
     </script>
 </body>
-</html>
+    </html>
