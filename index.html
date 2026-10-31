@@ -70,7 +70,7 @@
             <!-- Products Grid -->
             <div id="products-grid" class="grid grid-cols-2 gap-3"></div>
 
-            <!-- Support Desk Section -->
+            <!-- Support Desk Section (Both Admins Included) -->
             <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 space-y-4 mt-6">
                 <h3 class="text-sm font-bold text-blue-400 border-b border-slate-800 pb-2 flex items-center justify-between">
                     <span><i class="fa-solid fa-headset mr-2"></i>হেল্পডেস্ক ও সোশ্যাল মিডিয়া</span>
@@ -78,6 +78,7 @@
                 </h3>
                 
                 <div class="space-y-2 text-xs">
+                    <!-- Main Admin -->
                     <div class="p-2.5 bg-slate-950 rounded-lg flex items-center justify-between border border-slate-800">
                         <div>
                             <p class="font-bold text-white">Main Admin (Shakil)</p>
@@ -88,10 +89,21 @@
                             <a href="https://t.me/lxshakilyt72" target="_blank" class="bg-sky-600 text-white p-2 rounded-lg"><i class="fa-brands fa-telegram text-sm"></i></a>
                         </div>
                     </div>
+                    <!-- Second Admin (Placeholder details - you can update name/number) -->
+                    <div class="p-2.5 bg-slate-950 rounded-lg flex items-center justify-between border border-slate-800">
+                        <div>
+                            <p class="font-bold text-white">Co-Admin / Support</p>
+                            <p class="text-[10px] text-blue-400 font-mono">Support Contact</p>
+                        </div>
+                        <div class="flex space-x-2">
+                            <a href="https://wa.me/8801618024025" target="_blank" class="bg-emerald-600 text-white p-2 rounded-lg"><i class="fa-brands fa-whatsapp text-sm"></i></a>
+                            <a href="https://t.me/lxshakilyt72" target="_blank" class="bg-sky-600 text-white p-2 rounded-lg"><i class="fa-brands fa-telegram text-sm"></i></a>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
-        <!-- TUTORIAL TAB -->
+    </div>
+    <!-- TUTORIAL TAB -->
         <div id="tab-tutorial" class="tab-content hidden space-y-4">
             <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 space-y-3">
                 <h2 class="text-lg font-bold text-blue-400 border-b border-slate-800 pb-2">গাইড ও টিউটোরিয়াল ভিডিও</h2>
@@ -555,7 +567,7 @@
             }
 
             const products = getProducts();
-            products.unshift({ id: Date.now(), title, cat, price: Number(price), img, status });
+            products.unshift({ id: Date., title, cat, price: Number(price), img, status });
             saveProducts(products);
 
             titleEl.value = '';
