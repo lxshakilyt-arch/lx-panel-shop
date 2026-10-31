@@ -182,7 +182,7 @@
             </div>
         </div>
 
-        <!-- SUPPORT CENTER (Main & Correct 2nd Admin Info) -->
+        <!-- SUPPORT CENTER (Main & 2nd Admin Info) -->
         <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 space-y-3">
             <h3 class="text-xs font-bold text-blue-400 border-b border-slate-800 pb-1 flex justify-between items-center">
                 <span><i class="fa-solid fa-headset mr-1"></i> SUPPORT CENTER</span>
@@ -198,7 +198,7 @@
                 <a href="https://wa.me/8801618024025" target="_blank" class="bg-emerald-600 text-white p-2 rounded hover:opacity-90"><i class="fa-brands fa-whatsapp text-sm"></i></a>
             </div>
 
-            <!-- 2nd Admin (Corrected Info) -->
+            <!-- 2nd Admin (Correct Info) -->
             <div class="p-2.5 bg-slate-950 rounded-lg flex items-center justify-between border border-slate-800 text-xs">
                 <div>
                     <p class="font-bold text-white">2nd Admin / Support Leader</p>
@@ -211,7 +211,7 @@
             </div>
         </div>
 
-        <!-- EXPANDED ADMIN DASHBOARD MODAL (Extra Options Added) -->
+        <!-- ADMIN DASHBOARD MODAL -->
         <div id="admin-dashboard-modal" class="hidden fixed inset-0 bg-black/90 z-50 p-4 overflow-y-auto">
             <div class="bg-slate-900 border border-yellow-500/50 max-w-lg mx-auto rounded-xl p-4 space-y-4 text-xs">
                 <div class="flex justify-between items-center border-b border-slate-800 pb-2">
@@ -219,7 +219,6 @@
                     <button onclick="closeAdminDashboard()" class="text-red-500 font-bold px-2 py-1">✕ Close</button>
                 </div>
 
-                <!-- Admin Action Tabs / Sections -->
                 <div class="space-y-4">
                     <!-- 1. Pending Payments -->
                     <div class="space-y-2">
@@ -247,8 +246,8 @@
             </div>
         </div>
 
-                    </main>
-                    <!-- Fixed Bottom Navigation Bar -->
+    </main>
+    <!-- Fixed Bottom Navigation Bar -->
     <nav class="fixed bottom-0 left-0 right-0 max-w-md mx-auto bg-slate-900/95 backdrop-blur-md border-t border-slate-800 px-2 py-2 flex items-center justify-around z-40">
         <button onclick="switchTab('home')" id="nav-home" class="flex flex-col items-center text-blue-500 transition">
             <i class="fa-solid fa-house text-base"></i>
@@ -278,13 +277,13 @@
         import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
         import { getDatabase, ref, set, push, onValue, update } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 
-        // আপনার ফায়ারবেজের একদম সঠিক ও আসল API Key দিয়ে কনফিগারেশন সেট করা হলো
+        // আপনার সঠিক ও আসল ফায়ারবেজ কনফিগারেশন (সঠিক API Key সহ)
         const firebaseConfig = {
-            apiKey: "AIzaSyCi-cuSz81umW0129a146b95562187db710",
+            apiKey: "AIzaSyCi-cuSz81umWbpl0ryfsUmT48jM-IP07o",
             authDomain: "lx-panel-store-debce.firebaseapp.com",
             databaseURL: "https://lx-panel-store-debce-default-rtdb.firebaseio.com",
             projectId: "lx-panel-store-debce",
-            storageBucket: "lx-panel-store-debce.appspot.com",
+            storageBucket: "lx-panel-store-debce.firebasestorage.app",
             messagingSenderId: "618694919729",
             appId: "1:618694919729:web:0129a146b95562187db710"
         };
@@ -482,11 +481,9 @@
         window.approveDeposit = function(key, uid, amount) {
             const updateRef = ref(db, 'deposits/' + key);
             update(updateRef, { status: 'Approved' }).then(() => {
-                // Also add balance to user account automatically
                 const userBalRef = ref(db, 'users/' + uid);
                 onValue(userBalRef, (snap) => {
                     let currentBal = snap.val() ? (snap.val().balance || 0) : 0;
-                    // update balance
                     update(userBalRef, { balance: currentBal + amount });
                 }, { onlyOnce: true });
 
@@ -494,7 +491,6 @@
             });
         };
 
-        // Admin Extra Feature: Update Notice
         window.updateWebsiteNotice = function() {
             const newNotice = document.getElementById('admin-notice-input').value;
             if(!newNotice) { alert('নোটিশ লিখুন'); return; }
@@ -505,7 +501,6 @@
             });
         };
 
-        // Listen for live notice updates
         onValue(ref(db, 'settings'), (snapshot) => {
             const s = snapshot.val();
             if(s && s.notice) {
@@ -513,7 +508,6 @@
             }
         });
 
-        // Admin Extra Feature: Send Code to User
         window.sendCodeToUser = function() {
             const uid = document.getElementById('admin-code-uid').value.trim();
             const codeKey = document.getElementById('admin-code-key').value.trim();
