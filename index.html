@@ -47,7 +47,7 @@
                 LX PANEL<span class="text-xs text-blue-400">.com</span>
             </span>
         </div>
-        <div class="flex items-center space-x-2">
+        <div class="flex items-center space-x-2" id="header-auth-buttons">
             <button onclick="toggleAdminModal()" class="text-slate-400 hover:text-blue-400 transition p-2" title="Admin Login">
                 <i class="fa-solid fa-key text-yellow-400"></i>
             </button>
@@ -70,7 +70,7 @@
         <div id="tab-home" class="tab-content space-y-4">
             <div class="bg-slate-900 border border-slate-800 rounded-xl overflow-hidden p-3 space-y-2">
                 <div class="relative rounded-lg overflow-hidden bg-slate-950 aspect-video flex items-center justify-center">
-                    <iframe class="w-full h-full rounded-lg" src="https://www.youtube.com/embed/5qap5aO4i9A" title="YouTube video player" frameborder="0" allowfullscreen></iframe>
+                    <iframe id="home-yt-video" class="w-full h-full rounded-lg" src="https://www.youtube.com/embed/5qap5aO4i9A" title="YouTube video player" frameborder="0" allowfullscreen></iframe>
                 </div>
                 <div class="flex items-center justify-between text-xs pt-1">
                     <span class="bg-red-600 text-white px-2 py-0.5 rounded font-bold text-[10px]">ভিডিও গাইড</span>
@@ -89,12 +89,7 @@
 
             <h2 id="current-cat-title" class="text-lg font-bold font-orbitron text-white border-b border-slate-800 pb-2">Available Panels</h2>
             <div id="products-grid" class="grid grid-cols-2 gap-3">
-                <div class="bg-slate-900 border border-slate-800 rounded-xl p-3 space-y-2 text-xs">
-                    <div class="bg-slate-950 aspect-video rounded flex items-center justify-center font-orbitron text-blue-400 font-bold">LX NON-ROOT</div>
-                    <p class="font-bold text-white">Free Fire Safe Panel</p>
-                    <p class="text-yellow-400 font-bold">৳350 / Month</p>
-                    <button onclick="alert('অর্ডার করতে প্রথমে লগইন করুন এবং Add Fund থেকে টাকা পেমেন্ট সাবমিট করুন!')" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-1.5 rounded">কিনুন</button>
-                </div>
+                <!-- Products will load dynamically from database -->
             </div>
         </div>
 
@@ -171,18 +166,18 @@
                 <div class="flex items-center justify-between border-b border-slate-800 pb-3">
                     <div>
                         <h2 id="profile-email" class="font-bold text-white">user@gmail.com</h2>
-                        <p class="text-[10px] text-emerald-400">Active Account</p>
+                        <p class="text-[10px] text-slate-400 font-mono mt-0.5">UID: <span id="profile-uid" class="text-blue-400 select-all font-bold"></span></p>
                     </div>
                     <button onclick="handleLogout()" class="bg-red-600 text-white font-bold px-3 py-1.5 rounded">লগআউট</button>
                 </div>
                 <div class="grid grid-cols-2 gap-2 text-center">
                     <div class="bg-slate-950 p-3 rounded border border-slate-800"><p class="text-slate-400">Balance</p><p id="user-bal-display" class="font-bold text-yellow-400 text-sm">৳0</p></div>
-                    <div class="bg-slate-950 p-3 rounded border border-slate-800"><p class="text-slate-400">Total Order</p><p class="font-bold text-blue-400 text-sm">0</p></div>
+                    <div class="bg-slate-950 p-3 rounded border border-slate-800"><p class="text-slate-400">Status</p><p class="font-bold text-emerald-400 text-sm">Active</p></div>
                 </div>
             </div>
         </div>
 
-        <!-- SUPPORT CENTER (Main & 2nd Admin Info) -->
+        <!-- SUPPORT CENTER -->
         <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 space-y-3">
             <h3 class="text-xs font-bold text-blue-400 border-b border-slate-800 pb-1 flex justify-between items-center">
                 <span><i class="fa-solid fa-headset mr-1"></i> SUPPORT CENTER</span>
@@ -198,7 +193,7 @@
                 <a href="https://wa.me/8801618024025" target="_blank" class="bg-emerald-600 text-white p-2 rounded hover:opacity-90"><i class="fa-brands fa-whatsapp text-sm"></i></a>
             </div>
 
-            <!-- 2nd Admin (Correct Info) -->
+            <!-- 2nd Admin -->
             <div class="p-2.5 bg-slate-950 rounded-lg flex items-center justify-between border border-slate-800 text-xs">
                 <div>
                     <p class="font-bold text-white">2nd Admin / Support Leader</p>
@@ -211,7 +206,7 @@
             </div>
         </div>
 
-        <!-- ADMIN DASHBOARD MODAL -->
+        <!-- EXPANDED ADMIN DASHBOARD MODAL -->
         <div id="admin-dashboard-modal" class="hidden fixed inset-0 bg-black/90 z-50 p-4 overflow-y-auto">
             <div class="bg-slate-900 border border-yellow-500/50 max-w-lg mx-auto rounded-xl p-4 space-y-4 text-xs">
                 <div class="flex justify-between items-center border-b border-slate-800 pb-2">
@@ -219,8 +214,8 @@
                     <button onclick="closeAdminDashboard()" class="text-red-500 font-bold px-2 py-1">✕ Close</button>
                 </div>
 
-                <div class="space-y-4">
-                    <!-- 1. Pending Payments -->
+                <div class="space-y-4 max-h-[75vh] overflow-y-auto pr-1">
+                    <!-- 1. Pending Payments (Approve / Reject) -->
                     <div class="space-y-2">
                         <h3 class="font-bold text-white border-l-2 border-yellow-400 pl-2">পেন্ডিং ডিপোজিট ও পেমেন্ট লিস্ট:</h3>
                         <div id="admin-deposits-list" class="space-y-2 bg-slate-950 p-3 rounded border border-slate-800 max-h-40 overflow-y-auto">
@@ -228,18 +223,47 @@
                         </div>
                     </div>
 
-                    <!-- 2. Update Notice Ticker -->
+                    <!-- 2. View All Users & Their UIDs -->
+                    <div class="space-y-2">
+                        <h3 class="font-bold text-emerald-400 border-l-2 border-emerald-400 pl-2">রেজিস্টার্ড ইউজার ও UID লিস্ট:</h3>
+                        <div id="admin-users-list" class="space-y-2 bg-slate-950 p-3 rounded border border-slate-800 max-h-40 overflow-y-auto">
+                            <p class="text-slate-400">কোনো ইউজার নেই।</p>
+                        </div>
+                    </div>
+
+                    <!-- 3. Add New Product / Panel -->
+                    <div class="space-y-2 bg-slate-950 p-3 rounded border border-slate-800">
+                        <h3 class="font-bold text-yellow-400">নতুন প্যানেল / প্রোডাক্ট অ্যাড করুন:</h3>
+                        <input type="text" id="admin-prod-title" placeholder="প্রোডাক্টের নাম (যেমন: Free Fire Panel)" class="w-full bg-slate-900 border border-slate-800 rounded p-2 text-white mb-1.5">
+                        <input type="number" id="admin-prod-price" placeholder="মূল্য (যেমন: 350)" class="w-full bg-slate-900 border border-slate-800 rounded p-2 text-white mb-1.5">
+                        <select id="admin-prod-cat" class="w-full bg-slate-900 border border-slate-800 rounded p-2 text-white mb-1.5">
+                            <option value="NON ROOT">NON ROOT</option>
+                            <option value="ROOT">ROOT</option>
+                            <option value="IPHONE">IPHONE</option>
+                            <option value="PC">PC</option>
+                        </select>
+                        <button onclick="addNewProduct()" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-1.5 rounded">প্রোডাক্ট পাবলিশ করুন</button>
+                    </div>
+
+                    <!-- 4. Update Notice Ticker -->
                     <div class="space-y-2 bg-slate-950 p-3 rounded border border-slate-800">
                         <h3 class="font-bold text-yellow-400">ওয়েবসাইট নোটিশ পরিবর্তন করুন:</h3>
-                        <input type="text" id="admin-notice-input" placeholder="নতুন নোটিশ লিখুন..." class="w-full bg-slate-900 border border-slate-800 rounded p-2 text-white">
+                        <input type="text" id="admin-notice-input" placeholder="নতুন নোটিশ লিখুন..." class="w-full bg-slate-900 border border-slate-800 rounded p-2 text-white mb-1.5">
                         <button onclick="updateWebsiteNotice()" class="w-full bg-orange-600 hover:bg-orange-700 text-white font-bold py-1.5 rounded">নোটিশ আপডেট করুন</button>
                     </div>
 
-                    <!-- 3. Assign Panel Code to User -->
+                    <!-- 5. Update YouTube Video Link -->
+                    <div class="space-y-2 bg-slate-950 p-3 rounded border border-slate-800">
+                        <h3 class="font-bold text-red-400">ইউটিউব ভিডিও গাইড লিংক পরিবর্তন করুন:</h3>
+                        <input type="text" id="admin-yt-input" placeholder="ইউটিউব এমবেড লিংক (যেমন: https://www.youtube.com/embed/...)" class="w-full bg-slate-900 border border-slate-800 rounded p-2 text-white mb-1.5">
+                        <button onclick="updateYoutubeLink()" class="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-1.5 rounded">ভিডিও লিংক আপডেট করুন</button>
+                    </div>
+
+                    <!-- 6. Assign Panel Code to User -->
                     <div class="space-y-2 bg-slate-950 p-3 rounded border border-slate-800">
                         <h3 class="font-bold text-blue-400">ইউজারকে প্যানেল কোড প্রদান করুন:</h3>
-                        <input type="text" id="admin-code-uid" placeholder="ইউজারের UID দিন" class="w-full bg-slate-900 border border-slate-800 rounded p-2 text-white mb-1">
-                        <input type="text" id="admin-code-key" placeholder="প্যানেল লাইসেন্স কি বা কোড" class="w-full bg-slate-900 border border-slate-800 rounded p-2 text-white mb-1">
+                        <input type="text" id="admin-code-uid" placeholder="ইউজারের UID দিন" class="w-full bg-slate-900 border border-slate-800 rounded p-2 text-white mb-1.5">
+                        <input type="text" id="admin-code-key" placeholder="প্যানেল লাইসেন্স কি বা কোড" class="w-full bg-slate-900 border border-slate-800 rounded p-2 text-white mb-1.5">
                         <button onclick="sendCodeToUser()" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-1.5 rounded">কোড সেন্ড করুন</button>
                     </div>
                 </div>
@@ -271,13 +295,12 @@
         </button>
     </nav>
 
-    <!-- JavaScript & Firebase Logic -->
+    <!-- JavaScript & Firebase Logic (Part 1) -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-        import { getDatabase, ref, set, push, onValue, update } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+        import { getDatabase, ref, set, push, onValue, update, remove } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 
-        // আপনার সঠিক ও আসল ফায়ারবেজ কনফিগারেশন (সঠিক API Key সহ)
         const firebaseConfig = {
             apiKey: "AIzaSyCi-cuSz81umWbpl0ryfsUmT48jM-IP07o",
             authDomain: "lx-panel-store-debce.firebaseapp.com",
@@ -293,6 +316,7 @@
         const db = getDatabase(app);
 
         let currentUser = null;
+        let currentFilterCat = 'ALL';
 
         window.closeWelcomePopup = function() {
             document.getElementById('welcome-popup-modal').style.display = 'none';
@@ -329,7 +353,17 @@
             const pass = document.getElementById('reg-pass').value;
             if(!email || !pass) { alert('দয়া করে জিমেইল এবং পাসওয়ার্ড দিন'); return; }
             createUserWithEmailAndPassword(auth, email, pass)
-            .then(() => { alert('সফলভাবে অ্যাকাউন্ট তৈরি হয়েছে!'); window.switchTab('home'); })
+            .then((userCred) => {
+                const userRef = ref(db, 'users/' + userCred.user.uid);
+                set(userRef, {
+                    email: email,
+                    uid: userCred.user.uid,
+                    balance: 0,
+                    joined: new Date().toLocaleString()
+                });
+                alert('সফলভাবে অ্যাকাউন্ট তৈরি হয়েছে!');
+                window.switchTab('home');
+            })
             .catch((error) => { alert('ত্রুটি: ' + error.message); });
         };
 
@@ -348,17 +382,43 @@
 
         onAuthStateChanged(auth, (user) => {
             currentUser = user;
+            const authBtns = document.getElementById('header-auth-buttons');
             if (user) {
+                currentUser = user;
                 document.getElementById('auth-container').classList.add('hidden');
                 document.getElementById('user-profile-view').classList.remove('hidden');
                 document.getElementById('profile-email').innerText = user.email;
+                document.getElementById('profile-uid').innerText = user.uid;
+                
+                authBtns.innerHTML = `
+                    <button onclick="toggleAdminModal()" class="text-slate-400 hover:text-blue-400 transition p-2" title="Admin Login">
+                        <i class="fa-solid fa-key text-yellow-400"></i>
+                    </button>
+                    <span class="text-xs text-emerald-400 font-bold bg-slate-800 px-2.5 py-1 rounded border border-slate-700">Online</span>
+                `;
+
                 loadUserData(user.uid);
+                const userRef = ref(db, 'users/' + user.uid);
+                onValue(userRef, (snap) => {
+                    if(!snap.exists()) {
+                        set(userRef, { email: user.email, uid: user.uid, balance: 0 });
+                    }
+                }, { onlyOnce: true });
+
             } else {
+                currentUser = null;
                 document.getElementById('auth-container').classList.remove('hidden');
                 document.getElementById('user-profile-view').classList.add('hidden');
+                
+                authBtns.innerHTML = `
+                    <button onclick="toggleAdminModal()" class="text-slate-400 hover:text-blue-400 transition p-2" title="Admin Login">
+                        <i class="fa-solid fa-key text-yellow-400"></i>
+                    </button>
+                    <button onclick="switchTab('account')" class="bg-red-600 hover:bg-red-700 text-white text-xs font-bold px-3 py-1.5 rounded transition">LOGIN</button>
+                    <button onclick="switchTab('account')" class="bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-bold px-3 py-1.5 rounded border border-slate-700 transition">REGISTER</button>
+                `;
             }
         });
-
         window.submitDeposit = function() {
             if(!currentUser) {
                 alert('টাকা অ্যাড করতে হলে প্রথমে লগইন করতে হবে!');
@@ -395,7 +455,6 @@
         };
 
         function loadUserData(uid) {
-            // Load Deposits / Orders
             const depositsRef = ref(db, 'deposits');
             onValue(depositsRef, (snapshot) => {
                 const data = snapshot.val();
@@ -403,7 +462,7 @@
                 if(data) {
                     Object.values(data).forEach(item => {
                         if(item.uid === uid) {
-                            let badgeColor = item.status === 'Approved' ? 'text-emerald-400' : 'text-yellow-400';
+                            let badgeColor = item.status === 'Approved' ? 'text-emerald-400' : (item.status === 'Rejected' ? 'text-red-500' : 'text-yellow-400');
                             html += `<div class="bg-slate-950 p-2.5 rounded border border-slate-800 flex justify-between items-center">
                                 <div>
                                     <p class="text-white font-bold">টাকা: ৳${item.amount} (${item.method.toUpperCase()})</p>
@@ -417,7 +476,6 @@
                 document.getElementById('my-orders-list').innerHTML = html || '<p class="text-slate-400 text-center py-4">কোনো পেমেন্ট হিস্ট্রি নেই।</p>';
             });
 
-            // Load User Panel Codes
             const codesRef = ref(db, 'userCodes/' + uid);
             onValue(codesRef, (snapshot) => {
                 const codeData = snapshot.val();
@@ -433,7 +491,6 @@
                 document.getElementById('my-panel-codes-list').innerHTML = codeHtml || '<p class="text-slate-400 py-4">কোনো কোড পাওয়া যায়নি!</p>';
             });
 
-            // Load User Balance
             const userBalRef = ref(db, 'users/' + uid + '/balance');
             onValue(userBalRef, (snapshot) => {
                 const bal = snapshot.val() || 0;
@@ -441,12 +498,60 @@
             });
         }
 
-        // Admin Dashboard Logic & Extra Options
+        const productsRef = ref(db, 'products');
+        onValue(productsRef, (snapshot) => {
+            const data = snapshot.val();
+            let html = '';
+            if(data) {
+                Object.entries(data).forEach(([id, prod]) => {
+                    if(currentFilterCat === 'ALL' || prod.category === currentFilterCat) {
+                        html += `<div class="bg-slate-900 border border-slate-800 rounded-xl p-3 space-y-2 text-xs">
+                            <div class="bg-slate-950 aspect-video rounded flex items-center justify-center font-orbitron text-blue-400 font-bold">${prod.category}</div>
+                            <p class="font-bold text-white">${prod.title}</p>
+                            <p class="text-yellow-400 font-bold">৳${prod.price} / Month</p>
+                            <button onclick="buyProduct('${prod.title}', ${prod.price})" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-1.5 rounded">কিনুন</button>
+                        </div>`;
+                    }
+                });
+            }
+            document.getElementById('products-grid').innerHTML = html || '<p class="text-slate-400 col-span-2 text-center py-4">এই ক্যাটাগরিতে কোনো প্যানেল নেই।</p>';
+        });
+
+        window.buyProduct = function(title, price) {
+            if(!currentUser) {
+                alert('অর্ডার করতে প্রথমে লগইন করুন!');
+                window.switchTab('account');
+                return;
+            }
+            const userBalRef = ref(db, 'users/' + currentUser.uid + '/balance');
+            onValue(userBalRef, (snap) => {
+                const bal = snap.val() || 0;
+                if(bal < price) {
+                    alert(`আপনার পর্যাপ্ত ব্যালেন্স নেই! প্যানেলটির মূল্য ৳${price}, আপনার ব্যালেন্সে আছে ৳${bal}। দয়া করে Add Fund থেকে টাকা অ্যাড করুন।`);
+                    window.switchTab('addfund');
+                } else {
+                    if(confirm(`${title} প্যানেলটি কিনতে চান? আপনার একাউন্ট থেকে ৳${price} কাটা হবে।`)) {
+                        set(userBalRef, bal - price);
+                        const orderRef = push(ref(db, 'orders/' + currentUser.uid));
+                        set(orderRef, {
+                            title: title,
+                            price: price,
+                            date: new Date().toLocaleString(),
+                            status: 'Completed'
+                        });
+                        alert('সফলভাবে প্যানেলটি অর্ডার করা হয়েছে! অ্যাডমিন চেক করে আপনার কোড পাঠিয়ে দেবেন।');
+                        window.switchTab('orders');
+                    }
+                }
+            }, { onlyOnce: true });
+        };
+
         window.toggleAdminModal = function() {
             const pass = prompt('অ্যাডমিন পাসওয়ার্ড দিন:');
             if(pass === '@lxshakilyt72') {
                 document.getElementById('admin-dashboard-modal').classList.remove('hidden');
                 loadAdminDeposits();
+                loadAdminUsers();
             } else if(pass !== null) {
                 alert('ভুল পাসওয়ার্ড!');
             }
@@ -469,7 +574,10 @@
                                     <p class="text-white"><b>${item.email}</b> - ৳${item.amount}</p>
                                     <p class="text-[10px] text-yellow-400">TrxID: ${item.trxID} (${item.method})</p>
                                 </div>
-                                <button onclick="approveDeposit('${key}', '${item.uid}', ${item.amount})" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-3 py-1 rounded text-[10px]">Approve</button>
+                                <div class="flex space-x-1">
+                                    <button onclick="approveDeposit('${key}', '${item.uid}', ${item.amount})" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-2 py-1 rounded text-[10px]">Approve</button>
+                                    <button onclick="rejectDeposit('${key}')" class="bg-red-600 hover:bg-red-700 text-white font-bold px-2 py-1 rounded text-[10px]">Reject</button>
+                                </div>
                             </div>`;
                         }
                     });
@@ -481,13 +589,56 @@
         window.approveDeposit = function(key, uid, amount) {
             const updateRef = ref(db, 'deposits/' + key);
             update(updateRef, { status: 'Approved' }).then(() => {
-                const userBalRef = ref(db, 'users/' + uid);
+                const userBalRef = ref(db, 'users/' + uid + '/balance');
                 onValue(userBalRef, (snap) => {
-                    let currentBal = snap.val() ? (snap.val().balance || 0) : 0;
-                    update(userBalRef, { balance: currentBal + amount });
+                    let currentBal = snap.val() || 0;
+                    set(userBalRef, currentBal + amount);
                 }, { onlyOnce: true });
-
                 alert('পেমেন্ট অ্যাপ্রুভ হয়েছে এবং ইউজারের ব্যালেন্সে টাকা যোগ করা হয়েছে!');
+            });
+        };
+
+        window.rejectDeposit = function(key) {
+            const updateRef = ref(db, 'deposits/' + key);
+            update(updateRef, { status: 'Rejected' }).then(() => {
+                alert('পেমেন্ট রিকোয়েস্ট রিজেক্ট করা হয়েছে!');
+            });
+        };
+
+        function loadAdminUsers() {
+            const usersRef = ref(db, 'users');
+            onValue(usersRef, (snapshot) => {
+                const data = snapshot.val();
+                let html = '';
+                if(data) {
+                    Object.entries(data).forEach(([uid, u]) => {
+                        html += `<div class="bg-slate-900 p-2 rounded border border-slate-800 text-[11px]">
+                            <p class="text-white font-bold">Email: ${u.email}</p>
+                            <p class="text-blue-400 font-mono select-all">UID: ${uid}</p>
+                            <p class="text-yellow-400">Balance: ৳${u.balance || 0}</p>
+                        </div>`;
+                    });
+                }
+                document.getElementById('admin-users-list').innerHTML = html || '<p class="text-slate-400">কোনো ইউজার নেই।</p>';
+            });
+        }
+
+        window.addNewProduct = function() {
+            const title = document.getElementById('admin-prod-title').value.trim();
+            const price = document.getElementById('admin-prod-price').value.trim();
+            const category = document.getElementById('admin-prod-cat').value;
+
+            if(!title || !price) { alert('প্রোডাক্টের নাম এবং মূল্য দিন!'); return; }
+
+            const prodRef = push(ref(db, 'products'));
+            set(prodRef, {
+                title: title,
+                price: Number(price),
+                category: category
+            }).then(() => {
+                alert('নতুন প্রোডাক্ট সফলভাবে অ্যাড করা হয়েছে!');
+                document.getElementById('admin-prod-title').value = '';
+                document.getElementById('admin-prod-price').value = '';
             });
         };
 
@@ -495,16 +646,31 @@
             const newNotice = document.getElementById('admin-notice-input').value;
             if(!newNotice) { alert('নোটিশ লিখুন'); return; }
             const noticeRef = ref(db, 'settings');
-            set(noticeRef, { notice: newNotice }).then(() => {
+            update(noticeRef, { notice: newNotice }).then(() => {
                 alert('ওয়েবসাইট নোটিশ সফলভাবে আপডেট হয়েছে!');
                 document.getElementById('admin-notice-input').value = '';
             });
         };
 
+        window.updateYoutubeLink = function() {
+            const ytLink = document.getElementById('admin-yt-input').value.trim();
+            if(!ytLink) { alert('ইউটিউব এমবেড লিংক দিন'); return; }
+            const ytRef = ref(db, 'settings');
+            update(ytRef, { youtubeLink: ytLink }).then(() => {
+                alert('ইউটিউব ভিডিও লিংক আপডেট হয়েছে!');
+                document.getElementById('admin-yt-input').value = '';
+            });
+        };
+
         onValue(ref(db, 'settings'), (snapshot) => {
             const s = snapshot.val();
-            if(s && s.notice) {
-                document.getElementById('marquee-notice').innerText = s.notice;
+            if(s) {
+                if(s.notice) {
+                    document.getElementById('marquee-notice').innerText = s.notice;
+                }
+                if(s.youtubeLink) {
+                    document.getElementById('home-yt-video').src = s.youtubeLink;
+                }
             }
         });
 
@@ -525,11 +691,31 @@
         };
 
         window.filterCategory = function(cat, e) {
+            currentFilterCat = cat;
             document.querySelectorAll('.cat-btn').forEach(b => {
                 b.className = "cat-btn bg-slate-800 text-slate-300 hover:bg-slate-700 px-4 py-1.5 rounded-full text-xs font-bold whitespace-nowrap";
             });
             e.target.className = "cat-btn active bg-blue-600 text-white px-4 py-1.5 rounded-full text-xs font-bold shadow-md whitespace-nowrap";
-            document.getElementById('current-cat-title').innerText = cat;
+            document.getElementById('current-cat-title').innerText = cat === 'ALL' ? 'Available Panels' : cat + ' Panels';
+            
+            const productsRef = ref(db, 'products');
+            onValue(productsRef, (snapshot) => {
+                const data = snapshot.val();
+                let html = '';
+                if(data) {
+                    Object.entries(data).forEach(([id, prod]) => {
+                        if(currentFilterCat === 'ALL' || prod.category === currentFilterCat) {
+                            html += `<div class="bg-slate-900 border border-slate-800 rounded-xl p-3 space-y-2 text-xs">
+                                <div class="bg-slate-950 aspect-video rounded flex items-center justify-center font-orbitron text-blue-400 font-bold">${prod.category}</div>
+                                <p class="font-bold text-white">${prod.title}</p>
+                                <p class="text-yellow-400 font-bold">৳${prod.price} / Month</p>
+                                <button onclick="buyProduct('${prod.title}', ${prod.price})" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-1.5 rounded">কিনুন</button>
+                            </div>`;
+                        }
+                    });
+                }
+                document.getElementById('products-grid').innerHTML = html || '<p class="text-slate-400 col-span-2 text-center py-4">এই ক্যাটাগরিতে কোনো প্যানেল নেই।</p>';
+            }, { onlyOnce: true });
         };
     </script>
 </body>
