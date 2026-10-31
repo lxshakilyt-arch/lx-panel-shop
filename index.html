@@ -70,7 +70,7 @@
             <!-- Products Grid -->
             <div id="products-grid" class="grid grid-cols-2 gap-3"></div>
 
-            <!-- Support Desk Section (Both Admins with Exact Info) -->
+            <!-- Support Desk Section -->
             <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 space-y-4 mt-6">
                 <h3 class="text-sm font-bold text-blue-400 border-b border-slate-800 pb-2 flex items-center justify-between">
                     <span><i class="fa-solid fa-headset mr-2"></i>হেল্পডেস্ক ও সোশ্যাল মিডিয়া</span>
@@ -103,8 +103,8 @@
                     </div>
                 </div>
             </div>
-    </div>
-    <!-- TUTORIAL TAB -->
+                    </div>
+                    <!-- TUTORIAL TAB -->
         <div id="tab-tutorial" class="tab-content hidden space-y-4">
             <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 space-y-3">
                 <h2 class="text-lg font-bold text-blue-400 border-b border-slate-800 pb-2">গাইড ও টিউটোরিয়াল ভিডিও</h2>
@@ -124,7 +124,6 @@
                     <input type="text" id="track-input" placeholder="ফোন নম্বর / TrxID লিখুন" class="w-full bg-slate-950 border border-slate-800 rounded-lg p-3 text-xs text-white focus:outline-none focus:border-blue-500">
                     <button onclick="trackOrder()" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2.5 rounded-lg text-xs transition">অর্ডার খুঁজুন</button>
                 </div>
-                <!-- Multiple Orders List Container -->
                 <div id="track-result" class="space-y-2"></div>
             </div>
         </div>
@@ -201,7 +200,7 @@
                 <button onclick="toggleAdminModal()" class="text-slate-400 hover:text-white"><i class="fa-solid fa-xmark"></i></button>
             </div>
 
-            <!-- Admin Passcode View (Password Hidden) -->
+            <!-- Admin Passcode View -->
             <div id="admin-auth-view" class="space-y-3 text-xs">
                 <p class="text-slate-400">অ্যাডমিন পাসকোড দিন:</p>
                 <input type="password" id="admin-passcode" placeholder="পাসকোড লিখুন" class="w-full bg-slate-950 border border-slate-800 rounded-lg p-2.5 text-white">
@@ -253,9 +252,27 @@
                 </div>
             </div>
         </div>
-    </div>
+        <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-database-compat.js"></script>
+
     <!-- SCRIPT SECTION -->
     <script>
+        // Firebase Configuration for Lx-Panel-Store
+        const firebaseConfig = {
+            apiKey: "AIzaSyCi-cuSz81umWS6WqEaO_sR4jX8aQ", 
+            authDomain: "lx-panel-store-debce.firebaseapp.com",
+            databaseURL: "https://lx-panel-store-debce-default-rtdb.firebaseio.com",
+            projectId: "lx-panel-store-debce",
+            storageBucket: "lx-panel-store-debce.appspot.com",
+            messagingSenderId: "618694919729",
+            appId: "1:618694919729:web:0129a146b95562187db710"
+        };
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.database();
+
         let currentProduct = '';
         let currentPrice = 0;
         let currentFilterCat = 'ALL';
@@ -267,9 +284,46 @@
             { id: 4, title: 'AIMBOT EXE PC BYPASS', cat: 'PC', price: 1200, img: 'https://images.unsplash.com/photo-1538481199705-c710c4e965fc?auto=format&fit=crop&w=400&q=80', status: 'MAINTENANCE' }
         ];
 
-        function getNotice() {
-            const saved = localStorage.getItem('lx_site_notice');
-            return saved ? saved : '🔥 LX PANEL SHOP এ আপনাকে স্বাগতম! ১০০% সেফ এবং এন্টি-ব্যান প্যানেল পান সাশ্রয়ী মূল্যে।';
+        let cachedProducts = defaultProducts;
+        let cachedOrders = [];
+        let cachedNotice = '🔥 LX PANEL SHOP এ আপনাকে স্বাগতম! ১০০% সেফ এবং এন্টি-ব্যান প্যানেল পান সাশ্রয়ী মূল্যে।';
+
+        // Realtime Listeners
+        function initFirebaseListeners() {
+            // Notice Listener
+            db.ref('notice').on('value', (snapshot) => {
+                const val = snapshot.val();
+                if (val) {
+                    cachedNotice = val;
+                } else {
+                    db.ref('notice').set(cachedNotice);
+                }
+                loadNotice();
+            });
+
+            // Products Listener
+            db.ref('products').on('value', (snapshot) => {
+                const val = snapshot.val();
+                if (val) {
+                    cachedProducts = Array.isArray(val) ? val : Object.values(val);
+                } else {
+                    db.ref('products').set(defaultProducts);
+                    cachedProducts = defaultProducts;
+                }
+                renderProducts();
+                renderAdminProducts();
+            });
+
+            // Orders Listener
+            db.ref('orders').on('value', (snapshot) => {
+                const val = snapshot.val();
+                if (val) {
+                    cachedOrders = Array.isArray(val) ? val : Object.values(val);
+                } else {
+                    cachedOrders = [];
+                }
+                renderAdminOrders();
+            });
         }
 
         function updateNotice() {
@@ -278,48 +332,25 @@
                 alert('দয়া করে কিছু লিখে তারপর আপডেট করুন!');
                 return;
             }
-            localStorage.setItem('lx_site_notice', noticeInput);
-            loadNotice();
-            alert('নোটিশ সফলভাবে আপডেট করা হয়েছে!');
+            db.ref('notice').set(noticeInput).then(() => {
+                alert('নোটিশ সফলভাবে ফায়ারবেজে আপডেট করা হয়েছে!');
+            });
         }
 
         function loadNotice() {
-            const noticeText = getNotice();
             const displayEl = document.getElementById('display-notice');
-            if(displayEl) displayEl.innerText = noticeText;
+            if(displayEl) displayEl.innerText = cachedNotice;
             const inputEl = document.getElementById('admin-notice-input');
-            if(inputEl) inputEl.value = noticeText;
-        }
-
-        function getProducts() {
-            const saved = localStorage.getItem('lx_global_products');
-            return saved ? JSON.parse(saved) : defaultProducts;
-        }
-
-        function saveProducts(products) {
-            localStorage.setItem('lx_global_products', JSON.stringify(products));
-            renderProducts();
-            renderAdminProducts();
-        }
-
-        function getOrders() {
-            const saved = localStorage.getItem('lx_customer_orders');
-            return saved ? JSON.parse(saved) : [];
-        }
-
-        function saveOrders(orders) {
-            localStorage.setItem('lx_customer_orders', JSON.stringify(orders));
-            renderAdminOrders();
+            if(inputEl) inputEl.value = cachedNotice;
         }
 
         function renderProducts() {
-            const products = getProducts();
             const grid = document.getElementById('products-grid');
             if(!grid) return;
             grid.innerHTML = '';
 
             let count = 0;
-            products.forEach(p => {
+            cachedProducts.forEach(p => {
                 if (currentFilterCat === 'ALL' || p.cat === currentFilterCat) {
                     count++;
                     const isOnline = p.status === 'ONLINE';
@@ -404,7 +435,6 @@
                 return;
             }
 
-            const orders = getOrders();
             const newOrder = {
                 id: Date.now(),
                 product: currentProduct,
@@ -416,14 +446,14 @@
                 status: 'Pending'
             };
 
-            orders.unshift(newOrder);
-            saveOrders(orders);
-
-            alert(`আপনার অর্ডার সফলভাবে সাবমিট হয়েছে!\nTrxID: ${trx}\nএডমিন পেমেন্ট চেক করে দ্রুত অ্যাপ্রুভ করবে।`);
-            closeOrderModal();
-            document.getElementById('order-gmail').value = '';
-            document.getElementById('order-phone').value = '';
-            document.getElementById('order-trx').value = '';
+            cachedOrders.unshift(newOrder);
+            db.ref('orders').set(cachedOrders).then(() => {
+                alert(`আপনার অর্ডার সফলভাবে সাবমিট হয়েছে!\nTrxID: ${trx}\nএডমিন পেমেন্ট চেক করে দ্রুত অ্যাপ্রুভ করবে।`);
+                closeOrderModal();
+                document.getElementById('order-gmail').value = '';
+                document.getElementById('order-phone').value = '';
+                document.getElementById('order-trx').value = '';
+            });
         }
 
         function trackOrder() {
@@ -433,8 +463,7 @@
                 alert('দয়া করে আপনার ফোন নম্বর বা TrxID দিন');
                 return;
             }
-            const orders = getOrders();
-            const foundOrders = orders.filter(o => o.phone === val || o.trx === val);
+            const foundOrders = cachedOrders.filter(o => o.phone === val || o.trx === val);
 
             if(res) {
                 res.innerHTML = '';
@@ -478,20 +507,19 @@
         }
 
         function renderAdminOrders() {
-            const orders = getOrders();
             const list = document.getElementById('admin-orders-list');
             const badge = document.getElementById('order-count-badge');
             if(!list) return;
 
             list.innerHTML = '';
-            if(badge) badge.innerText = `${orders.length} Orders`;
+            if(badge) badge.innerText = `${cachedOrders.length} Orders`;
 
-            if(orders.length === 0) {
+            if(cachedOrders.length === 0) {
                 list.innerHTML = `<p class="text-slate-500 text-center py-2">কোনো নতুন অর্ডার নেই</p>`;
                 return;
             }
 
-            orders.forEach(o => {
+            cachedOrders.forEach(o => {
                 const item = document.createElement('div');
                 item.className = "bg-slate-900 p-2.5 rounded border border-slate-800 space-y-1 text-xs";
                 item.innerHTML = `
@@ -514,30 +542,28 @@
         }
 
         function approveOrder(id) {
-            let orders = getOrders();
-            orders = orders.map(o => {
+            cachedOrders = cachedOrders.map(o => {
                 if(o.id === id) o.status = 'Approved';
                 return o;
             });
-            saveOrders(orders);
-            alert('অর্ডারটি সফলভাবে অ্যাপ্রুভ করা হয়েছে!');
+            db.ref('orders').set(cachedOrders).then(() => {
+                alert('অর্ডারটি সফলভাবে অ্যাপ্রুভ করা হয়েছে!');
+            });
         }
 
         function deleteOrder(id) {
             if(confirm('এই অর্ডারটি ডিলিট করতে চান?')) {
-                let orders = getOrders();
-                orders = orders.filter(o => o.id !== id);
-                saveOrders(orders);
+                cachedOrders = cachedOrders.filter(o => o.id !== id);
+                db.ref('orders').set(cachedOrders);
             }
         }
 
         function renderAdminProducts() {
-            const products = getProducts();
             const list = document.getElementById('admin-product-list');
             if(!list) return;
             list.innerHTML = '';
 
-            products.forEach(p => {
+            cachedProducts.forEach(p => {
                 const item = document.createElement('div');
                 item.className = "bg-slate-900 p-2.5 rounded border border-slate-800 flex items-center justify-between";
                 item.innerHTML = `
@@ -573,28 +599,27 @@
                 return;
             }
 
-            const products = getProducts();
-            products.unshift({ id: Date.now(), title, cat, price: Number(price), img, status });
-            saveProducts(products);
-
-            titleEl.value = '';
-            priceEl.value = '';
-            imgEl.value = '';
-            alert('প্রোডাক্ট সফলভাবে যোগ করা হয়েছে!');
+            const newProd = { id: Date.now(), title, cat, price: Number(price), img, status };
+            cachedProducts.unshift(newProd);
+            db.ref('products').set(cachedProducts).then(() => {
+                titleEl.value = '';
+                priceEl.value = '';
+                imgEl.value = '';
+                alert('প্রোডাক্ট সফলভাবে ফায়ারবেজে যোগ করা হয়েছে!');
+            });
         }
 
         function deleteProduct(id) {
             if (confirm('প্রোডাক্ট ডিলিট করতে চান?')) {
-                let products = getProducts();
-                products = products.filter(p => p.id !== id);
-                saveProducts(products);
+                cachedProducts = cachedProducts.filter(p => p.id !== id);
+                db.ref('products').set(cachedProducts);
             }
         }
 
         document.addEventListener('DOMContentLoaded', () => {
-            renderProducts();
-            loadNotice();
+            initFirebaseListeners();
         });
     </script>
 </body>
 </html>
+                                                                                                                                                                                                                     </div>
