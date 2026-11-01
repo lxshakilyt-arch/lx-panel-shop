@@ -427,10 +427,11 @@
             }
             const method = document.getElementById('pay-method').value;
             const amount = document.getElementById('pay-amount').value;
+            const senderNo = document.getElementById('pay-sender').value.trim();
             const trxID = document.getElementById('pay-trx').value.trim();
 
-            if(!amount || amount < 50 || !trxID) {
-                alert('সঠিক পরিমাণ এবং ট্রানজেকশন আইডি (TrxID) দিন!');
+            if(!amount || amount < 50 || !senderNo || !trxID) {
+                alert('সকল তথ্য (পরিমাণ, প্রেরক নম্বর ও TrxID) সঠিকভাবে পূরণ করুন!');
                 return;
             }
 
@@ -441,12 +442,14 @@
                 email: currentUser.email,
                 method: method,
                 amount: Number(amount),
+                senderNo: senderNo,
                 trxID: trxID,
                 status: 'Pending',
                 date: new Date().toLocaleString()
             }).then(() => {
                 alert('পেমেন্ট রিকোয়েস্ট সফলভাবে জমা হয়েছে! অ্যাডমিন চেক করে ব্যালেন্স অ্যাড করে দেবেন।');
                 document.getElementById('pay-amount').value = '';
+                document.getElementById('pay-sender').value = '';
                 document.getElementById('pay-trx').value = '';
                 window.switchTab('orders');
             }).catch((err) => {
@@ -466,7 +469,8 @@
                             html += `<div class="bg-slate-950 p-2.5 rounded border border-slate-800 flex justify-between items-center">
                                 <div>
                                     <p class="text-white font-bold">টাকা: ৳${item.amount} (${item.method.toUpperCase()})</p>
-                                    <p class="text-[10px] text-slate-400">TrxID: ${item.trxID} | Date: ${item.date}</p>
+                                    <p class="text-[10px] text-slate-400">Sender: ${item.senderNo} | TrxID: ${item.trxID}</p>
+                                    <p class="text-[9px] text-slate-500">${item.date}</p>
                                 </div>
                                 <span class="font-bold ${badgeColor}">${item.status}</span>
                             </div>`;
@@ -502,11 +506,21 @@
         onValue(productsRef, (snapshot) => {
             const data = snapshot.val();
             let html = '';
+            let totalCount = 0;
+            let onlineCount = 0;
+            let offlineCount = 0;
+
             if(data) {
                 Object.entries(data).forEach(([id, prod]) => {
-                    if(currentFilterCat === 'ALL' || prod.category === currentFilterCat) {
+                    totalCount++;
+                    if(prod.status === 'Online') onlineCount++;
+                    else offlineCount++;
+
+                    if((currentFilterCat === 'ALL' || prod.category === currentFilterCat) && prod.status === 'Online') {
+                        let imgContent = prod.imageUrl ? `<img src="${prod.imageUrl}" class="w-full h-full object-cover rounded">` : `<span class="font-orbitron text-blue-400 font-bold">${prod.category}</span>`;
+                        
                         html += `<div class="bg-slate-900 border border-slate-800 rounded-xl p-3 space-y-2 text-xs">
-                            <div class="bg-slate-950 aspect-video rounded flex items-center justify-center font-orbitron text-blue-400 font-bold">${prod.category}</div>
+                            <div class="bg-slate-950 aspect-video rounded overflow-hidden flex items-center justify-center">${imgContent}</div>
                             <p class="font-bold text-white">${prod.title}</p>
                             <p class="text-yellow-400 font-bold">৳${prod.price} / Month</p>
                             <button onclick="buyProduct('${prod.title}', ${prod.price})" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-1.5 rounded">কিনুন</button>
@@ -514,7 +528,11 @@
                     }
                 });
             }
-            document.getElementById('products-grid').innerHTML = html || '<p class="text-slate-400 col-span-2 text-center py-4">এই ক্যাটাগরিতে কোনো প্যানেল নেই।</p>';
+            document.getElementById('products-grid').innerHTML = html || '<p class="text-slate-400 col-span-2 text-center py-4">এই ক্যাটাগরিতে কোনো অনলাইন প্যানেল নেই।</p>';
+            
+            if(document.getElementById('stat-total')) document.getElementById('stat-total').innerText = totalCount;
+            if(document.getElementById('stat-online')) document.getElementById('stat-online').innerText = onlineCount;
+            if(document.getElementById('stat-offline')) document.getElementById('stat-offline').innerText = offlineCount;
         });
 
         window.buyProduct = function(title, price) {
@@ -532,6 +550,7 @@
                 } else {
                     if(confirm(`${title} প্যানেলটি কিনতে চান? আপনার একাউন্ট থেকে ৳${price} কাটা হবে।`)) {
                         set(userBalRef, bal - price);
+                        
                         const orderRef = push(ref(db, 'orders/' + currentUser.uid));
                         set(orderRef, {
                             title: title,
@@ -539,19 +558,31 @@
                             date: new Date().toLocaleString(),
                             status: 'Completed'
                         });
+
+                        const globalOrderRef = push(ref(db, 'globalOrders'));
+                        set(globalOrderRef, {
+                            email: currentUser.email,
+                            uid: currentUser.uid,
+                            title: title,
+                            price: price,
+                            date: new Date().toLocaleString(),
+                            status: 'Pending'
+                        });
+
                         alert('সফলভাবে প্যানেলটি অর্ডার করা হয়েছে! অ্যাডমিন চেক করে আপনার কোড পাঠিয়ে দেবেন।');
                         window.switchTab('orders');
                     }
                 }
             }, { onlyOnce: true });
         };
-
         window.toggleAdminModal = function() {
             const pass = prompt('অ্যাডমিন পাসওয়ার্ড দিন:');
             if(pass === '@lxshakilyt72') {
                 document.getElementById('admin-dashboard-modal').classList.remove('hidden');
                 loadAdminDeposits();
+                loadAdminGlobalOrders();
                 loadAdminUsers();
+                loadAdminManageProducts();
             } else if(pass !== null) {
                 alert('ভুল পাসওয়ার্ড!');
             }
@@ -572,7 +603,7 @@
                             html += `<div class="bg-slate-900 p-2.5 rounded border border-slate-800 flex justify-between items-center">
                                 <div>
                                     <p class="text-white"><b>${item.email}</b> - ৳${item.amount}</p>
-                                    <p class="text-[10px] text-yellow-400">TrxID: ${item.trxID} (${item.method})</p>
+                                    <p class="text-[10px] text-yellow-400">Sender: ${item.senderNo} | TrxID: ${item.trxID} (${item.method})</p>
                                 </div>
                                 <div class="flex space-x-1">
                                     <button onclick="approveDeposit('${key}', '${item.uid}', ${item.amount})" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-2 py-1 rounded text-[10px]">Approve</button>
@@ -605,6 +636,27 @@
             });
         };
 
+        function loadAdminGlobalOrders() {
+            const gOrderRef = ref(db, 'globalOrders');
+            onValue(gOrderRef, (snapshot) => {
+                const data = snapshot.val();
+                let html = '';
+                if(data) {
+                    Object.entries(data).forEach(([key, order]) => {
+                        html += `<div class="bg-slate-900 p-2.5 rounded border border-slate-800 flex justify-between items-center text-[11px]">
+                            <div>
+                                <p class="text-white font-bold">${order.email} - <span class="text-yellow-400">${order.title}</span> (৳${order.price})</p>
+                                <p class="text-blue-400 font-mono">UID: ${order.uid}</p>
+                                <p class="text-[9px] text-slate-400">${order.date}</p>
+                            </div>
+                            <span class="text-emerald-400 font-bold">Ordered</span>
+                        </div>`;
+                    });
+                }
+                document.getElementById('admin-orders-list').innerHTML = html || '<p class="text-slate-400">কোনো নতুন অর্ডার নেই।</p>';
+            });
+        }
+
         function loadAdminUsers() {
             const usersRef = ref(db, 'users');
             onValue(usersRef, (snapshot) => {
@@ -627,6 +679,8 @@
             const title = document.getElementById('admin-prod-title').value.trim();
             const price = document.getElementById('admin-prod-price').value.trim();
             const category = document.getElementById('admin-prod-cat').value;
+            const imageUrl = document.getElementById('admin-prod-img').value.trim();
+            const status = document.getElementById('admin-prod-status').value;
 
             if(!title || !price) { alert('প্রোডাক্টের নাম এবং মূল্য দিন!'); return; }
 
@@ -634,30 +688,66 @@
             set(prodRef, {
                 title: title,
                 price: Number(price),
-                category: category
+                category: category,
+                imageUrl: imageUrl,
+                status: status
             }).then(() => {
                 alert('নতুন প্রোডাক্ট সফলভাবে অ্যাড করা হয়েছে!');
                 document.getElementById('admin-prod-title').value = '';
                 document.getElementById('admin-prod-price').value = '';
+                document.getElementById('admin-prod-img').value = '';
             });
+        };
+
+        function loadAdminManageProducts() {
+            onValue(ref(db, 'products'), (snapshot) => {
+                const data = snapshot.val();
+                let html = '';
+                if(data) {
+                    Object.entries(data).forEach(([id, prod]) => {
+                        html += `<div class="bg-slate-900 p-2 rounded border border-slate-800 flex justify-between items-center text-[11px]">
+                            <div>
+                                <p class="text-white font-bold">${prod.title} - ৳${prod.price} (${prod.status})</p>
+                                <p class="text-slate-400">Category: ${prod.category}</p>
+                            </div>
+                            <button onclick="deleteProduct('${id}')" class="bg-red-600 text-white px-2 py-1 rounded text-[10px]">Delete</button>
+                        </div>`;
+                    });
+                }
+                document.getElementById('admin-manage-products').innerHTML = html || '<p class="text-slate-400">কোনো প্রোডাক্ট নেই।</p>';
+            });
+        }
+
+        window.deleteProduct = function(id) {
+            if(confirm('প্রোডাক্টটি ডিলিট করতে চান?')) {
+                remove(ref(db, 'products/' + id)).then(() => alert('প্রোডাক্ট ডিলিট করা হয়েছে!'));
+            }
         };
 
         window.updateWebsiteNotice = function() {
             const newNotice = document.getElementById('admin-notice-input').value;
             if(!newNotice) { alert('নোটিশ লিখুন'); return; }
-            const noticeRef = ref(db, 'settings');
-            update(noticeRef, { notice: newNotice }).then(() => {
+            update(ref(db, 'settings'), { notice: newNotice }).then(() => {
                 alert('ওয়েবসাইট নোটিশ সফলভাবে আপডেট হয়েছে!');
                 document.getElementById('admin-notice-input').value = '';
             });
         };
 
         window.updateYoutubeLink = function() {
-            const ytLink = document.getElementById('admin-yt-input').value.trim();
-            if(!ytLink) { alert('ইউটিউব এমবেড লিংক দিন'); return; }
-            const ytRef = ref(db, 'settings');
-            update(ytRef, { youtubeLink: ytLink }).then(() => {
-                alert('ইউটিউব ভিডিও লিংক আপডেট হয়েছে!');
+            let inputVal = document.getElementById('admin-yt-input').value.trim();
+            if(!inputVal) { alert('ইউটিউব লিংক দিন'); return; }
+
+            let embedUrl = inputVal;
+            if(inputVal.includes('watch?v=')) {
+                const videoId = inputVal.split('watch?v=')[1].split('&')[0];
+                embedUrl = `https://www.youtube.com/embed/${videoId}`;
+            } else if(inputVal.includes('youtu.be/')) {
+                const videoId = inputVal.split('youtu.be/')[1].split('?')[0];
+                embedUrl = `https://www.youtube.com/embed/${videoId}`;
+            }
+
+            update(ref(db, 'settings'), { youtubeLink: embedUrl }).then(() => {
+                alert('ইউটিউব ভিডিও লিংক সফলভাবে আপডেট ও ফিক্স করা হয়েছে!');
                 document.getElementById('admin-yt-input').value = '';
             });
         };
@@ -698,15 +788,15 @@
             e.target.className = "cat-btn active bg-blue-600 text-white px-4 py-1.5 rounded-full text-xs font-bold shadow-md whitespace-nowrap";
             document.getElementById('current-cat-title').innerText = cat === 'ALL' ? 'Available Panels' : cat + ' Panels';
             
-            const productsRef = ref(db, 'products');
-            onValue(productsRef, (snapshot) => {
+            onValue(ref(db, 'products'), (snapshot) => {
                 const data = snapshot.val();
                 let html = '';
                 if(data) {
                     Object.entries(data).forEach(([id, prod]) => {
-                        if(currentFilterCat === 'ALL' || prod.category === currentFilterCat) {
+                        if((currentFilterCat === 'ALL' || prod.category === currentFilterCat) && prod.status === 'Online') {
+                            let imgContent = prod.imageUrl ? `<img src="${prod.imageUrl}" class="w-full h-full object-cover rounded">` : `<span class="font-orbitron text-blue-400 font-bold">${prod.category}</span>`;
                             html += `<div class="bg-slate-900 border border-slate-800 rounded-xl p-3 space-y-2 text-xs">
-                                <div class="bg-slate-950 aspect-video rounded flex items-center justify-center font-orbitron text-blue-400 font-bold">${prod.category}</div>
+                                <div class="bg-slate-950 aspect-video rounded overflow-hidden flex items-center justify-center">${imgContent}</div>
                                 <p class="font-bold text-white">${prod.title}</p>
                                 <p class="text-yellow-400 font-bold">৳${prod.price} / Month</p>
                                 <button onclick="buyProduct('${prod.title}', ${prod.price})" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-1.5 rounded">কিনুন</button>
@@ -714,7 +804,7 @@
                         }
                     });
                 }
-                document.getElementById('products-grid').innerHTML = html || '<p class="text-slate-400 col-span-2 text-center py-4">এই ক্যাটাগরিতে কোনো প্যানেল নেই।</p>';
+                document.getElementById('products-grid').innerHTML = html || '<p class="text-slate-400 col-span-2 text-center py-4">এই ক্যাটাগরিতে কোনো অনলাইন প্যানেল নেই।</p>';
             }, { onlyOnce: true });
         };
     </script>
