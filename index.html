@@ -89,7 +89,7 @@
 
             <h2 id="current-cat-title" class="text-lg font-bold font-orbitron text-white border-b border-slate-800 pb-2">Available Panels</h2>
             <div id="products-grid" class="grid grid-cols-2 gap-3">
-                <!-- Products will load dynamically from database -->
+                <!-- Products dynamically rendered -->
             </div>
         </div>
 
@@ -100,7 +100,7 @@
                 <div class="bg-slate-950 p-3 rounded border border-slate-800 space-y-1">
                     <p class="text-slate-300 font-bold">bKash / Nagad Personal Number:</p>
                     <p class="text-emerald-400 font-mono text-sm font-black">01973386420</p>
-                    <p class="text-[10px] text-slate-400">প্রথমে সেন্ড মনি করে নিচের ঘরে যে নম্বর থেকে টাকা পাঠিয়েছেন এবং ট্রানজেকশন আইডি দিন।</p>
+                    <p class="text-[10px] text-slate-400">সেন্ড মনি করে নিচে আপনার নম্বর, পরিমাণ ও TrxID দিন।</p>
                 </div>
                 <div class="space-y-3">
                     <div>
@@ -115,7 +115,7 @@
                         <input type="number" id="pay-amount" placeholder="350" class="w-full bg-slate-950 border border-slate-800 rounded p-2 text-white">
                     </div>
                     <div>
-                        <label class="text-slate-400 block mb-1">যে নম্বর থেকে টাকা পাঠিয়েছেন (Sender Number)</label>
+                        <label class="text-slate-400 block mb-1">প্রেরক নম্বর (Sender Number)</label>
                         <input type="text" id="pay-sender" placeholder="017xxxxxxxx" class="w-full bg-slate-950 border border-slate-800 rounded p-2 text-white">
                     </div>
                     <div>
@@ -130,7 +130,7 @@
         <!-- MY ORDERS TAB -->
         <div id="tab-orders" class="tab-content hidden space-y-4">
             <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 space-y-4 text-xs">
-                <h2 class="text-sm font-bold text-emerald-400 border-b border-slate-800 pb-2">My Orders & Deposits</h2>
+                <h2 class="text-sm font-bold text-emerald-400 border-b border-slate-800 pb-2">My Deposits & Panel Orders</h2>
                 <div id="my-orders-list" class="space-y-2">
                     <p class="text-slate-400 text-center py-4">কোনো অর্ডার বা পেমেন্ট হিস্ট্রি নেই।</p>
                 </div>
@@ -208,7 +208,7 @@
                     <a href="https://t.me/lxanikyt72" target="_blank" class="bg-blue-600 text-white p-1.5 rounded hover:opacity-90" title="Telegram"><i class="fa-brands fa-telegram text-xs"></i></a>
                 </div>
             </div>
-            <!-- EXPANDED ADMIN DASHBOARD MODAL -->
+                       <!-- EXPANDED ADMIN DASHBOARD MODAL -->
         <div id="admin-dashboard-modal" class="hidden fixed inset-0 bg-black/90 z-50 p-4 overflow-y-auto">
             <div class="bg-slate-900 border border-yellow-500/50 max-w-lg mx-auto rounded-xl p-4 space-y-4 text-xs">
                 <div class="flex justify-between items-center border-b border-slate-800 pb-2">
@@ -232,10 +232,10 @@
                         </div>
                     </div>
 
-                    <!-- 2. Customer Orders -->
+                    <!-- 2. Customer Panel Orders Management (Approve/Complete/Cancel) -->
                     <div class="space-y-2">
-                        <h3 class="font-bold text-yellow-400 border-l-2 border-yellow-400 pl-2">গ্রাহকদের প্যানেল অর্ডার লিস্ট:</h3>
-                        <div id="admin-orders-list" class="space-y-2 bg-slate-950 p-3 rounded border border-slate-800 max-h-40 overflow-y-auto">
+                        <h3 class="font-bold text-yellow-400 border-l-2 border-yellow-400 pl-2">গ্রাহকদের প্যানেল অর্ডার লিস্ট (কন্ট্রোল):</h3>
+                        <div id="admin-orders-list" class="space-y-2 bg-slate-950 p-3 rounded border border-slate-800 max-h-48 overflow-y-auto">
                             <p class="text-slate-400">কোনো নতুন অর্ডার নেই।</p>
                         </div>
                     </div>
@@ -248,12 +248,18 @@
                         </div>
                     </div>
 
-                    <!-- 4. Add New Product / Panel -->
+                    <!-- 4. Add New Product / Panel with Duration & Stock -->
                     <div class="space-y-2 bg-slate-950 p-3 rounded border border-slate-800">
-                        <h3 class="font-bold text-yellow-400">নতুন প্যানেল / প্রোডাক্ট অ্যাড করুন:</h3>
+                        <h3 class="font-bold text-yellow-400">নতুন প্যানেল অ্যাড করুন (মেয়াদ ও স্টক সহ):</h3>
                         <input type="text" id="admin-prod-title" placeholder="প্রোডাক্টের নাম (যেমন: Free Fire Panel)" class="w-full bg-slate-900 border border-slate-800 rounded p-2 text-white mb-1.5">
-                        <input type="number" id="admin-prod-price" placeholder="মূল্য (যেমন: 350)" class="w-full bg-slate-900 border border-slate-800 rounded p-2 text-white mb-1.5">
-                        <input type="text" id="admin-prod-img" placeholder="ছবির ডিরেক্ট লিংক (Image URL)" class="w-full bg-slate-900 border border-slate-800 rounded p-2 text-white mb-1.5">
+                        <div class="grid grid-cols-2 gap-2 mb-1.5">
+                            <input type="number" id="admin-prod-price" placeholder="মূল্য (যেমন: 19 বা 350)" class="bg-slate-900 border border-slate-800 rounded p-2 text-white">
+                            <input type="text" id="admin-prod-duration" placeholder="মেয়াদ (যেমন: 1 Hour, 1 Month)" class="bg-slate-900 border border-slate-800 rounded p-2 text-white">
+                        </div>
+                        <div class="grid grid-cols-2 gap-2 mb-1.5">
+                            <input type="number" id="admin-prod-stock" placeholder="স্টক সংখ্যা (যেমন: 10)" class="bg-slate-900 border border-slate-800 rounded p-2 text-white">
+                            <input type="text" id="admin-prod-img" placeholder="ছবির URL (ঐচ্ছিক)" class="bg-slate-900 border border-slate-800 rounded p-2 text-white">
+                        </div>
                         <select id="admin-prod-cat" class="w-full bg-slate-900 border border-slate-800 rounded p-2 text-white mb-1.5">
                             <option value="NON ROOT">NON ROOT</option>
                             <option value="ROOT">ROOT</option>
@@ -267,7 +273,7 @@
                         <button onclick="addNewProduct()" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-1.5 rounded">প্রোডাক্ট পাবলিশ করুন</button>
                     </div>
 
-                    <!-- 5. Manage Products -->
+                    <!-- 5. Manage / Delete Products -->
                     <div class="space-y-2">
                         <h3 class="font-bold text-red-400 border-l-2 border-red-400 pl-2">প্রোডাক্ট ম্যানেজ / ডিলিট করুন:</h3>
                         <div id="admin-manage-products" class="space-y-2 bg-slate-950 p-3 rounded border border-slate-800 max-h-40 overflow-y-auto">
@@ -282,10 +288,10 @@
                         <button onclick="updateWebsiteNotice()" class="w-full bg-orange-600 hover:bg-orange-700 text-white font-bold py-1.5 rounded">নোটিশ আপডেট করুন</button>
                     </div>
 
-                    <!-- 7. Update YouTube Link -->
+                    <!-- 7. Update YouTube Video Link -->
                     <div class="space-y-2 bg-slate-950 p-3 rounded border border-slate-800">
                         <h3 class="font-bold text-red-400">ইউটিউব ভিডিও গাইড লিংক পরিবর্তন করুন:</h3>
-                        <input type="text" id="admin-yt-input" placeholder="ইউটিউব লিংক (যেমন: watch?v=... বা embed/...)" class="w-full bg-slate-900 border border-slate-800 rounded p-2 text-white mb-1.5">
+                        <input type="text" id="admin-yt-input" placeholder="ইউটিউব ভিডিও লিংক..." class="w-full bg-slate-900 border border-slate-800 rounded p-2 text-white mb-1.5">
                         <button onclick="updateYoutubeLink()" class="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-1.5 rounded">ভিডিও লিংক আপডেট করুন</button>
                     </div>
 
@@ -324,8 +330,9 @@
             <i class="fa-solid fa-user text-base"></i>
             <span class="text-[10px] font-bold mt-0.5">Account</span>
         </button>
-    </nav>
-    <!-- JavaScript & Firebase Logic (Part 1) -->
+    </nav>        
+</div>
+    <!-- JavaScript & Firebase Logic -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
@@ -489,25 +496,51 @@
 
         function loadUserData(uid) {
             const depositsRef = ref(db, 'deposits');
+            const globalOrdersRef = ref(db, 'globalOrders');
+
             onValue(depositsRef, (snapshot) => {
                 const data = snapshot.val();
-                let html = '';
+                let html = '<h4 class="text-xs font-bold text-yellow-400 mb-1">পেমেন্ট ডিপোজিট হিস্ট্রি:</h4>';
+                let hasData = false;
                 if(data) {
                     Object.values(data).forEach(item => {
                         if(item.uid === uid) {
+                            hasData = true;
                             let badgeColor = item.status === 'Approved' ? 'text-emerald-400' : (item.status === 'Rejected' ? 'text-red-500' : 'text-yellow-400');
-                            html += `<div class="bg-slate-950 p-2.5 rounded border border-slate-800 flex justify-between items-center">
+                            html += `<div class="bg-slate-950 p-2.5 rounded border border-slate-800 flex justify-between items-center mb-1.5">
                                 <div>
                                     <p class="text-white font-bold">টাকা: ৳${item.amount} (${item.method.toUpperCase()})</p>
                                     <p class="text-[10px] text-slate-400">Sender: ${item.senderNo} | TrxID: ${item.trxID}</p>
-                                    <p class="text-[9px] text-slate-500">${item.date}</p>
                                 </div>
                                 <span class="font-bold ${badgeColor}">${item.status}</span>
                             </div>`;
                         }
                     });
                 }
-                document.getElementById('my-orders-list').innerHTML = html || '<p class="text-slate-400 text-center py-4">কোনো পেমেন্ট হিস্ট্রি নেই।</p>';
+                if(!hasData) html += '<p class="text-slate-400 text-center py-2">কোনো পেমেন্ট হিস্ট্রি নেই।</p>';
+
+                onValue(globalOrdersRef, (snapOrder) => {
+                    const orderData = snapOrder.val();
+                    html += '<h4 class="text-xs font-bold text-blue-400 mt-3 mb-1">প্যানেল ক্রয় হিস্ট্রি ও স্ট্যাটাস:</h4>';
+                    let hasOrders = false;
+                    if(orderData) {
+                        Object.values(orderData).forEach(ord => {
+                            if(ord.uid === uid) {
+                                hasOrders = true;
+                                let stColor = ord.status === 'Completed' ? 'text-emerald-400' : (ord.status === 'Cancelled' ? 'text-red-500' : 'text-yellow-400');
+                                html += `<div class="bg-slate-950 p-2.5 rounded border border-slate-800 flex justify-between items-center mb-1.5">
+                                    <div>
+                                        <p class="text-white font-bold">${ord.title} (৳${ord.price})</p>
+                                        <p class="text-[10px] text-slate-400">Date: ${ord.date}</p>
+                                    </div>
+                                    <span class="font-bold ${stColor}">${ord.status}</span>
+                                </div>`;
+                            }
+                        });
+                    }
+                    if(!hasOrders) html += '<p class="text-slate-400 text-center py-2">কোনো প্যানেল অর্ডার নেই।</p>';
+                    document.getElementById('my-orders-list').innerHTML = html;
+                });
             });
 
             const codesRef = ref(db, 'userCodes/' + uid);
@@ -530,8 +563,7 @@
                 const bal = snapshot.val() || 0;
                 document.getElementById('user-bal-display').innerText = '৳' + bal;
             });
-        }
-
+                    }
         const productsRef = ref(db, 'products');
         onValue(productsRef, (snapshot) => {
             const data = snapshot.val();
@@ -548,12 +580,18 @@
 
                     if((currentFilterCat === 'ALL' || prod.category === currentFilterCat) && prod.status === 'Online') {
                         let imgContent = prod.imageUrl ? `<img src="${prod.imageUrl}" class="w-full h-full object-cover rounded">` : `<span class="font-orbitron text-blue-400 font-bold">${prod.category}</span>`;
-                        
+                        let durationText = prod.duration ? prod.duration : 'Month';
+                        let stockText = prod.stock > 0 ? `<span class="text-emerald-400 font-bold">Stock: ${prod.stock}</span>` : `<span class="text-red-500 font-bold">Out of Stock</span>`;
+                        let buyBtn = prod.stock > 0 ? `<button onclick="buyProduct('${id}', '${prod.title}', ${prod.price})" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-1.5 rounded">কিনুন</button>` : `<button disabled class="w-full bg-slate-800 text-slate-500 font-bold py-1.5 rounded cursor-not-allowed">স্টক শেষ</button>`;
+
                         html += `<div class="bg-slate-900 border border-slate-800 rounded-xl p-3 space-y-2 text-xs">
                             <div class="bg-slate-950 aspect-video rounded overflow-hidden flex items-center justify-center">${imgContent}</div>
                             <p class="font-bold text-white">${prod.title}</p>
-                            <p class="text-yellow-400 font-bold">৳${prod.price} / Month</p>
-                            <button onclick="buyProduct('${prod.title}', ${prod.price})" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-1.5 rounded">কিনুন</button>
+                            <p class="text-yellow-400 font-bold">৳${prod.price} / ${durationText}</p>
+                            <div class="flex justify-between items-center text-[10px]">
+                                ${stockText}
+                            </div>
+                            ${buyBtn}
                         </div>`;
                     }
                 });
@@ -565,7 +603,7 @@
             if(document.getElementById('stat-offline')) document.getElementById('stat-offline').innerText = offlineCount;
         });
 
-        window.buyProduct = function(title, price) {
+        window.buyProduct = function(prodId, title, price) {
             if(!currentUser) {
                 alert('অর্ডার করতে প্রথমে লগইন করুন!');
                 switchTab('account');
@@ -580,14 +618,14 @@
                 } else {
                     if(confirm(`${title} প্যানেলটি কিনতে চান? আপনার একাউন্ট থেকে ৳${price} কাটা হবে।`)) {
                         set(userBalRef, bal - price);
-                        
-                        const orderRef = push(ref(db, 'orders/' + currentUser.uid));
-                        set(orderRef, {
-                            title: title,
-                            price: price,
-                            date: new Date().toLocaleString(),
-                            status: 'Completed'
-                        });
+
+                        const singleProdRef = ref(db, 'products/' + prodId);
+                        onValue(singleProdRef, (pSnap) => {
+                            let currStock = pSnap.val() ? (pSnap.val().stock || 0) : 0;
+                            if(currStock > 0) {
+                                update(singleProdRef, { stock: currStock - 1 });
+                            }
+                        }, { onlyOnce: true });
 
                         const globalOrderRef = push(ref(db, 'globalOrders'));
                         set(globalOrderRef, {
@@ -630,7 +668,7 @@
                 if(data) {
                     Object.entries(data).forEach(([key, item]) => {
                         if(item.status === 'Pending') {
-                            html += `<div class="bg-slate-900 p-2.5 rounded border border-slate-800 flex justify-between items-center">
+                            html += `<div class="bg-slate-900 p-2.5 rounded border border-slate-800 flex justify-between items-center mb-1">
                                 <div>
                                     <p class="text-white"><b>${item.email}</b> - ৳${item.amount}</p>
                                     <p class="text-[10px] text-yellow-400">Sender: ${item.senderNo} | TrxID: ${item.trxID} (${item.method})</p>
@@ -648,8 +686,7 @@
         }
 
         window.approveDeposit = function(key, uid, amount) {
-            const updateRef = ref(db, 'deposits/' + key);
-            update(updateRef, { status: 'Approved' }).then(() => {
+            update(ref(db, 'deposits/' + key), { status: 'Approved' }).then(() => {
                 const userBalRef = ref(db, 'users/' + uid + '/balance');
                 onValue(userBalRef, (snap) => {
                     let currentBal = snap.val() || 0;
@@ -660,8 +697,7 @@
         };
 
         window.rejectDeposit = function(key) {
-            const updateRef = ref(db, 'deposits/' + key);
-            update(updateRef, { status: 'Rejected' }).then(() => {
+            update(ref(db, 'deposits/' + key), { status: 'Rejected' }).then(() => {
                 alert('পেমেন্ট রিকোয়েস্ট রিজেক্ট করা হয়েছে!');
             });
         };
@@ -673,19 +709,30 @@
                 let html = '';
                 if(data) {
                     Object.entries(data).forEach(([key, order]) => {
-                        html += `<div class="bg-slate-900 p-2.5 rounded border border-slate-800 flex justify-between items-center text-[11px]">
-                            <div>
+                        let statusBadge = order.status === 'Completed' ? 'bg-emerald-600' : (order.status === 'Cancelled' ? 'bg-red-600' : 'bg-yellow-600');
+                        html += `<div class="bg-slate-900 p-2.5 rounded border border-slate-800 space-y-1.5 text-[11px] mb-1.5">
+                            <div class="flex justify-between items-center">
                                 <p class="text-white font-bold">${order.email} - <span class="text-yellow-400">${order.title}</span> (৳${order.price})</p>
-                                <p class="text-blue-400 font-mono">UID: ${order.uid}</p>
-                                <p class="text-[9px] text-slate-400">${order.date}</p>
+                                <span class="text-white text-[9px] px-1.5 py-0.5 rounded ${statusBadge}">${order.status}</span>
                             </div>
-                            <span class="text-emerald-400 font-bold">Ordered</span>
+                            <p class="text-blue-400 font-mono">UID: ${order.uid}</p>
+                            <div class="flex space-x-1 pt-1 border-t border-slate-800">
+                                <button onclick="updateOrderStatus('${key}', 'Approved')" class="bg-blue-600 text-white font-bold px-2 py-0.5 rounded text-[9px]">Approved</button>
+                                <button onclick="updateOrderStatus('${key}', 'Completed')" class="bg-emerald-600 text-white font-bold px-2 py-0.5 rounded text-[9px]">Completed</button>
+                                <button onclick="updateOrderStatus('${key}', 'Cancelled')" class="bg-red-600 text-white font-bold px-2 py-0.5 rounded text-[9px]">Cancelled</button>
+                            </div>
                         </div>`;
                     });
                 }
                 document.getElementById('admin-orders-list').innerHTML = html || '<p class="text-slate-400">কোনো নতুন অর্ডার নেই।</p>';
             });
         }
+
+        window.updateOrderStatus = function(orderKey, status) {
+            update(ref(db, 'globalOrders/' + orderKey), { status: status }).then(() => {
+                alert(`অর্ডার স্ট্যাটাস সফলভাবে '${status}' করা হয়েছে!`);
+            });
+        };
 
         function loadAdminUsers() {
             const usersRef = ref(db, 'users');
@@ -694,7 +741,7 @@
                 let html = '';
                 if(data) {
                     Object.entries(data).forEach(([uid, u]) => {
-                        html += `<div class="bg-slate-900 p-2 rounded border border-slate-800 text-[11px]">
+                        html += `<div class="bg-slate-900 p-2 rounded border border-slate-800 text-[11px] mb-1">
                             <p class="text-white font-bold">Email: ${u.email}</p>
                             <p class="text-blue-400 font-mono select-all">UID: ${uid}</p>
                             <p class="text-yellow-400">Balance: ৳${u.balance || 0}</p>
@@ -708,6 +755,8 @@
         window.addNewProduct = function() {
             const title = document.getElementById('admin-prod-title').value.trim();
             const price = document.getElementById('admin-prod-price').value.trim();
+            const duration = document.getElementById('admin-prod-duration').value.trim() || '1 Month';
+            const stock = document.getElementById('admin-prod-stock').value.trim() || 10;
             const category = document.getElementById('admin-prod-cat').value;
             const imageUrl = document.getElementById('admin-prod-img').value.trim();
             const status = document.getElementById('admin-prod-status').value;
@@ -718,6 +767,8 @@
             set(prodRef, {
                 title: title,
                 price: Number(price),
+                duration: duration,
+                stock: Number(stock),
                 category: category,
                 imageUrl: imageUrl,
                 status: status
@@ -725,6 +776,8 @@
                 alert('নতুন প্রোডাক্ট সফলভাবে অ্যাড করা হয়েছে!');
                 document.getElementById('admin-prod-title').value = '';
                 document.getElementById('admin-prod-price').value = '';
+                document.getElementById('admin-prod-duration').value = '';
+                document.getElementById('admin-prod-stock').value = '';
                 document.getElementById('admin-prod-img').value = '';
             });
         };
@@ -735,10 +788,10 @@
                 let html = '';
                 if(data) {
                     Object.entries(data).forEach(([id, prod]) => {
-                        html += `<div class="bg-slate-900 p-2 rounded border border-slate-800 flex justify-between items-center text-[11px]">
+                        html += `<div class="bg-slate-900 p-2 rounded border border-slate-800 flex justify-between items-center text-[11px] mb-1">
                             <div>
-                                <p class="text-white font-bold">${prod.title} - ৳${prod.price} (${prod.status})</p>
-                                <p class="text-slate-400">Category: ${prod.category}</p>
+                                <p class="text-white font-bold">${prod.title} - ৳${prod.price} (${prod.duration || '1 Month'})</p>
+                                <p class="text-slate-400">Stock: ${prod.stock || 0} | Cat: ${prod.category} (${prod.status})</p>
                             </div>
                             <button onclick="deleteProduct('${id}')" class="bg-red-600 text-white px-2 py-1 rounded text-[10px]">Delete</button>
                         </div>`;
@@ -777,7 +830,7 @@
             }
 
             update(ref(db, 'settings'), { youtubeLink: embedUrl }).then(() => {
-                alert('ইউটিউব ভিডিও লিংক সফলভাবে আপডেট ও ফিক্স করা হয়েছে!');
+                alert('ইউটিউব ভিডিও লিংক সফলভাবে আপডেট করা হয়েছে!');
                 document.getElementById('admin-yt-input').value = '';
             });
         };
@@ -825,11 +878,18 @@
                     Object.entries(data).forEach(([id, prod]) => {
                         if((currentFilterCat === 'ALL' || prod.category === currentFilterCat) && prod.status === 'Online') {
                             let imgContent = prod.imageUrl ? `<img src="${prod.imageUrl}" class="w-full h-full object-cover rounded">` : `<span class="font-orbitron text-blue-400 font-bold">${prod.category}</span>`;
+                            let durationText = prod.duration ? prod.duration : 'Month';
+                            let stockText = prod.stock > 0 ? `<span class="text-emerald-400 font-bold">Stock: ${prod.stock}</span>` : `<span class="text-red-500 font-bold">Out of Stock</span>`;
+                            let buyBtn = prod.stock > 0 ? `<button onclick="buyProduct('${id}', '${prod.title}', ${prod.price})" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-1.5 rounded">কিনুন</button>` : `<button disabled class="w-full bg-slate-800 text-slate-500 font-bold py-1.5 rounded cursor-not-allowed">স্টক শেষ</button>`;
+
                             html += `<div class="bg-slate-900 border border-slate-800 rounded-xl p-3 space-y-2 text-xs">
                                 <div class="bg-slate-950 aspect-video rounded overflow-hidden flex items-center justify-center">${imgContent}</div>
                                 <p class="font-bold text-white">${prod.title}</p>
-                                <p class="text-yellow-400 font-bold">৳${prod.price} / Month</p>
-                                <button onclick="buyProduct('${prod.title}', ${prod.price})" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-1.5 rounded">কিনুন</button>
+                                <p class="text-yellow-400 font-bold">৳${prod.price} / ${durationText}</p>
+                                <div class="flex justify-between items-center text-[10px]">
+                                    ${stockText}
+                                </div>
+                                ${buyBtn}
                             </div>`;
                         }
                     });
@@ -840,4 +900,3 @@
     </script>
 </body>
 </html>
-                                                                                                                                                                                                </div>
