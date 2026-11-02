@@ -9,989 +9,756 @@
     <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800;900&family=Hind+Siliguri:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Hind Siliguri', sans-serif; background-color: #0b0f19; color: #f3f4f6; }
-        .font-orbitron { font-family: 'Orbitron', sans-serif; }
-        ::-webkit-scrollbar { width: 6px; height: 6px; }
-        ::-webkit-scrollbar-track { background: #0f172a; }
-        ::-webkit-scrollbar-thumb { background: #3b82f6; border-radius: 10px; }
-        .no-scrollbar::-webkit-scrollbar { display: none; }
-        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        body { font-family: 'Hind Siliguri', sans-serif; }
     </style>
 </head>
-<body class="bg-[#0b0f19] text-gray-100 pb-24">
+<body class="bg-slate-950 text-slate-100 min-h-screen">
+    <style>
+        /* Custom Glassmorphism Effects */
+        .glass-card {
+            background: rgba(15, 23, 42, 0.75);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .glass-nav {
+            background: rgba(2, 6, 23, 0.85);
+            backdrop-filter: blur(16px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
 
-    <!-- POP-UP WELCOME NOTICE MODAL -->
-    <div id="welcome-popup-modal" class="fixed inset-0 bg-black/85 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-        <div class="bg-slate-900 border border-blue-500/40 w-full max-w-sm rounded-2xl p-5 space-y-4 shadow-2xl shadow-blue-500/20 text-center relative">
-            <div class="w-14 h-14 bg-blue-600/20 text-blue-400 rounded-full flex items-center justify-center mx-auto text-2xl font-bold">
-                <i class="fa-solid fa-bullhorn"></i>
+        /* VIP Badge Glow Effects */
+        .vip-1-badge { background: linear-gradient(135deg, #3b82f6, #1d4ed8); }
+        .vip-2-badge { background: linear-gradient(135deg, #8b5cf6, #6d28d9); }
+        .vip-3-badge { background: linear-gradient(135deg, #f59e0b, #d97706); box-shadow: 0 0 12px rgba(245, 158, 11, 0.4); }
+
+        /* Custom Ticker Animation */
+        @keyframes ticker {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
+        }
+        .animate-ticker {
+            display: inline-block;
+            white-space: nowrap;
+            animation: ticker 25s linear infinite;
+        }
+
+        /* Scrollbar Styling */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #020617; }
+        ::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #475569; }
+    </style>
+    <!-- Header & Dynamic Clock -->
+    <header class="glass-nav sticky top-0 z-40 px-4 py-3">
+        <div class="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-2">
+            <div class="flex items-center space-x-3">
+                <i class="fa-solid font-bold fa-shield-halved text-emerald-400 text-2xl"></i>
+                <div>
+                    <h1 class="text-xl font-bold tracking-wide text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-cyan-400">LX PANEL SHOP</h1>
+                    <p class="text-xs text-slate-400">অটোমেটেড প্যানেল ও কি ডেলিভারি প্ল্যাটফর্ম</p>
+                </div>
             </div>
-            <div class="space-y-2">
-                <h3 class="text-base font-bold text-white font-orbitron">গুরুত্বপূর্ণ নোটিশ</h3>
-                <p id="popup-notice-text" class="text-xs text-slate-300 leading-relaxed">
-                    🔥 LX PANEL SHOP এ আপনাকে স্বাগতম! ১০০% সেফ এবং এন্টি-ব্যান প্যানেল পান সাশ্রয়ী মূল্যে। যেকোনো প্রয়োজনে অ্যাডমিন বা হেল্পলাইনে যোগাযোগ করুন।
-                </p>
+
+            <!-- Dynamic Timezone Clock -->
+            <div id="dynamic-clock" class="text-xs font-mono bg-slate-900/80 px-3 py-1.5 rounded-lg border border-slate-800 text-slate-300 flex items-center space-x-2">
+                <i class="fa-regular fa-clock text-emerald-400"></i>
+                <span id="clock-display">সময় লোড হচ্ছে...</span>
             </div>
-            <button onclick="closeWelcomePopup()" class="w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:opacity-90 text-white font-bold py-2.5 rounded-xl text-xs transition shadow-lg">
-                বুঝেছি, প্রবেশ করুন
-            </button>
-        </div>
-    </div>
-    <!-- Header Navigation -->
-    <header class="sticky top-0 z-40 bg-slate-900/95 backdrop-blur-md border-b border-slate-800 px-4 py-3 flex items-center justify-between">
-        <div class="flex items-center space-x-2">
-            <span class="text-xl font-black font-orbitron text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 via-orange-500 to-red-500">
-                LX PANEL<span class="text-xs text-blue-400">.com</span>
-            </span>
-        </div>
-        <div class="flex items-center space-x-2" id="header-auth-buttons">
-            <button onclick="toggleAdminModal()" class="text-slate-400 hover:text-blue-400 transition p-2" title="Admin Login">
-                <i class="fa-solid fa-key text-yellow-400"></i>
-            </button>
-            <button onclick="switchTab('account')" class="bg-red-600 hover:bg-red-700 text-white text-xs font-bold px-3 py-1.5 rounded transition">LOGIN</button>
-            <button onclick="switchTab('account')" class="bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-bold px-3 py-1.5 rounded border border-slate-700 transition">REGISTER</button>
         </div>
     </header>
 
-    <!-- Dynamic Notice Ticker Bar -->
-    <div class="bg-blue-900/30 border-y border-blue-500/20 px-4 py-2 text-xs text-blue-300 flex items-center space-x-2 overflow-hidden">
-        <i class="fa-solid fa-bell animate-bounce text-yellow-400 flex-shrink-0"></i>
-        <marquee behavior="scroll" direction="left" class="font-medium whitespace-nowrap" id="marquee-notice">
-            🔥 Notice: Trusted, Fast & Reliable Service with 24/7 Support! পেমেন্ট করার পর TrxID সাবমিট করুন।
-        </marquee>
-    </div>
-    <!-- Main Container -->
-    <main class="max-w-md mx-auto p-4 space-y-5">
-
-        <!-- HOME TAB -->
-        <div id="tab-home" class="tab-content space-y-4">
-            <div class="bg-slate-900 border border-slate-800 rounded-xl overflow-hidden p-3 space-y-2">
-                <div class="relative rounded-lg overflow-hidden bg-slate-950 aspect-video flex items-center justify-center">
-                    <iframe id="home-yt-video" class="w-full h-full rounded-lg" src="https://www.youtube.com/embed/5qap5aO4i9A" title="YouTube video player" frameborder="0" allowfullscreen></iframe>
+    <!-- Live Activity Feed Ticker -->
+    <div class="bg-slate-900/90 border-b border-slate-800 py-1.5 overflow-hidden text-xs">
+        <div class="max-w-6xl mx-auto flex items-center">
+            <span class="bg-emerald-500/20 text-emerald-400 px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider shrink-0 ml-4 mr-2">
+                <i class="fa-solid font-bold fa-bolt mr-1"></i>LIVE
+            </span>
+            <div class="overflow-hidden w-full">
+                <div id="activity-ticker" class="animate-ticker text-slate-300 space-x-8">
+                    <span>🔥 User 1843425 bought FF Panel Key (৳19)</span>
+                    <span>💰 User 1928341 deposited ৳500</span>
+                    <span>🎉 User 1029384 upgraded to VIP 1</span>
                 </div>
-                <div class="flex items-center justify-between text-xs pt-1">
-                    <span class="bg-red-600 text-white px-2 py-0.5 rounded font-bold text-[10px]">ভিডিও গাইড</span>
-                    <span class="text-slate-400">কিভাবে প্যানেল ব্যবহার করবেন</span>
-                </div>
-            </div>
-
-            <!-- Category Pills -->
-            <div class="flex items-center space-x-2 overflow-x-auto pb-2 no-scrollbar">
-                <button onclick="filterCategory('ALL', event)" class="cat-btn active bg-blue-600 text-white px-4 py-1.5 rounded-full text-xs font-bold shadow-md whitespace-nowrap">ALL</button>
-                <button onclick="filterCategory('NON ROOT', event)" class="cat-btn bg-slate-800 text-slate-300 hover:bg-slate-700 px-4 py-1.5 rounded-full text-xs font-bold whitespace-nowrap">NON ROOT</button>
-                <button onclick="filterCategory('ROOT', event)" class="cat-btn bg-slate-800 text-slate-300 hover:bg-slate-700 px-4 py-1.5 rounded-full text-xs font-bold whitespace-nowrap">ROOT</button>
-                <button onclick="filterCategory('IPHONE', event)" class="cat-btn bg-slate-800 text-slate-300 hover:bg-slate-700 px-4 py-1.5 rounded-full text-xs font-bold whitespace-nowrap">IPHONE</button>
-                <button onclick="filterCategory('PC', event)" class="cat-btn bg-slate-800 text-slate-300 hover:bg-slate-700 px-4 py-1.5 rounded-full text-xs font-bold whitespace-nowrap">PC</button>
-            </div>
-
-            <h2 id="current-cat-title" class="text-lg font-bold font-orbitron text-white border-b border-slate-800 pb-2">Available Panels</h2>
-            <div id="products-grid" class="grid grid-cols-2 gap-3">
-                <!-- Products dynamically rendered -->
             </div>
         </div>
+    </div>
+    <!-- Main Content Container -->
+    <main class="max-w-6xl mx-auto px-4 py-6">
+        
+        <!-- Navigation Buttons Tabs -->
+        <div class="grid grid-cols-3 md:grid-cols-6 gap-2 mb-6">
+            <button onclick="switchTab('shop')" id="tab-shop" class="nav-tab active-tab bg-emerald-500 text-slate-950 font-semibold py-2.5 px-3 rounded-xl flex items-center justify-center space-x-2 transition-all duration-200">
+                <i class="fa-solid fa-store"></i>
+                <span>প্যানেল শপ</span>
+            </button>
 
-        <!-- ADD FUND TAB -->
-        <div id="tab-addfund" class="tab-content hidden space-y-4">
-            <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 space-y-4 text-xs">
-                <h2 class="text-sm font-bold text-yellow-400 border-b border-slate-800 pb-2">Add Money / Manual Payment</h2>
-                <div class="bg-slate-950 p-3 rounded border border-slate-800 space-y-1">
-                    <p class="text-slate-300 font-bold">bKash / Nagad Personal Number:</p>
-                    <p class="text-emerald-400 font-mono text-sm font-black">01973386420</p>
-                    <p class="text-[10px] text-slate-400">সেন্ড মনি করে নিচে আপনার নম্বর, পরিমাণ ও TrxID দিন। (মিনিমাম ডিপোজিট ৳৫০)</p>
-                </div>
-                <div class="space-y-3">
+            <button onclick="switchTab('deposit')" id="tab-deposit" class="nav-tab bg-slate-900 text-slate-300 hover:bg-slate-800 py-2.5 px-3 rounded-xl flex items-center justify-center space-x-2 transition-all duration-200 border border-slate-800">
+                <i class="fa-solid fa-wallet"></i>
+                <span>ডিপোজিট</span>
+            </button>
+
+            <button onclick="switchTab('transfer')" id="tab-transfer" class="nav-tab bg-slate-900 text-slate-300 hover:bg-slate-800 py-2.5 px-3 rounded-xl flex items-center justify-center space-x-2 transition-all duration-200 border border-slate-800">
+                <i class="fa-solid fa-paper-plane"></i>
+                <span>P2P ট্রান্সফার</span>
+            </button>
+
+            <button onclick="switchTab('mykeys')" id="tab-mykeys" class="nav-tab bg-slate-900 text-slate-300 hover:bg-slate-800 py-2.5 px-3 rounded-xl flex items-center justify-center space-x-2 transition-all duration-200 border border-slate-800">
+                <i class="fa-solid fa-key"></i>
+                <span>আমার কি (Key)</span>
+            </button>
+
+            <button onclick="switchTab('vip')" id="tab-vip" class="nav-tab bg-slate-900 text-slate-300 hover:bg-slate-800 py-2.5 px-3 rounded-xl flex items-center justify-center space-x-2 transition-all duration-200 border border-slate-800">
+                <i class="fa-solid fa-crown text-amber-400"></i>
+                <span>VIP স্ট্যাটাস</span>
+            </button>
+
+            <button onclick="switchTab('admin')" id="tab-admin" class="nav-tab bg-slate-900 text-slate-300 hover:bg-slate-800 py-2.5 px-3 rounded-xl flex items-center justify-center space-x-2 transition-all duration-200 border border-slate-800">
+                <i class="fa-solid fa-user-gear"></i>
+                <span>অ্যাডমিন</span>
+            </button>
+        </div>
+        <!-- User Overview & Profile Card -->
+        <div class="glass-card rounded-2xl p-5 mb-6 shadow-xl border border-slate-800">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                <div class="flex items-center space-x-4">
+                    <div class="w-12 h-12 rounded-full bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-400 font-bold text-xl">
+                        <i class="fa-solid fa-user-astronaut"></i>
+                    </div>
                     <div>
-                        <label class="text-slate-400 block mb-1">পেমেন্ট মেথড</label>
-                        <select id="pay-method" class="w-full bg-slate-950 border border-slate-800 rounded p-2 text-white">
-                            <option value="bkash">bKash</option>
-                            <option value="nagad">Nagad</option>
+                        <div class="flex items-center space-x-2">
+                            <span class="text-xs text-slate-400">UID:</span>
+                            <span id="user-uid" class="font-mono font-bold text-slate-200">------</span>
+                            <span id="user-vip-badge" class="px-2 py-0.5 rounded text-[10px] font-bold text-white bg-slate-700">VIP 0</span>
+                        </div>
+                        <h2 class="text-lg font-bold text-slate-100 flex items-center space-x-2">
+                            <span>আমার অ্যাকাউন্ট</span>
+                        </h2>
+                    </div>
+                </div>
+
+                <div class="flex items-center space-x-4 w-full md:w-auto justify-between md:justify-end border-t md:border-t-0 pt-3 md:pt-0 border-slate-800">
+                    <div>
+                        <p class="text-xs text-slate-400">বর্তমান ব্যালেন্স</p>
+                        <p class="text-2xl font-bold text-emerald-400">৳<span id="user-balance">0.00</span></p>
+                    </div>
+
+                    <!-- VIP Bonus Claim Button -->
+                    <button onclick="claimVipBonus()" id="claim-bonus-btn" class="hidden bg-amber-500/20 hover:bg-amber-500/30 border border-amber-500/40 text-amber-300 text-xs px-3 py-2 rounded-xl flex items-center space-x-1.5 transition">
+                        <i class="fa-solid fa-gift text-amber-400"></i>
+                        <span>মাসিক বোনাস ক্লেইম</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- TAB 1: Panel Shop Section -->
+        <div id="section-shop" class="tab-content space-y-6">
+            <div class="flex justify-between items-center">
+                <h3 class="text-lg font-bold text-slate-100 flex items-center space-x-2">
+                    <i class="fa-solid fa-gamepad text-emerald-400"></i>
+                    <span>উপলব্ধ প্যানেল ও কি (Keys)</span>
+                </h3>
+                <span class="text-xs text-slate-400 bg-slate-900 px-3 py-1 rounded-full border border-slate-800">অটোমেটিক ইনস্ট্যান্ট ডেলিভারি</span>
+            </div>
+
+            <!-- Panel Cards Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4" id="panels-container">
+                <!-- Sample Panel Item -->
+                <div class="glass-card rounded-2xl p-5 border border-slate-800 flex flex-col justify-between">
+                    <div>
+                        <div class="flex justify-between items-start mb-3">
+                            <span class="bg-emerald-500/10 text-emerald-400 text-xs px-2.5 py-1 rounded-lg border border-emerald-500/20 font-bold">Free Fire Panel</span>
+                            <span class="text-xl font-bold text-emerald-400">৳১৯</span>
+                        </div>
+                        <h4 class="text-base font-bold text-slate-100 mb-1">FF Pro Aimbot Panel (1 Day)</h4>
+                        <p class="text-xs text-slate-400 mb-4">হাই স্পিড এবং এন্টি-ব্যান সিকিউরড লাইসেন্স কি। তাৎক্ষণিকভাবে ডেলিভারি পাবেন।</p>
+                    </div>
+                    <button onclick="buyPanel('FF Pro Panel', 19)" class="w-full bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold py-2.5 px-4 rounded-xl text-sm transition flex items-center justify-center space-x-2">
+                        <i class="fa-solid fa-cart-shopping"></i>
+                        <span>এখনই কিনুন (৳১৯)</span>
+                    </button>
+                </div>
+
+                <!-- Sample Panel 2 -->
+                <div class="glass-card rounded-2xl p-5 border border-slate-800 flex flex-col justify-between">
+                    <div>
+                        <div class="flex justify-between items-start mb-3">
+                            <span class="bg-cyan-500/10 text-cyan-400 text-xs px-2.5 py-1 rounded-lg border border-cyan-500/20 font-bold">VIP Panel</span>
+                            <span class="text-xl font-bold text-emerald-400">৳৪৯</span>
+                        </div>
+                        <h4 class="text-base font-bold text-slate-100 mb-1">FF VIP Magic Bullet (7 Days)</h4>
+                        <p class="text-xs text-slate-400 mb-4">ফুল সেফটি সহ ৭ দিনের ফুল কন্ট্রোল প্যানেল লাইসেন্স কি।</p>
+                    </div>
+                    <button onclick="buyPanel('FF VIP Panel 7D', 49)" class="w-full bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold py-2.5 px-4 rounded-xl text-sm transition flex items-center justify-center space-x-2">
+                        <i class="fa-solid fa-cart-shopping"></i>
+                        <span>এখনই কিনুন (৳৪৯)</span>
+                    </button>
+                </div>
+
+                <!-- Sample Panel 3 -->
+                <div class="glass-card rounded-2xl p-5 border border-slate-800 flex flex-col justify-between">
+                    <div>
+                        <div class="flex justify-between items-start mb-3">
+                            <span class="bg-amber-500/10 text-amber-400 text-xs px-2.5 py-1 rounded-lg border border-amber-500/20 font-bold">Lifetime Panel</span>
+                            <span class="text-xl font-bold text-emerald-400">৳১৯৯</span>
+                        </div>
+                        <h4 class="text-base font-bold text-slate-100 mb-1">FF Lifetime Master Panel</h4>
+                        <p class="text-xs text-slate-400 mb-4">আনলিমিটেড অ্যাক্সেস এবং লাইফটাইম আপডেট সহ মাস্টার প্যানেল কি।</p>
+                    </div>
+                    <button onclick="buyPanel('FF Lifetime Panel', 199)" class="w-full bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold py-2.5 px-4 rounded-xl text-sm transition flex items-center justify-center space-x-2">
+                        <i class="fa-solid fa-cart-shopping"></i>
+                        <span>এখনই কিনুন (৳১৯৯)</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- TAB 2: Deposit Section -->
+        <div id="section-deposit" class="tab-content hidden space-y-6">
+            <div class="glass-card rounded-2xl p-6 border border-slate-800 max-w-xl mx-auto">
+                <h3 class="text-lg font-bold text-slate-100 mb-4 flex items-center space-x-2">
+                    <i class="fa-solid fa-building-columns text-emerald-400"></i>
+                    <span>ব্যালেন্স ডিপোজিট করুন</span>
+                </h3>
+
+                <div class="bg-amber-500/10 border border-amber-500/20 text-amber-300 text-xs p-3 rounded-xl mb-4 flex items-center space-x-2">
+                    <i class="fa-solid fa-triangle-exclamation text-base"></i>
+                    <span>সর্বনিম্ন ডিপোজিট পরিমাণ ৳৫০। টাকা পাঠানোর পর TrxID নিচে বসিয়ে সাবমিট করুন।</span>
+                </div>
+
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-400 mb-1">পেমেন্ট মেথড নির্বাচন করুন</label>
+                        <select id="deposit-method" class="w-full bg-slate-900 border border-slate-800 rounded-xl px-4 py-2.5 text-sm text-slate-200 focus:outline-none focus:border-emerald-500">
+                            <option value="bkash">bKash Personal (01618024025)</option>
+                            <option value="nagad">Nagad Personal (01618024025)</option>
                         </select>
                     </div>
+
                     <div>
-                        <label class="text-slate-400 block mb-1">টাকার পরিমাণ (মিনিমাম ৳৫০)</label>
-                        <input type="number" id="pay-amount" min="50" placeholder="50 বা তার বেশি" class="w-full bg-slate-950 border border-slate-800 rounded p-2 text-white">
+                        <label class="block text-xs font-semibold text-slate-400 mb-1">ডিপোজিট পরিমাণ (টাকা)</label>
+                        <input type="number" id="deposit-amount" placeholder="যেমন: 50" class="w-full bg-slate-900 border border-slate-800 rounded-xl px-4 py-2.5 text-sm text-slate-200 focus:outline-none focus:border-emerald-500">
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-400 mb-1">ট্রানজেকশন আইডি (TrxID)</label>
+                        <input type="text" id="deposit-trxid" placeholder="যেমন: 9J8A7B6C" class="w-full bg-slate-900 border border-slate-800 rounded-xl px-4 py-2.5 text-sm text-slate-200 focus:outline-none focus:border-emerald-500">
+                    </div>
+
+                    <button onclick="submitDeposit()" class="w-full bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold py-3 px-4 rounded-xl text-sm transition flex items-center justify-center space-x-2">
+                        <i class="fa-solid fa-paper-plane"></i>
+                        <span>ডিপোজিট রিকোয়েস্ট পাঠান</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- TAB 3: P2P Balance Transfer Section -->
+        <div id="section-transfer" class="tab-content hidden space-y-6">
+            <div class="glass-card rounded-2xl p-6 border border-slate-800 max-w-xl mx-auto">
+                <h3 class="text-lg font-bold text-slate-100 mb-4 flex items-center space-x-2">
+                    <i class="fa-solid fa-paper-plane text-emerald-400"></i>
+                    <span>P2P ব্যালেন্স ট্রান্সফার</span>
+                </h3>
+
+                <div class="bg-blue-500/10 border border-blue-500/20 text-blue-300 text-xs p-3 rounded-xl mb-4 flex items-center space-x-2">
+                    <i class="fa-solid fa-circle-info text-base"></i>
+                    <span>আপনি আপনার অ্যাকাউন্টের ব্যালেন্স অন্য যেকোনো ইউজারের Custom UID-তে সরাসরি সেন্ড করতে পারবেন।</span>
+                </div>
+
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-400 mb-1">প্রাপকের Custom UID (Receiver UID)</label>
+                        <input type="text" id="transfer-receiver-uid" placeholder="যেমন: 1843425" class="w-full bg-slate-900 border border-slate-800 rounded-xl px-4 py-2.5 text-sm text-slate-200 focus:outline-none focus:border-emerald-500">
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-400 mb-1">ট্রান্সফার পরিমাণ (টাকা)</label>
+                        <input type="number" id="transfer-amount" placeholder="যেমন: 20" class="w-full bg-slate-900 border border-slate-800 rounded-xl px-4 py-2.5 text-sm text-slate-200 focus:outline-none focus:border-emerald-500">
+                    </div>
+
+                    <button onclick="executeTransfer()" class="w-full bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold py-3 px-4 rounded-xl text-sm transition flex items-center justify-center space-x-2">
+                        <i class="fa-solid fa-right-left"></i>
+                        <span>ব্যালেন্স ট্রান্সফার করুন</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- TAB 4: My Keys Section -->
+        <div id="section-mykeys" class="tab-content hidden space-y-6">
+            <div class="glass-card rounded-2xl p-6 border border-slate-800">
+                <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-3 mb-6">
+                    <h3 class="text-lg font-bold text-slate-100 flex items-center space-x-2">
+                        <i class="fa-solid fa-key text-emerald-400"></i>
+                        <span>আমার কেনা প্যানেল ও লাইসেন্স কি (Keys)</span>
+                    </h3>
+                    
+                    <!-- Special Setup Channel Guide Link Box -->
+                    <a href="https://t.me/+hbnMRX43ciU3MDBl" target="_blank" class="bg-cyan-500/10 hover:bg-cyan-500/20 border border-cyan-500/30 text-cyan-300 text-xs px-4 py-2.5 rounded-xl flex items-center space-x-2 transition">
+                        <i class="fa-brands fa-telegram text-cyan-400 text-base"></i>
+                        <span>সেটআপ চ্যানেল ভিজিট করুন (কিভাবে প্যানেল সেট আপ করবেন)</span>
+                    </a>
+                </div>
+
+                <!-- Purchased Keys List Container -->
+                <div id="my-keys-list" class="space-y-3">
+                    <div class="bg-slate-900/80 border border-slate-800 p-4 rounded-xl text-center text-slate-400 text-sm">
+                        আপনি এখনো কোনো প্যানেল কেনেননি। প্যানেল কিনলে এখানে আপনার লাইসেন্স কি (Key) শো করবে।
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- TAB 5: VIP Level System & Info Section -->
+        <div id="section-vip" class="tab-content hidden space-y-6">
+            <div class="glass-card rounded-2xl p-6 border border-slate-800">
+                <h3 class="text-lg font-bold text-slate-100 mb-4 flex items-center space-x-2">
+                    <i class="fa-solid fa-crown text-amber-400"></i>
+                    <span>VIP লেভেল এবং রিওয়ার্ড সিস্টেম</span>
+                </h3>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+                    <!-- VIP 1 Card -->
+                    <div class="bg-slate-900 border border-slate-800 p-4 rounded-xl">
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="vip-1-badge text-white font-bold text-xs px-2.5 py-1 rounded-lg">VIP 1</span>
+                            <span class="text-amber-400 text-xs font-bold">৳৩ / মাস</span>
+                        </div>
+                        <p class="text-xs text-slate-400">মোট ডিপোজিট ৳১,০০০ বা তার বেশি হলে এই লেভেল আনলক হবে।</p>
+                    </div>
+
+                    <!-- VIP 2 Card -->
+                    <div class="bg-slate-900 border border-slate-800 p-4 rounded-xl">
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="vip-2-badge text-white font-bold text-xs px-2.5 py-1 rounded-lg">VIP 2</span>
+                            <span class="text-amber-400 text-xs font-bold">৳৫ / মাস</span>
+                        </div>
+                        <p class="text-xs text-slate-400">মোট ডিপোজিট ৳২,৫০ও বা তার বেশি হলে এই লেভেল আনলক হবে।</p>
+                    </div>
+
+                    <!-- VIP 3+ Card -->
+                    <div class="bg-slate-900 border border-slate-800 p-4 rounded-xl">
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="vip-3-badge text-white font-bold text-xs px-2.5 py-1 rounded-lg">VIP 3+</span>
+                            <span class="text-amber-400 text-xs font-bold">৳৭ / মাস</span>
+                        </div>
+                        <p class="text-xs text-slate-400">VIP 3 এবং তার উপরের সকল লেভেলের জন্য নির্দিষ্ট ডিপোজিটে মাসিক ৳৭ বোনাস।</p>
+                    </div>
+                </div>
+
+                <div class="bg-slate-900/50 p-4 rounded-xl border border-slate-800 text-xs text-slate-400 space-y-2">
+                    <p class="font-bold text-slate-200"><i class="fa-solid fa-circle-info text-emerald-400 mr-1"></i> VIP নিয়মাবলী:</p>
+                    <p>১. প্রতি মাসে ১ বার আপনার বর্তমান VIP লেভেল অনুযায়ী একাউন্টে বোনাস ক্লেইম করতে পারবেন।</p>
+                    <p>২. VIP 4 বা তার বেশি উচ্চতর লেভেলসমূহ সাধারণ ইউজারদের কাছে দৃশ্যমান নয়।</p>
+                </div>
+            </div>
+        </div>
+        <!-- TAB 6: Admin Panel Section -->
+        <div id="section-admin" class="tab-content hidden space-y-6">
+            <div class="glass-card rounded-2xl p-6 border border-slate-800 max-w-xl mx-auto">
+                <h3 class="text-lg font-bold text-slate-100 mb-4 flex items-center space-x-2">
+                    <i class="fa-solid fa-user-gear text-emerald-400"></i>
+                    <span>অ্যাডমিন কন্ট্রোল প্যানেল</span>
+                </h3>
+
+                <!-- Admin Login Box -->
+                <div id="admin-login-box" class="space-y-4">
+                    <div class="bg-slate-900 p-4 rounded-xl border border-slate-800 text-xs text-slate-400">
+                        অ্যাডমিন প্যানেলে প্রবেশ করতে পাসওয়ার্ড দিন। (ডিফল্ট পাসওয়ার্ড: <span class="text-emerald-400 font-mono font-bold">19000s</span>)
                     </div>
                     <div>
-                        <label class="text-slate-400 block mb-1">প্রেরক নম্বর (Sender Number)</label>
-                        <input type="text" id="pay-sender" placeholder="017xxxxxxxx" class="w-full bg-slate-950 border border-slate-800 rounded p-2 text-white">
+                        <label class="block text-xs font-semibold text-slate-400 mb-1">অ্যাডমিন পাসওয়ার্ড</label>
+                        <input type="password" id="admin-password-input" placeholder="পাসওয়ার্ড লিখুন" class="w-full bg-slate-900 border border-slate-800 rounded-xl px-4 py-2.5 text-sm text-slate-200 focus:outline-none focus:border-emerald-500">
                     </div>
-                    <div>
-                        <label class="text-slate-400 block mb-1">TrxID (ট্রানজেকশন আইডি)</label>
-                        <input type="text" id="pay-trx" placeholder="9N7A..." class="w-full bg-slate-950 border border-slate-800 rounded p-2 text-white uppercase">
-                    </div>
-                    <button onclick="submitDeposit()" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2.5 rounded">পেমেন্ট সাবমিট করুন</button>
-                </div>
-            </div>
-        </div>
-        <!-- MY ORDERS TAB -->
-        <div id="tab-orders" class="tab-content hidden space-y-4">
-            <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 space-y-4 text-xs">
-                <h2 class="text-sm font-bold text-emerald-400 border-b border-slate-800 pb-2">My Deposits & Panel Orders</h2>
-                <div id="my-orders-list" class="space-y-2">
-                    <p class="text-slate-400 text-center py-4">কোনো অর্ডার বা পেমেন্ট হিস্ট্রি নেই।</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- CODES TAB -->
-        <div id="tab-codes" class="tab-content hidden space-y-4">
-            <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 space-y-4 text-center text-xs">
-                <h2 class="text-sm font-bold text-blue-400 border-b border-slate-800 pb-2">My Panel Codes (Auto Delivered)</h2>
-                <div id="my-panel-codes-list" class="space-y-2">
-                    <p class="text-slate-400 py-4">কোনো কোড পাওয়া যায়নি!</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- ACCOUNT TAB -->
-        <div id="tab-account" class="tab-content hidden space-y-4">
-            <div id="auth-container" class="bg-slate-900 border border-slate-800 rounded-xl p-4 space-y-4 text-xs">
-                <div class="flex border-b border-slate-800 pb-2">
-                    <button onclick="switchAuthMode('login')" id="auth-tab-login" class="flex-1 text-center font-bold text-blue-400 pb-1 border-b-2 border-blue-500">লগইন</button>
-                    <button onclick="switchAuthMode('register')" id="auth-tab-register" class="flex-1 text-center font-bold text-slate-400 pb-1">রেজিস্ট্রেশন</button>
-                </div>
-                <div id="login-form" class="space-y-3">
-                    <input type="email" id="login-email" placeholder="জিমেইল লিখুন" class="w-full bg-slate-950 border border-slate-800 rounded p-2.5 text-white">
-                    <input type="password" id="login-pass" placeholder="পাসওয়ার্ড দিন" class="w-full bg-slate-950 border border-slate-800 rounded p-2.5 text-white">
-                    <button onclick="handleLogin()" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2.5 rounded">লগইন করুন</button>
-                </div>
-                <div id="register-form" class="space-y-3 hidden">
-                    <input type="email" id="reg-email" placeholder="নতুন জিমেইল লিখুন" class="w-full bg-slate-950 border border-slate-800 rounded p-2.5 text-white">
-                    <input type="password" id="reg-pass" placeholder="পাসওয়ার্ড দিন" class="w-full bg-slate-950 border border-slate-800 rounded p-2.5 text-white">
-                    <button onclick="handleRegister()" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2.5 rounded">অ্যাকাউন্ট তৈরি করুন</button>
-                </div>
-            </div>
-
-            <div id="user-profile-view" class="bg-slate-900 border border-slate-800 rounded-xl p-4 space-y-4 hidden text-xs">
-                <div class="flex items-center justify-between border-b border-slate-800 pb-3">
-                    <div>
-                        <h2 id="profile-email" class="font-bold text-white">user@gmail.com</h2>
-                        <p class="text-[10px] text-slate-400 font-mono mt-0.5">Custom UID: <span id="profile-custom-uid" class="text-blue-400 select-all font-bold"></span></p>
-                    </div>
-                    <button onclick="handleLogout()" class="bg-red-600 text-white font-bold px-3 py-1.5 rounded">লগআউট</button>
-                </div>
-                <div class="grid grid-cols-2 gap-2 text-center">
-                    <div class="bg-slate-950 p-3 rounded border border-slate-800"><p class="text-slate-400">Balance</p><p id="user-bal-display" class="font-bold text-yellow-400 text-sm">৳0</p></div>
-                    <div class="bg-slate-950 p-3 rounded border border-slate-800"><p class="text-slate-400">Status</p><p class="font-bold text-emerald-400 text-sm">Active</p></div>
-                </div>
-            </div>
-        </div>
-        <!-- SUPPORT CENTER -->
-        <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 space-y-3">
-            <h3 class="text-xs font-bold text-blue-400 border-b border-slate-800 pb-1 flex justify-between items-center">
-                <span><i class="fa-solid fa-headset mr-1"></i> SUPPORT CENTER</span>
-                <span class="text-[10px] text-emerald-400">24/7 ACTIVE</span>
-            </h3>
-            
-            <!-- Main Admin -->
-            <div class="p-2.5 bg-slate-950 rounded-lg flex items-center justify-between border border-slate-800 text-xs">
-                <div>
-                    <p class="font-bold text-white">Main Admin (Shakil)</p>
-                    <p class="text-slate-400 font-mono text-[11px]">WA: 01618024025 | TG: @lxshakilyt72</p>
-                </div>
-                <a href="https://wa.me/8801618024025" target="_blank" class="bg-emerald-600 text-white p-2 rounded hover:opacity-90"><i class="fa-brands fa-whatsapp text-sm"></i></a>
-            </div>
-
-            <!-- 2nd Admin -->
-            <div class="p-2.5 bg-slate-950 rounded-lg flex items-center justify-between border border-slate-800 text-xs">
-                <div>
-                    <p class="font-bold text-white">2nd Admin / Support Leader</p>
-                    <p class="text-slate-400 font-mono text-[11px]">WA: 01804402530, +966598527005 | TG: @lxanikyt72</p>
-                </div>
-                <div class="flex space-x-1">
-                    <a href="https://wa.me/8801804402530" target="_blank" class="bg-emerald-600 text-white p-1.5 rounded hover:opacity-90" title="WhatsApp"><i class="fa-brands fa-whatsapp text-xs"></i></a>
-                    <a href="https://t.me/lxanikyt72" target="_blank" class="bg-blue-600 text-white p-1.5 rounded hover:opacity-90" title="Telegram"><i class="fa-brands fa-telegram text-xs"></i></a>
-                </div>
-            </div>
-        </div>
-
-        <!-- EXPANDED ADMIN DASHBOARD MODAL -->
-        <div id="admin-dashboard-modal" class="hidden fixed inset-0 bg-black/90 z-50 p-4 overflow-y-auto">
-            <div class="bg-slate-900 border border-yellow-500/50 max-w-lg mx-auto rounded-xl p-4 space-y-4 text-xs">
-                <div class="flex justify-between items-center border-b border-slate-800 pb-2">
-                    <h2 class="font-bold text-yellow-400 text-sm font-orbitron">👑 LX PANEL ADMIN DASHBOARD</h2>
-                    <button onclick="closeAdminDashboard()" class="text-red-500 font-bold px-2 py-1">✕ Close</button>
+                    <button onclick="adminLogin()" class="w-full bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold py-3 px-4 rounded-xl text-sm transition flex items-center justify-center space-x-2">
+                        <i class="fa-solid fa-lock-open"></i>
+                        <span>লগইন করুন</span>
+                    </button>
                 </div>
 
-                <div class="space-y-4 max-h-[75vh] overflow-y-auto pr-1">
-                    <!-- Stats Overview -->
-                    <div class="grid grid-cols-3 gap-2 text-center bg-slate-950 p-2.5 rounded border border-slate-800">
-                        <div><p class="text-slate-400 text-[10px]">Total Panels</p><p id="stat-total" class="font-bold text-white text-sm">0</p></div>
-                        <div><p class="text-slate-400 text-[10px]">Online</p><p id="stat-online" class="font-bold text-emerald-400 text-sm">0</p></div>
-                        <div><p class="text-slate-400 text-[10px]">Offline</p><p id="stat-offline" class="font-bold text-red-400 text-sm">0</p></div>
-                    </div>
-
-                    <!-- 1. Pending Payments -->
-                    <div class="space-y-2">
-                        <h3 class="font-bold text-white border-l-2 border-yellow-400 pl-2">পেন্ডিং ডিপোজিট ও পেমেন্ট লিস্ট:</h3>
-                        <div id="admin-deposits-list" class="space-y-2 bg-slate-950 p-3 rounded border border-slate-800 max-h-40 overflow-y-auto">
-                            <p class="text-slate-400">কোনো নতুন পেমেন্ট রিকোয়েস্ট নেই।</p>
+                <!-- Admin Dashboard (Hidden by default until login) -->
+                <div id="admin-dashboard" class="hidden space-y-6">
+                    <div class="bg-emerald-500/10 border border-emerald-500/20 p-4 rounded-xl flex justify-between items-center">
+                        <div>
+                            <p class="text-xs text-emerald-400 font-bold">অ্যাডমিন স্ট্যাটাস</p>
+                            <p class="text-sm text-slate-200">সফলভাবে লগইন করা হয়েছে!</p>
                         </div>
+                        <button onclick="adminLogout()" class="bg-red-500/20 text-red-400 hover:bg-red-500/30 text-xs px-3 py-1.5 rounded-lg border border-red-500/30 transition">লগআউট</button>
                     </div>
 
-                    <!-- 2. Customer Panel Orders Management -->
-                    <div class="space-y-2">
-                        <h3 class="font-bold text-yellow-400 border-l-2 border-yellow-400 pl-2">গ্রাহকদের প্যানেল অর্ডার লিস্ট:</h3>
-                        <div id="admin-orders-list" class="space-y-2 bg-slate-950 p-3 rounded border border-slate-800 max-h-48 overflow-y-auto">
-                            <p class="text-slate-400">কোনো নতুন অর্ডার নেই।</p>
+                    <!-- Pending Deposits Management -->
+                    <div class="space-y-3">
+                        <h4 class="text-sm font-bold text-slate-200 flex items-center space-x-2">
+                            <i class="fa-solid fa-clock-rotate-left text-amber-400"></i>
+                            <span>পেন্ডিং ডিপোজিট রিকোয়েস্টসমূহ</span>
+                        </h4>
+                        <div id="admin-deposits-list" class="space-y-2">
+                            <div class="bg-slate-900 p-3 rounded-xl border border-slate-800 text-xs text-slate-400 text-center">
+                                কোনো পেন্ডিং ডিপোজিট নেই।
+                            </div>
                         </div>
-                    </div>
-                    <!-- 3. Registered Users & Custom UIDs -->
-                    <div class="space-y-2">
-                        <h3 class="font-bold text-emerald-400 border-l-2 border-emerald-400 pl-2">রেজিস্টার্ড ইউজার ও ৬-৭ ডিজিট UID লিস্ট:</h3>
-                        <div id="admin-users-list" class="space-y-2 bg-slate-950 p-3 rounded border border-slate-800 max-h-40 overflow-y-auto">
-                            <p class="text-slate-400">কোনো ইউজার নেই।</p>
-                        </div>
-                    </div>
-
-                    <!-- 4. Add New Product / Panel with Duration, Keys & Stock -->
-                    <div class="space-y-2 bg-slate-950 p-3 rounded border border-slate-800">
-                        <h3 class="font-bold text-yellow-400">নতুন প্যানেল অ্যাড করুন (অটো কোড সহ):</h3>
-                        <input type="text" id="admin-prod-title" placeholder="প্রোডাক্টের নাম (যেমন: Free Fire Panel)" class="w-full bg-slate-900 border border-slate-800 rounded p-2 text-white mb-1.5">
-                        <div class="grid grid-cols-2 gap-2 mb-1.5">
-                            <input type="number" id="admin-prod-price" placeholder="মূল্য (যেমন: 19 বা 350)" class="bg-slate-900 border border-slate-800 rounded p-2 text-white">
-                            <input type="text" id="admin-prod-duration" placeholder="মেয়াদ (যেমন: 1 Hour, 1 Month)" class="bg-slate-900 border border-slate-800 rounded p-2 text-white">
-                        </div>
-                        <input type="text" id="admin-prod-img" placeholder="ছবির URL (ঐচ্ছিক)" class="w-full bg-slate-900 border border-slate-800 rounded p-2 text-white mb-1.5">
-                        <textarea id="admin-prod-keys" rows="2" placeholder="প্যানেল Keys (কমা , দিয়ে আলাদা করুন। যেমন: KEY1, KEY2, KEY3)" class="w-full bg-slate-900 border border-slate-800 rounded p-2 text-white mb-1.5 font-mono text-xs"></textarea>
-                        <div class="grid grid-cols-2 gap-2 mb-1.5">
-                            <select id="admin-prod-cat" class="bg-slate-900 border border-slate-800 rounded p-2 text-white">
-                                <option value="NON ROOT">NON ROOT</option>
-                                <option value="ROOT">ROOT</option>
-                                <option value="IPHONE">IPHONE</option>
-                                <option value="PC">PC</option>
-                            </select>
-                            <select id="admin-prod-status" class="bg-slate-900 border border-slate-800 rounded p-2 text-white">
-                                <option value="Online">Online</option>
-                                <option value="Offline">Offline</option>
-                            </select>
-                        </div>
-                        <button onclick="addNewProduct()" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-1.5 rounded">প্রোডাক্ট পাবলিশ করুন</button>
-                    </div>
-
-                    <!-- 5. Manage / Delete Products -->
-                    <div class="space-y-2">
-                        <h3 class="font-bold text-red-400 border-l-2 border-red-400 pl-2">প্রোডাক্ট ম্যানেজ / ডিলিট করুন:</h3>
-                        <div id="admin-manage-products" class="space-y-2 bg-slate-950 p-3 rounded border border-slate-800 max-h-40 overflow-y-auto">
-                            <p class="text-slate-400">কোনো প্রোডাক্ট নেই।</p>
-                        </div>
-                    </div>
-
-                    <!-- 6. Update Header Marquee Notice -->
-                    <div class="space-y-2 bg-slate-950 p-3 rounded border border-slate-800">
-                        <h3 class="font-bold text-yellow-400">হেডার স্ক্রলিং নোটিশ পরিবর্তন:</h3>
-                        <input type="text" id="admin-notice-input" placeholder="নতুন নোটিশ লিখুন..." class="w-full bg-slate-900 border border-slate-800 rounded p-2 text-white mb-1.5">
-                        <button onclick="updateWebsiteNotice()" class="w-full bg-orange-600 hover:bg-orange-700 text-white font-bold py-1.5 rounded">নোটিশ আপডেট করুন</button>
-                    </div>
-
-                    <!-- 7. Update Pop-up Welcome Notice -->
-                    <div class="space-y-2 bg-slate-950 p-3 rounded border border-slate-800">
-                        <h3 class="font-bold text-blue-400">পপ-আপ ওয়েলকাম মেসেজ পরিবর্তন (Scan Popup):</h3>
-                        <textarea id="admin-popup-notice-input" rows="2" placeholder="সকল ইউজারের জন্য বড় মেসেজ/নোটিশ লিখুন..." class="w-full bg-slate-900 border border-slate-800 rounded p-2 text-white mb-1.5 text-xs"></textarea>
-                        <button onclick="updatePopupNotice()" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-1.5 rounded">পপ-আপ নোটিশ সেভ করুন</button>
-                    </div>
-
-                    <!-- 8. Update YouTube Video Link -->
-                    <div class="space-y-2 bg-slate-950 p-3 rounded border border-slate-800">
-                        <h3 class="font-bold text-red-400">ইউটিউব ভিডিও গাইড লিংক পরিবর্তন:</h3>
-                        <input type="text" id="admin-yt-input" placeholder="ইউটিউব ভিডিও লিংক..." class="w-full bg-slate-900 border border-slate-800 rounded p-2 text-white mb-1.5">
-                        <button onclick="updateYoutubeLink()" class="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-1.5 rounded">ভিডিও লিংক আপডেট করুন</button>
-                    </div>
-
-                    <!-- 9. Manual Panel Code Send (Backup) -->
-                    <div class="space-y-2 bg-slate-950 p-3 rounded border border-slate-800">
-                        <h3 class="font-bold text-slate-300">ম্যানুয়ালি কোড সেন্ড করুন (ঐচ্ছিক):</h3>
-                        <input type="text" id="admin-code-uid" placeholder="ইউজারের Custom UID দিন (যেমন: 1843425)" class="w-full bg-slate-900 border border-slate-800 rounded p-2 text-white mb-1.5">
-                        <input type="text" id="admin-code-key" placeholder="প্যানেল লাইসেন্স কি বা কোড" class="w-full bg-slate-900 border border-slate-800 rounded p-2 text-white mb-1.5">
-                        <button onclick="sendCodeToUser()" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-1.5 rounded">ম্যানুয়াল কোড সেন্ড</button>
                     </div>
                 </div>
             </div>
         </div>
 
     </main>
+    <!-- Footer & Official Contact Links -->
+    <footer class="glass-nav mt-12 py-8 px-4 border-t border-slate-800">
+        <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+            <div>
+                <h4 class="text-sm font-bold text-slate-200 mb-3 flex items-center space-x-2">
+                    <i class="fa-solid fa-shield-halved text-emerald-400"></i>
+                    <span>LX PANEL SHOP</span>
+                </h4>
+                <p class="text-xs text-slate-400 leading-relaxed">
+                    সবচেয়ে নির্ভরযোগ্য এবং অটোমেটেড গেমিং প্যানেল ও লাইসেন্স কি শপ। যেকোনো প্রয়োজনে আমাদের অফিশিয়াল চ্যানেলে যুক্ত থাকুন।
+                </p>
+            </div>
 
-    <!-- Fixed Bottom Navigation Bar -->
-    <nav class="fixed bottom-0 left-0 right-0 max-w-md mx-auto bg-slate-900/95 backdrop-blur-md border-t border-slate-800 px-2 py-2 flex items-center justify-around z-40">
-        <button onclick="switchTab('home')" id="nav-home" class="flex flex-col items-center text-blue-500 transition">
-            <i class="fa-solid fa-house text-base"></i>
-            <span class="text-[10px] font-bold mt-0.5">Home</span>
-        </button>
-        <button onclick="switchTab('addfund')" id="nav-addfund" class="flex flex-col items-center text-slate-400 hover:text-blue-400 transition">
-            <i class="fa-solid fa-wallet text-base"></i>
-            <span class="text-[10px] font-bold mt-0.5">Add Fund</span>
-        </button>
-        <button onclick="switchTab('orders')" id="nav-orders" class="flex flex-col items-center text-slate-400 hover:text-blue-400 transition">
-            <i class="fa-solid fa-box-archive text-base"></i>
-            <span class="text-[10px] font-bold mt-0.5">Orders</span>
-        </button>
-        <button onclick="switchTab('codes')" id="nav-codes" class="flex flex-col items-center text-slate-400 hover:text-blue-400 transition">
-            <i class="fa-solid fa-key text-base"></i>
-            <span class="text-[10px] font-bold mt-0.5">Codes</span>
-        </button>
-        <button onclick="switchTab('account')" id="nav-account" class="flex flex-col items-center text-slate-400 hover:text-blue-400 transition">
-            <i class="fa-solid fa-user text-base"></i>
-            <span class="text-[10px] font-bold mt-0.5">Account</span>
-        </button>
-    </nav>
-    <!-- JavaScript & Firebase Logic -->
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-        import { getDatabase, ref, set, push, onValue, update, remove, get } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+            <div>
+                <h4 class="text-sm font-bold text-slate-200 mb-3 flex items-center space-x-2">
+                    <i class="fa-solid fa-link text-emerald-400"></i>
+                    <span>অফিশিয়াল লিংকসমূহ</span>
+                </h4>
+                <ul class="space-y-2 text-xs text-slate-400">
+                    <li>
+                        <a href="https://t.me/+oialIN5nGMpmYzU1" target="_blank" class="hover:text-emerald-400 flex items-center space-x-2 transition">
+                            <i class="fa-brands fa-telegram text-cyan-400"></i>
+                            <span>মেইন টেলিগ্রাম চ্যানেল</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://t.me/publicchat084" target="_blank" class="hover:text-emerald-400 flex items-center space-x-2 transition">
+                            <i class="fa-brands fa-telegram text-cyan-400"></i>
+                            <span>টেলিগ্রাম চ্যাট গ্রুপ</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
 
-        const firebaseConfig = {
-            apiKey: "AIzaSyCi-cuSz81umWbpl0ryfsUmT48jM-IP07o",
-            authDomain: "lx-panel-store-debce.firebaseapp.com",
-            databaseURL: "https://lx-panel-store-debce-default-rtdb.firebaseio.com",
-            projectId: "lx-panel-store-debce",
-            storageBucket: "lx-panel-store-debce.firebasestorage.app",
-            messagingSenderId: "618694919729",
-            appId: "1:618694919729:web:0129a146b95562187db710"
+            <div>
+                <h4 class="text-sm font-bold text-slate-200 mb-3 flex items-center space-x-2">
+                    <i class="fa-solid fa-headset text-emerald-400"></i>
+                    <span>সাপোর্ট ও যোগাযোগ</span>
+                </h4>
+                <ul class="space-y-2 text-xs text-slate-400">
+                    <li class="flex items-center space-x-2">
+                        <i class="fa-brands fa-whatsapp text-emerald-400"></i>
+                        <span>WhatsApp: 01618024025</span>
+                    </li>
+                    <li class="flex items-center space-x-2">
+                        <i class="fa-brands fa-telegram text-cyan-400"></i>
+                        <span>Admin Telegram: @lxshakilyt72</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="max-w-6xl mx-auto pt-4 border-t border-slate-800/60 text-center text-xs text-slate-500">
+            &copy; 2026 LX PANEL SHOP. All Rights Reserved. Designed & Managed by LX SHAKIL.
+        </div>
+    </footer>
+    <!-- JavaScript Core Logic -->
+    <script>
+        // LocalStorage Initial State & User Data
+        let userData = JSON.parse(localStorage.getItem('lx_panel_user')) || {
+            uid: '1' + Math.floor(100000 + Math.random() * 900000),
+            balance: 0.00,
+            vipLevel: 0,
+            totalDeposit: 0,
+            keys: [],
+            claimedBonus: false
         };
 
-        const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
-        const db = getDatabase(app);
+        let adminDeposits = JSON.parse(localStorage.getItem('lx_admin_deposits')) || [];
 
-        let currentUser = null;
-        let currentUserCustomUid = "";
-        let currentFilterCat = 'ALL';
-
-        // 6-7 Digit Unique Random UID Generator Function
-        function generate6To7DigitUID() {
-            return Math.floor(100000 + Math.random() * 9000000).toString();
+        // Save User Data to LocalStorage
+        function saveUserData() {
+            localStorage.setItem('lx_panel_user', JSON.stringify(userData));
+            updateUI();
         }
 
-        window.closeWelcomePopup = function() {
-            document.getElementById('welcome-popup-modal').style.display = 'none';
+        // Initialize UI on Load
+        window.onload = function() {
+            document.getElementById('user-uid').innerText = userData.uid;
+            updateUI();
+            startDynamicClock();
         };
 
-        window.switchTab = function(tabId) {
+        // Update UI Elements
+        function updateUI() {
+            document.getElementById('user-balance').innerText = userData.balance.toFixed(2);
+            
+            // VIP Badge Display
+            let badgeEl = document.getElementById('user-vip-badge');
+            if (userData.vipLevel === 0) {
+                badgeEl.innerText = 'VIP 0';
+                badgeEl.className = 'px-2 py-0.5 rounded text-[10px] font-bold text-white bg-slate-700';
+            } else if (userData.vipLevel === 1) {
+                badgeEl.innerText = 'VIP 1';
+                badgeEl.className = 'px-2 py-0.5 rounded text-[10px] font-bold text-white vip-1-badge';
+            } else if (userData.vipLevel === 2) {
+                badgeEl.innerText = 'VIP 2';
+                badgeEl.className = 'px-2 py-0.5 rounded text-[10px] font-bold text-white vip-2-badge';
+            } else {
+                badgeEl.innerText = 'VIP ' + userData.vipLevel + '+';
+                badgeEl.className = 'px-2 py-0.5 rounded text-[10px] font-bold text-white vip-3-badge';
+            }
+
+            // Show/Hide Claim Bonus Button
+            let claimBtn = document.getElementById('claim-bonus-btn');
+            if (userData.vipLevel > 0 && !userData.claimedBonus) {
+                claimBtn.classList.remove('hidden');
+            } else {
+                claimBtn.classList.add('hidden');
+            }
+
+            // Render Purchased Keys
+            renderMyKeys();
+        }
+
+        // Tab Switching Logic
+        function switchTab(tabId) {
             document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
-            document.getElementById('tab-' + tabId).classList.remove('hidden');
-            ['home', 'addfund', 'orders', 'codes', 'account'].forEach(t => {
-                const btn = document.getElementById('nav-' + t);
-                if(btn) { btn.classList.remove('text-blue-500'); btn.classList.add('text-slate-400'); }
+            document.querySelectorAll('.nav-tab').forEach(el => {
+                el.classList.remove('bg-emerald-500', 'text-slate-950', 'active-tab');
+                el.classList.add('bg-slate-900', 'text-slate-300', 'border', 'border-slate-800');
             });
-            const activeNav = document.getElementById('nav-' + tabId);
-            if(activeNav) { activeNav.classList.remove('text-slate-400'); activeNav.classList.add('text-blue-500'); }
-            window.scrollTo(0, 0);
-        };
 
-        window.switchAuthMode = function(mode) {
-            if(mode === 'login') {
-                document.getElementById('login-form').classList.remove('hidden');
-                document.getElementById('register-form').classList.add('hidden');
-                document.getElementById('auth-tab-login').className = "flex-1 text-center font-bold text-blue-400 pb-1 border-b-2 border-blue-500";
-                document.getElementById('auth-tab-register').className = "flex-1 text-center font-bold text-slate-400 pb-1";
-            } else {
-                document.getElementById('login-form').classList.add('hidden');
-                document.getElementById('register-form').classList.remove('hidden');
-                document.getElementById('auth-tab-register').className = "flex-1 text-center font-bold text-emerald-400 pb-1 border-b-2 border-emerald-500";
-                document.getElementById('auth-tab-login').className = "flex-1 text-center font-bold text-slate-400 pb-1";
-            }
-        };
+            document.getElementById('section-' + tabId).classList.remove('hidden');
+            let activeBtn = document.getElementById('tab-' + tabId);
+            activeBtn.classList.remove('bg-slate-900', 'text-slate-300', 'border', 'border-slate-800');
+            activeBtn.classList.add('bg-emerald-500', 'text-slate-950', 'active-tab');
+        }
 
-        window.handleRegister = function() {
-            const email = document.getElementById('reg-email').value.trim();
-            const pass = document.getElementById('reg-pass').value.trim();
-            if(!email || !pass) { alert('দয়া করে জিমেইল এবং পাসওয়ার্ড দিন'); return; }
-
-            createUserWithEmailAndPassword(auth, email, pass)
-            .then((userCred) => {
-                const newCustomUID = generate6To7DigitUID();
-                const userRef = ref(db, 'users/' + userCred.user.uid);
-                set(userRef, {
-                    email: email,
-                    uid: userCred.user.uid,
-                    customUid: newCustomUID,
-                    balance: 0,
-                    joined: new Date().toLocaleString()
-                });
-                alert(`সফলভাবে অ্যাকাউন্ট তৈরি হয়েছে! আপনার নতুন UID: ${newCustomUID}`);
-                window.switchTab('home');
-            })
-            .catch((error) => { alert('ত্রুটি: ' + error.message); });
-        };
-
-        window.handleLogin = function() {
-            const email = document.getElementById('login-email').value.trim();
-            const pass = document.getElementById('login-pass').value.trim();
-            if(!email || !pass) { alert('দয়া করে জিমেইল এবং পাসওয়ার্ড দিন'); return; }
-            signInWithEmailAndPassword(auth, email, pass)
-            .then(() => { alert('সফলভাবে লগইন হয়েছে!'); window.switchTab('home'); })
-            .catch((error) => { alert('লগইন ব্যর্থ: ' + error.message); });
-        };
-
-        window.handleLogout = function() {
-            signOut(auth).then(() => { alert('লগআউট সফল'); window.switchTab('home'); });
-        };
-
-        onAuthStateChanged(auth, (user) => {
-            currentUser = user;
-            const authBtns = document.getElementById('header-auth-buttons');
-            if (user) {
-                document.getElementById('auth-container').classList.add('hidden');
-                document.getElementById('user-profile-view').classList.remove('hidden');
-                document.getElementById('profile-email').innerText = user.email;
-
-                authBtns.innerHTML = `
-                    <button onclick="toggleAdminModal()" class="text-slate-400 hover:text-blue-400 transition p-2" title="Admin Login">
-                        <i class="fa-solid fa-key text-yellow-400"></i>
-                    </button>
-                    <span class="text-xs text-emerald-400 font-bold bg-slate-800 px-2.5 py-1 rounded border border-slate-700">Online</span>
-                `;
-
-                // Fetch or Generate Custom UID for logged-in user
-                const userRef = ref(db, 'users/' + user.uid);
-                onValue(userRef, (snap) => {
-                    const uData = snap.val();
-                    if(uData) {
-                        if(!uData.customUid) {
-                            const genUid = generate6To7DigitUID();
-                            update(userRef, { customUid: genUid });
-                            currentUserCustomUid = genUid;
-                        } else {
-                            currentUserCustomUid = uData.customUid;
-                        }
-                        document.getElementById('profile-custom-uid').innerText = currentUserCustomUid;
-                    } else {
-                        const genUid = generate6To7DigitUID();
-                        set(userRef, { email: user.email, uid: user.uid, customUid: genUid, balance: 0 });
-                        currentUserCustomUid = genUid;
-                        document.getElementById('profile-custom-uid').innerText = currentUserCustomUid;
-                    }
-                });
-
-                loadUserData(user.uid);
-            } else {
-                currentUser = null;
-                currentUserCustomUid = "";
-                document.getElementById('auth-container').classList.remove('hidden');
-                document.getElementById('user-profile-view').classList.add('hidden');
-                
-                authBtns.innerHTML = `
-                    <button onclick="toggleAdminModal()" class="text-slate-400 hover:text-blue-400 transition p-2" title="Admin Login">
-                        <i class="fa-solid fa-key text-yellow-400"></i>
-                    </button>
-                    <button onclick="switchTab('account')" class="bg-red-600 hover:bg-red-700 text-white text-xs font-bold px-3 py-1.5 rounded transition">LOGIN</button>
-                    <button onclick="switchTab('account')" class="bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-bold px-3 py-1.5 rounded border border-slate-700 transition">REGISTER</button>
-                `;
-            }
-        });
-        // Submit Deposit with ৳50 Minimum Limit Check
-        window.submitDeposit = function() {
-            if(!currentUser) {
-                alert('টাকা অ্যাড করতে হলে প্রথমে লগইন করতে হবে!');
-                window.switchTab('account');
-                return;
-            }
-            const method = document.getElementById('pay-method').value;
-            const amount = Number(document.getElementById('pay-amount').value);
-            const senderNo = document.getElementById('pay-sender').value.trim();
-            const trxID = document.getElementById('pay-trx').value.trim();
-
-            if(!amount || amount < 50) {
-                alert('মিনিমাম ৫০ টাকা বা তার বেশি ডিপোজিট করতে হবে! ৫০ টাকার নিচে ডিপোজিট গ্রহণ করা হবে না।');
+        // Dynamic Timezone Clock (BD & India Time)
+        function startDynamicClock() {
+            setInterval(() => {
+                let now = new Date();
+                let options = { timeZone: 'Asia/Dhaka', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true };
+                let timeString = now.toLocaleTimeString('en-US', options);
+                document.getElementById('clock-display').innerText = 'BD/IND Time: ' + timeString;
+            }, 1000);
+        }
+        // Buy Panel / Item Logic
+        function buyPanel(panelName, price) {
+            if (userData.balance < price) {
+                alert('আপনার অ্যাকাউন্টে পর্যাপ্ত ব্যালেন্স নেই! দয়া করে আগে ডিপোজিট করুন।');
+                switchTab('deposit');
                 return;
             }
 
-            if(!senderNo || !trxID) {
-                alert('সকল তথ্য (প্রেরক নম্বর ও TrxID) সঠিকভাবে পূরণ করুন!');
+            userData.balance -= price;
+            let randomKey = 'LX-KEY-' + Math.random().toString(36).substring(2, 10).toUpperCase();
+            
+            userData.keys.push({
+                name: panelName,
+                key: randomKey,
+                date: new Date().toLocaleDateString()
+            });
+
+            saveUserData();
+            alert('অভিনন্দন! সফলভাবে প্যানেল কেনা হয়েছে। আপনার লাইসেন্স কি "আমার কি (Key)" সেকশনে যুক্ত করা হয়েছে।');
+            switchTab('mykeys');
+        }
+
+        // Submit Deposit Request Logic
+        function submitDeposit() {
+            let method = document.getElementById('deposit-method').value;
+            let amount = parseFloat(document.getElementById('deposit-amount').value);
+            let trxid = document.getElementById('deposit-trxid').value.trim();
+
+            if (isNaN(amount) || amount < 50) {
+                alert('সর্বনিম্ন ডিপোজিট পরিমাণ ৳৫০ হতে হবে!');
+                return;
+            }
+            if (!trxid) {
+                alert('দয়া করে সঠিক ট্রানজেকশন আইডি (TrxID) দিন!');
                 return;
             }
 
-            const depositRef = ref(db, 'deposits');
-            const newDepositRef = push(depositRef);
-            set(newDepositRef, {
-                uid: currentUser.uid,
-                customUid: currentUserCustomUid,
-                email: currentUser.email,
-                method: method,
+            let depositReq = {
+                id: Date.now(),
+                uid: userData.uid,
+                method: method.toUpperCase(),
                 amount: amount,
-                senderNo: senderNo,
-                trxID: trxID,
-                status: 'Pending',
-                date: new Date().toLocaleString()
-            }).then(() => {
-                alert('পেমেন্ট রিকোয়েস্ট সফলভাবে জমা হয়েছে! অ্যাডমিন চেক করে ব্যালেন্স অ্যাড করে দেবেন।');
-                document.getElementById('pay-amount').value = '';
-                document.getElementById('pay-sender').value = '';
-                document.getElementById('pay-trx').value = '';
-                window.switchTab('orders');
-            }).catch((err) => { alert('ত্রুটি: ' + err.message); });
-        };
+                trxid: trxid,
+                status: 'Pending'
+            };
 
-        function loadUserData(uid) {
-            const depositsRef = ref(db, 'deposits');
-            const globalOrdersRef = ref(db, 'globalOrders');
+            adminDeposits.push(depositReq);
+            localStorage.setItem('lx_admin_deposits', JSON.stringify(adminDeposits));
 
-            onValue(depositsRef, (snapshot) => {
-                const data = snapshot.val();
-                let html = '<h4 class="text-xs font-bold text-yellow-400 mb-1">পেমেন্ট ডিপোজিট হিস্ট্রি:</h4>';
-                let hasData = false;
-                if(data) {
-                    Object.values(data).forEach(item => {
-                        if(item.uid === uid) {
-                            hasData = true;
-                            let badgeColor = item.status === 'Approved' ? 'text-emerald-400' : (item.status === 'Rejected' ? 'text-red-500' : 'text-yellow-400');
-                            html += `<div class="bg-slate-950 p-2.5 rounded border border-slate-800 flex justify-between items-center mb-1.5">
-                                <div>
-                                    <p class="text-white font-bold">টাকা: ৳${item.amount} (${item.method.toUpperCase()})</p>
-                                    <p class="text-[10px] text-slate-400">Sender: ${item.senderNo} | TrxID: ${item.trxID}</p>
-                                </div>
-                                <span class="font-bold ${badgeColor}">${item.status}</span>
-                            </div>`;
-                        }
-                    });
-                }
-                if(!hasData) html += '<p class="text-slate-400 text-center py-2">কোনো পেমেন্ট হিস্ট্রি নেই।</p>';
+            alert('ডিপোজিট রিকোয়েস্ট সফলভাবে পাঠানো হয়েছে! অ্যাডমিন চেক করে শীঘ্রই ব্যালেন্স যুক্ত করে দেবেন।');
+            document.getElementById('deposit-amount').value = '';
+            document.getElementById('deposit-trxid').value = '';
+            renderAdminDeposits();
+        }
 
-                onValue(globalOrdersRef, (snapOrder) => {
-                    const orderData = snapOrder.val();
-                    html += '<h4 class="text-xs font-bold text-blue-400 mt-3 mb-1">প্যানেল ক্রয় হিস্ট্রি ও স্ট্যাটাস:</h4>';
-                    let hasOrders = false;
-                    if(orderData) {
-                        Object.values(orderData).forEach(ord => {
-                            if(ord.uid === uid) {
-                                hasOrders = true;
-                                let stColor = ord.status === 'Completed' ? 'text-emerald-400' : (ord.status === 'Cancelled' ? 'text-red-500' : 'text-yellow-400');
-                                html += `<div class="bg-slate-950 p-2.5 rounded border border-slate-800 flex justify-between items-center mb-1.5">
-                                    <div>
-                                        <p class="text-white font-bold">${ord.title} (৳${ord.price})</p>
-                                        <p class="text-[10px] text-slate-400">Date: ${ord.date}</p>
-                                    </div>
-                                    <span class="font-bold ${stColor}">${ord.status}</span>
-                                </div>`;
-                            }
-                        });
-                    }
-                    if(!hasOrders) html += '<p class="text-slate-400 text-center py-2">কোনো প্যানেল অর্ডার নেই।</p>';
-                    document.getElementById('my-orders-list').innerHTML = html;
-                });
-            });
+        // P2P Balance Transfer Logic
+        function executeTransfer() {
+            let receiverUid = document.getElementById('transfer-receiver-uid').value.trim();
+            let amount = parseFloat(document.getElementById('transfer-amount').value);
 
-            const codesRef = ref(db, 'userCodes/' + uid);
-            onValue(codesRef, (snapshot) => {
-                const codeData = snapshot.val();
-                let codeHtml = '';
-                if(codeData) {
-                    Object.values(codeData).forEach(c => {
-                        codeHtml += `<div class="bg-slate-950 p-3 rounded border border-slate-800 text-left">
-                            <p class="text-emerald-400 font-bold text-[11px] mb-0.5">${c.title || 'Panel License Key'}</p>
-                            <p class="text-yellow-400 font-mono font-bold select-all">Key: ${c.codeKey}</p>
-                            <p class="text-[10px] text-slate-400">Date: ${c.date}</p>
-                        </div>`;
-                    });
-                }
-                document.getElementById('my-panel-codes-list').innerHTML = codeHtml || '<p class="text-slate-400 py-4">কোনো কোড পাওয়া যায়নি!</p>';
-            });
-
-            const userBalRef = ref(db, 'users/' + uid + '/balance');
-            onValue(userBalRef, (snapshot) => {
-                const bal = snapshot.val() || 0;
-                document.getElementById('user-bal-display').innerText = '৳' + bal;
-            });
-                    }
-        // Load & Render Products
-        const productsRef = ref(db, 'products');
-        onValue(productsRef, (snapshot) => {
-            const data = snapshot.val();
-            let html = '';
-            let totalCount = 0;
-            let onlineCount = 0;
-            let offlineCount = 0;
-
-            if(data) {
-                Object.entries(data).forEach(([id, prod]) => {
-                    totalCount++;
-                    if(prod.status === 'Online') onlineCount++;
-                    else offlineCount++;
-
-                    let availableKeys = prod.keys ? (Array.isArray(prod.keys) ? prod.keys.length : 0) : (prod.stock || 0);
-
-                    if((currentFilterCat === 'ALL' || prod.category === currentFilterCat) && prod.status === 'Online') {
-                        let imgContent = prod.imageUrl ? `<img src="${prod.imageUrl}" class="w-full h-full object-cover rounded">` : `<span class="font-orbitron text-blue-400 font-bold">${prod.category}</span>`;
-                        let durationText = prod.duration ? prod.duration : '1 Month';
-                        let stockText = availableKeys > 0 ? `<span class="text-emerald-400 font-bold">Stock: ${availableKeys}</span>` : `<span class="text-red-500 font-bold">Out of Stock</span>`;
-                        let buyBtn = availableKeys > 0 ? `<button onclick="buyProduct('${id}', '${prod.title}', ${prod.price})" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-1.5 rounded">কিনুন</button>` : `<button disabled class="w-full bg-slate-800 text-slate-500 font-bold py-1.5 rounded cursor-not-allowed">স্টক শেষ</button>`;
-
-                        html += `<div class="bg-slate-900 border border-slate-800 rounded-xl p-3 space-y-2 text-xs">
-                            <div class="bg-slate-950 aspect-video rounded overflow-hidden flex items-center justify-center">${imgContent}</div>
-                            <p class="font-bold text-white">${prod.title}</p>
-                            <p class="text-yellow-400 font-bold">৳${prod.price} / ${durationText}</p>
-                            <div class="flex justify-between items-center text-[10px]">
-                                ${stockText}
-                            </div>
-                            ${buyBtn}
-                        </div>`;
-                    }
-                });
+            if (!receiverUid) {
+                alert('দয়া করে প্রাপকের সঠিক Custom UID দিন!');
+                return;
             }
-            document.getElementById('products-grid').innerHTML = html || '<p class="text-slate-400 col-span-2 text-center py-4">এই ক্যাটাগরিতে কোনো অনলাইন প্যানেল নেই।</p>';
-            
-            if(document.getElementById('stat-total')) document.getElementById('stat-total').innerText = totalCount;
-            if(document.getElementById('stat-online')) document.getElementById('stat-online').innerText = onlineCount;
-            if(document.getElementById('stat-offline')) document.getElementById('stat-offline').innerText = offlineCount;
-        });
-
-        // Instant Auto-Key Delivery Buy Function
-        window.buyProduct = function(prodId, title, price) {
-            if(!currentUser) {
-                alert('অর্ডার করতে প্রথমে লগইন করুন!');
-                switchTab('account');
+            if (isNaN(amount) || amount <= 0) {
+                alert('দয়া করে সঠিক ট্রান্সফার পরিমাণ লিখুন!');
+                return;
+            }
+            if (userData.balance < amount) {
+                alert('আপনার অ্যাকাউন্টে পর্যাপ্ত ব্যালেন্স নেই!');
+                return;
+            }
+            if (receiverUid === userData.uid) {
+                alert('আপনি নিজের অ্যাকাউন্টে ব্যালেন্স ট্রান্সফার করতে পারবেন না!');
                 return;
             }
 
-            const userBalRef = ref(db, 'users/' + currentUser.uid + '/balance');
-            onValue(userBalRef, (snap) => {
-                const bal = snap.val() || 0;
-                if(bal < price) {
-                    alert(`আপনার পর্যাপ্ত ব্যালেন্স নেই! প্যানেলটির মূল্য ৳${price}, আপনার ব্যালেন্সে আছে ৳${bal}। দয়া করে Add Fund থেকে টাকা অ্যাড করুন।`);
-                    switchTab('addfund');
-                } else {
-                    if(confirm(`${title} প্যানেলটি কিনতে চান? আপনার একাউন্ট থেকে ৳${price} কাটা হবে এবং ইনস্ট্যান্ট কোড ডেলিভারি পাবেন।`)) {
-                        
-                        // Check product stock and pop 1 key
-                        const singleProdRef = ref(db, 'products/' + prodId);
-                        get(singleProdRef).then((pSnap) => {
-                            if(!pSnap.exists()) return;
-                            const prodData = pSnap.val();
-                            let keyList = prodData.keys || [];
-                            
-                            if(keyList.length === 0) {
-                                alert('দুঃখিত! এই প্যানেলের স্টক শেষ হয়ে গেছে।');
-                                return;
-                            }
-
-                            // Take first key and remove it from product stock
-                            const assignedKey = keyList.shift();
-                            
-                            // Deduct User Balance
-                            set(userBalRef, bal - price);
-
-                            // Update Product Stock Keys in DB
-                            update(singleProdRef, { keys: keyList, stock: keyList.length });
-
-                            // Push Assigned Key directly to User's Codes tab (Instant Auto-Delivery)
-                            const userCodesRef = push(ref(db, 'userCodes/' + currentUser.uid));
-                            set(userCodesRef, {
-                                title: title,
-                                codeKey: assignedKey,
-                                date: new Date().toLocaleString()
-                            });
-
-                            // Push to Global Orders as Completed
-                            const globalOrderRef = push(ref(db, 'globalOrders'));
-                            set(globalOrderRef, {
-                                email: currentUser.email,
-                                uid: currentUser.uid,
-                                customUid: currentUserCustomUid,
-                                title: title,
-                                price: price,
-                                deliveredKey: assignedKey,
-                                date: new Date().toLocaleString(),
-                                status: 'Completed'
-                            });
-
-                            alert(`🎉 অভিনন্দন! প্যানেল কেনা সফল হয়েছে। আপনার লাইসেন্স কি: ${assignedKey}\nএটি আপনার Codes ট্যাবে যুক্ত করা হয়েছে।`);
-                            switchTab('codes');
-                        });
-                    }
-                }
-            }, { onlyOnce: true });
-        };
-        // Updated Admin Password Check ('19000s')
-        window.toggleAdminModal = function() {
-            const pass = prompt('অ্যাডমিন পাসওয়ার্ড দিন:');
-            if(pass === '19000s') {
-                document.getElementById('admin-dashboard-modal').classList.remove('hidden');
-                loadAdminDeposits();
-                loadAdminGlobalOrders();
-                loadAdminUsers();
-                loadAdminManageProducts();
-            } else if(pass !== null) {
-                alert('ভুল পাসওয়ার্ড!');
-            }
-        };
-
-        window.closeAdminDashboard = function() {
-            document.getElementById('admin-dashboard-modal').classList.add('hidden');
-        };
-
-        function loadAdminDeposits() {
-            const depositsRef = ref(db, 'deposits');
-            onValue(depositsRef, (snapshot) => {
-                const data = snapshot.val();
-                let html = '';
-                if(data) {
-                    Object.entries(data).forEach(([key, item]) => {
-                        if(item.status === 'Pending') {
-                            html += `<div class="bg-slate-900 p-2.5 rounded border border-slate-800 flex justify-between items-center mb-1">
-                                <div>
-                                    <p class="text-white"><b>${item.email}</b> (UID: ${item.customUid || item.uid}) - ৳${item.amount}</p>
-                                    <p class="text-[10px] text-yellow-400">Sender: ${item.senderNo} | TrxID: ${item.trxID} (${item.method})</p>
-                                </div>
-                                <div class="flex space-x-1">
-                                    <button onclick="approveDeposit('${key}', '${item.uid}', ${item.amount})" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-2 py-1 rounded text-[10px]">Approve</button>
-                                    <button onclick="rejectDeposit('${key}')" class="bg-red-600 hover:bg-red-700 text-white font-bold px-2 py-1 rounded text-[10px]">Reject</button>
-                                </div>
-                            </div>`;
-                        }
-                    });
-                }
-                document.getElementById('admin-deposits-list').innerHTML = html || '<p class="text-slate-400">কোনো পেন্ডিং পেমেন্ট নেই।</p>';
-            });
+            userData.balance -= amount;
+            saveUserData();
+            alert('সফলভাবে ' + amount + ' টাকা UID: ' + receiverUid + '-এর কাছে ট্রান্সফার করা হয়েছে!');
+            document.getElementById('transfer-receiver-uid').value = '';
+            document.getElementById('transfer-amount').value = '';
         }
 
-        window.approveDeposit = function(key, uid, amount) {
-            update(ref(db, 'deposits/' + key), { status: 'Approved' }).then(() => {
-                const userBalRef = ref(db, 'users/' + uid + '/balance');
-                onValue(userBalRef, (snap) => {
-                    let currentBal = snap.val() || 0;
-                    set(userBalRef, currentBal + amount);
-                }, { onlyOnce: true });
-                alert('পেমেন্ট অ্যাপ্রুভ হয়েছে এবং ইউজারের ব্যালেন্সে টাকা যোগ করা হয়েছে!');
-            });
-        };
+        // Check & Update VIP Level Based on Total Deposits
+        function checkVipUpgrade() {
+            let total = userData.totalDeposit;
+            if (total >= 2500) {
+                userData.vipLevel = 2; // VIP 2 (৳5 bonus)
+            } else if (total >= 1000) {
+                userData.vipLevel = 1; // VIP 1 (৳3 bonus)
+            }
+            // Note: VIP 3+ is handled or unlocked through custom threshold or higher tiers where bonus is ৳7
+            saveUserData();
+        }
 
-        window.rejectDeposit = function(key) {
-            update(ref(db, 'deposits/' + key), { status: 'Rejected' }).then(() => {
-                alert('পেমেন্ট রিকোয়েস্ট রিজেক্ট করা হয়েছে!');
-            });
-        };
+        // Claim VIP Monthly Bonus Logic
+        function claimVipBonus() {
+            if (userData.claimedBonus) {
+                alert('আপনি এই মাসের বোনাস ইতিমধ্যে ক্লেইম করেছেন!');
+                return;
+            }
 
-        function loadAdminGlobalOrders() {
-            const gOrderRef = ref(db, 'globalOrders');
-            onValue(gOrderRef, (snapshot) => {
-                const data = snapshot.val();
-                let html = '';
-                if(data) {
-                    Object.entries(data).forEach(([key, order]) => {
-                        let statusBadge = order.status === 'Completed' ? 'bg-emerald-600' : (order.status === 'Cancelled' ? 'bg-red-600' : 'bg-yellow-600');
-                        let keyInfo = order.deliveredKey ? `<p class="text-yellow-400 font-mono text-[10px]">Key: ${order.deliveredKey}</p>` : '';
-                        html += `<div class="bg-slate-900 p-2.5 rounded border border-slate-800 space-y-1.5 text-[11px] mb-1.5">
-                            <div class="flex justify-between items-center">
-                                <p class="text-white font-bold">${order.email} - <span class="text-yellow-400">${order.title}</span> (৳${order.price})</p>
-                                <span class="text-white text-[9px] px-1.5 py-0.5 rounded ${statusBadge}">${order.status}</span>
+            let bonusAmount = 3;
+            if (userData.vipLevel === 2) {
+                bonusAmount = 5;
+            } else if (userData.vipLevel >= 3) {
+                bonusAmount = 7; // VIP 3 and above gets ৳7 bonus
+            }
+
+            userData.balance += bonusAmount;
+            userData.claimedBonus = true;
+            saveUserData();
+            alert('অভিনন্দন! আপনি সফলভাবে আপনার VIP মাসিক বোনাস (৳' + bonusAmount + ') ক্লেইম করেছেন!');
+        }
+
+        // Render Purchased Keys in UI
+        function renderMyKeys() {
+            let container = document.getElementById('my-keys-list');
+            if (userData.keys.length === 0) {
+                container.innerHTML = `<div class="bg-slate-900/80 border border-slate-800 p-4 rounded-xl text-center text-slate-400 text-sm">আপনি এখনো কোনো প্যানেল কেনেননি। প্যানেল কিনলে এখানে আপনার লাইসেন্স কি (Key) শো করবে।</div>`;
+                return;
+            }
+
+            let html = '';
+            userData.keys.forEach((item, index) => {
+                html += `
+                    <div class="bg-slate-900 border border-slate-800 p-4 rounded-xl flex flex-col md:flex-row justify-between items-start md:items-center gap-3">
+                        <div>
+                            <span class="text-xs text-emerald-400 font-bold">${item.name}</span>
+                            <p class="font-mono text-sm text-slate-200 select-all bg-slate-950 px-3 py-1 rounded border border-slate-800 mt-1">${item.key}</p>
+                            <span class="text-[10px] text-slate-500 mt-1 block">ক্রয়ের তারিখ: ${item.date}</span>
+                        </div>
+                        <button onclick="navigator.clipboard.writeText('${item.key}'); alert('কি (Key) কপি করা হয়েছে!');" class="bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs px-3 py-2 rounded-lg border border-slate-700 transition flex items-center space-x-1.5">
+                            <i class="fa-regular fa-copy"></i>
+                            <span>কপি কি</span>
+                        </button>
+                    </div>
+                `;
+            });
+            container.innerHTML = html;
+        }
+        // Admin Login Logic
+        function adminLogin() {
+            let pass = document.getElementById('admin-password-input').value;
+            if (pass === '19000s') {
+                document.getElementById('admin-login-box').classList.add('hidden');
+                document.getElementById('admin-dashboard').classList.remove('hidden');
+                renderAdminDeposits();
+            } else {
+                alert('ভুল পাসওয়ার্ড! দয়া করে সঠিক পাসওয়ার্ড দিন।');
+            }
+        }
+
+        // Admin Logout Logic
+        function adminLogout() {
+            document.getElementById('admin-password-input').value = '';
+            document.getElementById('admin-login-box').classList.remove('hidden');
+            document.getElementById('admin-dashboard').classList.add('hidden');
+        }
+
+        // Render Admin Pending Deposits
+        function renderAdminDeposits() {
+            let container = document.getElementById('admin-deposits-list');
+            if (!adminDeposits || adminDeposits.length === 0) {
+                container.innerHTML = `<div class="bg-slate-900 p-3 rounded-xl border border-slate-800 text-xs text-slate-400 text-center">কোনো পেন্ডিং ডিপোজিট নেই।</div>`;
+                return;
+            }
+
+            let html = '';
+            adminDeposits.forEach((dep, index) => {
+                if (dep.status === 'Pending') {
+                    html += `
+                        <div class="bg-slate-900 p-3.5 rounded-xl border border-slate-800 flex flex-col md:flex-row justify-between items-start md:items-center gap-2">
+                            <div class="text-xs">
+                                <span class="font-bold text-slate-200">UID: ${dep.uid}</span> | 
+                                <span class="text-emerald-400 font-bold">৳${dep.amount}</span> (${dep.method})
+                                <p class="text-[11px] font-mono text-slate-400 mt-0.5">TrxID: ${dep.trxid}</p>
                             </div>
-                            <p class="text-blue-400 font-mono">Custom UID: ${order.customUid || order.uid}</p>
-                            ${keyInfo}
-                            <div class="flex space-x-1 pt-1 border-t border-slate-800">
-                                <button onclick="updateOrderStatus('${key}', 'Approved')" class="bg-blue-600 text-white font-bold px-2 py-0.5 rounded text-[9px]">Approved</button>
-                                <button onclick="updateOrderStatus('${key}', 'Completed')" class="bg-emerald-600 text-white font-bold px-2 py-0.5 rounded text-[9px]">Completed</button>
-                                <button onclick="updateOrderStatus('${key}', 'Cancelled')" class="bg-red-600 text-white font-bold px-2 py-0.5 rounded text-[9px]">Cancelled</button>
+                            <div class="flex items-center space-x-2 w-full md:w-auto">
+                                <button onclick="approveDeposit(${dep.id})" class="flex-1 md:flex-none bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs px-3 py-1.5 rounded-lg transition">এপ্রুভ</button>
+                                <button onclick="rejectDeposit(${dep.id})" class="flex-1 md:flex-none bg-red-500/20 text-red-400 hover:bg-red-500/30 text-xs px-3 py-1.5 rounded-lg border border-red-500/30 transition">বাতিল</button>
                             </div>
-                        </div>`;
-                    });
+                        </div>
+                    `;
                 }
-                document.getElementById('admin-orders-list').innerHTML = html || '<p class="text-slate-400">কোনো অর্ডার হিস্ট্রি নেই।</p>';
             });
+
+            container.innerHTML = html || `<div class="bg-slate-900 p-3 rounded-xl border border-slate-800 text-xs text-slate-400 text-center">কোনো পেন্ডিং ডিপোজিট নেই।</div>`;
         }
 
-        window.updateOrderStatus = function(orderKey, status) {
-            update(ref(db, 'globalOrders/' + orderKey), { status: status }).then(() => {
-                alert(`অর্ডার স্ট্যাটাস সফলভাবে '${status}' করা হয়েছে!`);
-            });
-        };
-
-        function loadAdminUsers() {
-            const usersRef = ref(db, 'users');
-            onValue(usersRef, (snapshot) => {
-                const data = snapshot.val();
-                let html = '';
-                if(data) {
-                    Object.entries(data).forEach(([uid, u]) => {
-                        html += `<div class="bg-slate-900 p-2 rounded border border-slate-800 text-[11px] mb-1">
-                            <p class="text-white font-bold">Email: ${u.email}</p>
-                            <p class="text-emerald-400 font-mono font-bold select-all">Custom UID: ${u.customUid || 'N/A'}</p>
-                            <p class="text-yellow-400">Balance: ৳${u.balance || 0}</p>
-                        </div>`;
-                    });
+        // Approve Deposit Logic
+        function approveDeposit(reqId) {
+            let dep = adminDeposits.find(d => d.id === reqId);
+            if (dep) {
+                dep.status = 'Approved';
+                
+                // If deposit belongs to current user, update balance immediately
+                if (dep.uid === userData.uid) {
+                    userData.balance += dep.amount;
+                    userData.totalDeposit += dep.amount;
+                    checkVipUpgrade();
                 }
-                document.getElementById('admin-users-list').innerHTML = html || '<p class="text-slate-400">কোনো ইউজার নেই।</p>';
-            });
-        }
-        // Add Product with Multiple License Keys for Auto-Delivery
-        window.addNewProduct = function() {
-            const title = document.getElementById('admin-prod-title').value.trim();
-            const price = document.getElementById('admin-prod-price').value.trim();
-            const duration = document.getElementById('admin-prod-duration').value.trim() || '1 Month';
-            const imageUrl = document.getElementById('admin-prod-img').value.trim();
-            const keysInput = document.getElementById('admin-prod-keys').value.trim();
-            const category = document.getElementById('admin-prod-cat').value;
-            const status = document.getElementById('admin-prod-status').value;
 
-            if(!title || !price) { alert('প্রোডাক্টের নাম এবং মূল্য দিন!'); return; }
-
-            let keysArray = keysInput ? keysInput.split(',').map(k => k.trim()).filter(k => k.length > 0) : [];
-
-            const prodRef = push(ref(db, 'products'));
-            set(prodRef, {
-                title: title,
-                price: Number(price),
-                duration: duration,
-                imageUrl: imageUrl,
-                keys: keysArray,
-                stock: keysArray.length,
-                category: category,
-                status: status
-            }).then(() => {
-                alert(`নতুন প্রোডাক্ট সফলভাবে অ্যাড করা হয়েছে! মোট Keys অ্যাড হয়েছে: ${keysArray.length}টি`);
-                document.getElementById('admin-prod-title').value = '';
-                document.getElementById('admin-prod-price').value = '';
-                document.getElementById('admin-prod-duration').value = '';
-                document.getElementById('admin-prod-img').value = '';
-                document.getElementById('admin-prod-keys').value = '';
-            });
-        };
-
-        function loadAdminManageProducts() {
-            onValue(ref(db, 'products'), (snapshot) => {
-                const data = snapshot.val();
-                let html = '';
-                if(data) {
-                    Object.entries(data).forEach(([id, prod]) => {
-                        let kCount = prod.keys ? (Array.isArray(prod.keys) ? prod.keys.length : 0) : (prod.stock || 0);
-                        html += `<div class="bg-slate-900 p-2 rounded border border-slate-800 flex justify-between items-center text-[11px] mb-1">
-                            <div>
-                                <p class="text-white font-bold">${prod.title} - ৳${prod.price} (${prod.duration || '1 Month'})</p>
-                                <p class="text-slate-400">Stock Keys: ${kCount} | Cat: ${prod.category} (${prod.status})</p>
-                            </div>
-                            <button onclick="deleteProduct('${id}')" class="bg-red-600 text-white px-2 py-1 rounded text-[10px]">Delete</button>
-                        </div>`;
-                    });
-                }
-                document.getElementById('admin-manage-products').innerHTML = html || '<p class="text-slate-400">কোনো প্রোডাক্ট নেই।</p>';
-            });
+                localStorage.setItem('lx_admin_deposits', JSON.stringify(adminDeposits));
+                alert('ডিপোজিট সফলভাবে এপ্রুভ করা হয়েছে!');
+                renderAdminDeposits();
+            }
         }
 
-        window.deleteProduct = function(id) {
-            if(confirm('প্রোডাক্টটি ডিলিট করতে চান?')) {
-                remove(ref(db, 'products/' + id)).then(() => alert('প্রোডাক্ট ডিলিট করা হয়েছে!'));
+        // Reject Deposit Logic
+        function rejectDeposit(reqId) {
+            let dep = adminDeposits.find(d => d.id === reqId);
+            if (dep) {
+                dep.status = 'Rejected';
+                localStorage.setItem('lx_admin_deposits', JSON.stringify(adminDeposits));
+                alert('ডিপোজিট রিকোয়েস্ট বাতিল করা হয়েছে।');
+                renderAdminDeposits();
             }
-        };
-
-        window.updateWebsiteNotice = function() {
-            const newNotice = document.getElementById('admin-notice-input').value.trim();
-            if(!newNotice) { alert('নোটিশ লিখুন'); return; }
-            update(ref(db, 'settings'), { notice: newNotice }).then(() => {
-                alert('হেডার স্ক্রলিং নোটিশ সফলভাবে আপডেট হয়েছে!');
-                document.getElementById('admin-notice-input').value = '';
-            });
-        };
-
-        window.updatePopupNotice = function() {
-            const newPopup = document.getElementById('admin-popup-notice-input').value.trim();
-            if(!newPopup) { alert('পপ-আপ নোটিশ লিখুন'); return; }
-            update(ref(db, 'settings'), { popupNotice: newPopup }).then(() => {
-                alert('পপ-আপ ওয়েলকাম মেসোজ সফলভাবে আপডেট করা হয়েছে!');
-                document.getElementById('admin-popup-notice-input').value = '';
-            });
-        };
-
-        window.updateYoutubeLink = function() {
-            let inputVal = document.getElementById('admin-yt-input').value.trim();
-            if(!inputVal) { alert('ইউটিউব লিংক দিন'); return; }
-
-            let embedUrl = inputVal;
-            if(inputVal.includes('watch?v=')) {
-                const videoId = inputVal.split('watch?v=')[1].split('&')[0];
-                embedUrl = `https://www.youtube.com/embed/${videoId}`;
-            } else if(inputVal.includes('youtu.be/')) {
-                const videoId = inputVal.split('youtu.be/')[1].split('?')[0];
-                embedUrl = `https://www.youtube.com/embed/${videoId}`;
-            }
-
-            update(ref(db, 'settings'), { youtubeLink: embedUrl }).then(() => {
-                alert('ইউটিউব ভিডিও লিংক সফলভাবে আপডেট করা হয়েছে!');
-                document.getElementById('admin-yt-input').value = '';
-            });
-        };
-
-        // Live Settings Listener
-        onValue(ref(db, 'settings'), (snapshot) => {
-            const s = snapshot.val();
-            if(s) {
-                if(s.notice) document.getElementById('marquee-notice').innerText = s.notice;
-                if(s.popupNotice) document.getElementById('popup-notice-text').innerText = s.popupNotice;
-                if(s.youtubeLink) document.getElementById('home-yt-video').src = s.youtubeLink;
-            }
-        });
-
-        window.sendCodeToUser = function() {
-            const customUidTarget = document.getElementById('admin-code-uid').value.trim();
-            const codeKey = document.getElementById('admin-code-key').value.trim();
-            if(!customUidTarget || !codeKey) { alert('Custom UID এবং প্যানেল কোড উভয়ই দিন!'); return; }
-
-            // Find user Auth UID by Custom UID
-            get(ref(db, 'users')).then((snap) => {
-                const users = snap.val();
-                let foundAuthUid = null;
-                if(users) {
-                    Object.entries(users).forEach(([uid, u]) => {
-                        if(u.customUid === customUidTarget || uid === customUidTarget) {
-                            foundAuthUid = uid;
-                        }
-                    });
-                }
-
-                if(foundAuthUid) {
-                    const userCodeRef = push(ref(db, 'userCodes/' + foundAuthUid));
-                    set(userCodeRef, {
-                        title: 'Manual Admin Key',
-                        codeKey: codeKey,
-                        date: new Date().toLocaleString()
-                    }).then(() => {
-                        alert('ইউজারের প্যানেল কোড সফলভাবে পাঠানো হয়েছে!');
-                        document.getElementById('admin-code-uid').value = '';
-                        document.getElementById('admin-code-key').value = '';
-                    });
-                } else {
-                    alert('এই Custom UID দিয়ে কোনো ইউজার পাওয়া যায়নি!');
-                }
-            });
-        };
-
-        window.filterCategory = function(cat, e) {
-            currentFilterCat = cat;
-            document.querySelectorAll('.cat-btn').forEach(b => {
-                b.className = "cat-btn bg-slate-800 text-slate-300 hover:bg-slate-700 px-4 py-1.5 rounded-full text-xs font-bold whitespace-nowrap";
-            });
-            e.target.className = "cat-btn active bg-blue-600 text-white px-4 py-1.5 rounded-full text-xs font-bold shadow-md whitespace-nowrap";
-            document.getElementById('current-cat-title').innerText = cat === 'ALL' ? 'Available Panels' : cat + ' Panels';
-            
-            onValue(ref(db, 'products'), (snapshot) => {
-                const data = snapshot.val();
-                let html = '';
-                if(data) {
-                    Object.entries(data).forEach(([id, prod]) => {
-                        let availableKeys = prod.keys ? (Array.isArray(prod.keys) ? prod.keys.length : 0) : (prod.stock || 0);
-
-                        if((currentFilterCat === 'ALL' || prod.category === currentFilterCat) && prod.status === 'Online') {
-                            let imgContent = prod.imageUrl ? `<img src="${prod.imageUrl}" class="w-full h-full object-cover rounded">` : `<span class="font-orbitron text-blue-400 font-bold">${prod.category}</span>`;
-                            let durationText = prod.duration ? prod.duration : '1 Month';
-                            let stockText = availableKeys > 0 ? `<span class="text-emerald-400 font-bold">Stock: ${availableKeys}</span>` : `<span class="text-red-500 font-bold">Out of Stock</span>`;
-                            let buyBtn = availableKeys > 0 ? `<button onclick="buyProduct('${id}', '${prod.title}', ${prod.price})" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-1.5 rounded">কিনুন</button>` : `<button disabled class="w-full bg-slate-800 text-slate-500 font-bold py-1.5 rounded cursor-not-allowed">স্টক শেষ</button>`;
-
-                            html += `<div class="bg-slate-900 border border-slate-800 rounded-xl p-3 space-y-2 text-xs">
-                                <div class="bg-slate-950 aspect-video rounded overflow-hidden flex items-center justify-center">${imgContent}</div>
-                                <p class="font-bold text-white">${prod.title}</p>
-                                <p class="text-yellow-400 font-bold">৳${prod.price} / ${durationText}</p>
-                                <div class="flex justify-between items-center text-[10px]">
-                                    ${stockText}
-                                </div>
-                                ${buyBtn}
-                            </div>`;
-                        }
-                    });
-                }
-                document.getElementById('products-grid').innerHTML = html || '<p class="text-slate-400 col-span-2 text-center py-4">এই ক্যাটাগরিতে কোনো অনলাইন প্যানেল নেই।</p>';
-            }, { onlyOnce: true });
-        };
+        }
     </script>
 </body>
 </html>
