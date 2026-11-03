@@ -52,8 +52,8 @@
             <button onclick="switchTab('account')" class="bg-red-600 hover:bg-red-700 text-white text-xs font-bold px-3 py-1.5 rounded transition">LOGIN</button>
             <button onclick="switchTab('account')" class="bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-bold px-3 py-1.5 rounded border border-slate-700 transition">REGISTER</button>
         </div>
-                </header>
-                    <!-- Dynamic Notice Ticker Bar -->
+    </header>
+        <!-- Dynamic Notice Ticker Bar -->
     <div class="bg-blue-900/30 border-y border-blue-500/20 px-4 py-2 text-xs text-blue-300 flex items-center space-x-2 overflow-hidden">
         <i class="fa-solid fa-bell animate-bounce text-yellow-400 flex-shrink-0"></i>
         <marquee behavior="scroll" direction="left" class="font-medium whitespace-nowrap" id="marquee-notice">
@@ -183,25 +183,24 @@
                 <span class="text-[10px] text-emerald-400">24/7 ACTIVE</span>
             </h3>
             
-            <!-- Main Admin -->
+            <!-- Main Admin (Fast Admin with requested number & telegram) -->
             <div class="p-2.5 bg-slate-950 rounded-lg flex items-center justify-between border border-slate-800 text-xs">
                 <div>
                     <p class="font-bold text-white">Main Admin (Shakil)</p>
-                    <p class="text-slate-400 font-mono text-[11px]">WA: 01616024025 | TG: @lxshakilyt72</p>
+                    <p class="text-slate-400 font-mono text-[11px]">WA: 01618024025 | TG: @lxshakilyt72</p>
                 </div>
-                <a href="https://wa.me/01616024025" target="_blank" class="bg-emerald-600 text-white p-2 rounded hover:opacity-90" title="WhatsApp"><i class="fa-brands fa-whatsapp text-xs"></i></a>
+                <a href="https://wa.me/01618024025" target="_blank" class="bg-emerald-600 text-white p-2 rounded hover:opacity-90" title="WhatsApp"><i class="fa-brands fa-whatsapp text-xs"></i></a>
             </div>
 
-            <!-- 2nd Admin (WhatsApp & Telegram Removed) -->
+            <!-- 2nd Admin (Completely Removed Info & Buttons) -->
             <div class="p-2.5 bg-slate-950 rounded-lg flex items-center justify-between border border-slate-800 text-xs">
                 <div>
                     <p class="font-bold text-white">2nd Admin / Support Leader</p>
-                    <p class="text-slate-400 font-mono text-[11px]">WA: 01804402530, +966590527005 | TG: @lxanikyt72</p>
+                    <p class="text-slate-400 font-mono text-[11px]">Support Team</p>
                 </div>
             </div>
         </div>
-
-        <!-- EXPANDED ADMIN DASHBOARD MODAL -->
+                <!-- EXPANDED ADMIN DASHBOARD MODAL -->
         <div id="admin-dashboard-modal" class="hidden fixed inset-0 bg-black/90 z-50 p-4 overflow-y-auto">
             <div class="bg-slate-950 border border-yellow-500/50 max-w-lg mx-auto rounded-xl p-4 space-y-4">
                 <div class="flex justify-between items-center border-b border-slate-800 pb-2">
@@ -216,15 +215,15 @@
                         <p class="text-slate-400 text-[10px]">Online <span id="stat-online" class="font-bold text-emerald-400 text-sm">0</span></p>
                         <p class="text-slate-400 text-[10px]">Offline <span id="stat-offline" class="font-bold text-red-400 text-sm">0</span></p>
                     </div>
-                                        <!-- 1. Pending Payments -->
+
+                    <!-- 1. Pending Payments -->
                     <div class="space-y-2">
                         <h3 class="font-bold text-white border-l-2 border-yellow-400 pl-2">১. পেন্ডিং ডিপোজিট ও পেমেন্ট লিস্ট:</h3>
                         <div id="admin-deposits-list" class="space-y-2 bg-slate-950 p-3 rounded border border-slate-800 max-h-40 overflow-y-auto">
                             <p class="text-slate-400">কোনো নতুন পেমেন্ট রিকোয়েস্ট নেই।</p>
                         </div>
                     </div>
-
-                    <!-- 2. Customer Panel Orders Management -->
+                                        <!-- 2. Customer Panel Orders Management -->
                     <div class="space-y-2">
                         <h3 class="font-bold text-yellow-400 border-l-2 border-yellow-400 pl-2">২. গ্রাহকদের প্যানেল অর্ডার লিস্ট:</h3>
                         <div id="admin-orders-list" class="space-y-2 bg-slate-950 p-3 rounded border border-slate-800 max-h-48 overflow-y-auto">
@@ -250,7 +249,7 @@
                             <input type="text" id="admin-prod-duration" placeholder="মেয়াদ (যেমন: 1 Hour, 1 Month)" class="bg-slate-900 border border-slate-800 rounded p-2 text-white">
                         </div>
 
-                        <!-- Stock Input Added Here -->
+                        <!-- Stock Input -->
                         <div class="mb-1.5">
                             <input type="number" id="admin-prod-stock" placeholder="স্টক সংখ্যা (যেমন: 10 বা 50)" class="bg-slate-900 border border-slate-800 rounded p-2 text-white w-full">
                         </div>
@@ -271,8 +270,8 @@
                             </select>
                         </div>
                         <button onclick="addProduct()" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-1.5 rounded">প্যানেল সাবমিট করুন</button>
-                    </div>
-                                        <!-- 5. Manage / Delete Products -->
+                            </div>
+                                                <!-- 5. Manage / Delete Products -->
                     <div class="space-y-2">
                         <h3 class="font-bold text-red-400 border-l-2 border-red-400 pl-2">৫. প্রোডাক্ট ম্যানেজ / ডিলিট করুন:</h3>
                         <div id="admin-manage-products" class="space-y-2 bg-slate-950 p-3 rounded border border-slate-800 max-h-40 overflow-y-auto">
@@ -430,7 +429,6 @@
 
         onAuthStateChanged(auth, (user) => {
             currentUser = user;
-            const authBtns = document.getElementById('header-auth-buttons');
             const authContainer = document.getElementById('auth-container');
             const userProfileView = document.getElementById('user-profile-view');
 
@@ -507,8 +505,7 @@
                 window.switchTab('orders');
             }).catch((err) => { alert('ত্রুটি: ' + err.message); });
         };
-
-        function loadUserData(uid) {
+                function loadUserData(uid) {
             const depositsRef = ref(db, 'deposits');
             const globalOrdersRef = ref(db, 'globalOrders');
 
@@ -579,8 +576,9 @@
                 const bal = snapshot.val() || 0;
                 document.getElementById('user-bal-display').innerText = '৳' + bal;
             });
-                                                                    }
-                // Load & Render Products
+        }
+
+        // Load & Render Products
         const productsRef = ref(db, 'products');
         onValue(productsRef, (snapshot) => {
             const data = snapshot.val();
@@ -677,8 +675,7 @@
                 }
             }, { onlyOnce: true });
         };
-
-        window.toggleAdminModal = function() {
+                window.toggleAdminModal = function() {
             const pass = prompt('অ্যাডমিন পাসওয়ার্ড দিন:');
             if(pass === '1900s') {
                 document.getElementById('admin-dashboard-modal').classList.remove('hidden');
@@ -779,7 +776,7 @@
                     Object.entries(data).forEach(([uid, u]) => {
                         html += `<div class="bg-slate-900 p-2 rounded border border-slate-800 text-[11px] mb-1">
                             <p class="text-white font-bold">Email: ${u.email}</p>
-                            <p class="text-emerald-400 font-mono text-all">Custom UID: ${u.customUid || 'N/A'}</p>
+                            <p class="text-emerald-400 font-mono">Custom UID: ${u.customUid || 'N/A'}</p>
                             <p class="text-yellow-400">Balance: ৳${u.balance || 0}</p>
                         </div>`;
                     });
@@ -852,7 +849,7 @@
 
         window.updateWebsiteNotice = function() {
             const newNotice = document.getElementById('admin-notice-input').value.trim();
-            if(!newNotice) { alert('নোটিক লিখুন!'); return; }
+            if(!newNotice) { alert('নোটিশ লিখুন!'); return; }
             update(ref(db, 'settings'), { notice: newNotice }).then(() => {
                 alert('মারকিউ নোটিশ সফলভাবে আপডেট হয়েছে!');
                 document.getElementById('admin-notice-input').value = '';
@@ -927,7 +924,7 @@
             });
         };
 
-           window.filterCategory = function(cat, e) {
+        window.filterCategory = function(cat, e) {
             currentFilterCat = cat;
             document.querySelectorAll('.cat-btn').forEach(b => {
                 b.className = "cat-btn bg-slate-800 text-slate-300 hover:bg-slate-700 px-4 py-1.5 rounded-full text-xs font-bold whitespace-nowrap";
