@@ -4,11 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LX PANEL SHOP</title>
-    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
         body { font-family: 'Hind Siliguri', sans-serif; background-color: #0B0F19; color: #F3F4F6; }
@@ -29,7 +26,7 @@
             <div class="space-y-2">
                 <h3 class="text-base font-bold text-white font-orbitron">স্বাগতম নোটিশ</h3>
                 <p id="popup-notice-text" class="text-xs text-slate-300 leading-relaxed">
-                    LX PANEL SHOP এ আপনাকে স্বাগতম। ১০০% সেফ এবং অটো-পেমেন্ট প্যানেল থেকে সার্ভিস নিন। যেকোনো প্রয়োজনে অ্যাডমিন বা হেল্পলাইনে যোগাযোগ করুন।
+                    LX PANEL SHOP এ আপনাকে স্বাগতম। ১০০% সেফ এবং অটো-পেমেন্ট প্যানেল থেকে সার্ভিস নিন।
                 </p>
             </div>
             <button onclick="closeWelcomePopup()" class="w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:opacity-90 text-white font-bold py-2.5 rounded-xl text-xs transition shadow-lg">
@@ -45,12 +42,15 @@
                 LX PANEL <span class="text-xs text-blue-400">.com</span>
             </span>
         </div>
-        <div class="flex items-center space-x-2" id="header-auth-buttons">
+        <div class="flex items-center space-x-2">
             <button onclick="toggleAdminModal()" class="text-slate-400 hover:text-blue-400 transition p-2" title="Admin Login">
                 <i class="fa-solid fa-key text-yellow-400"></i>
             </button>
-            <button onclick="switchTab('account')" class="bg-red-600 hover:bg-red-700 text-white text-xs font-bold px-3 py-1.5 rounded transition">LOGIN</button>
-            <button onclick="switchTab('account')" class="bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-bold px-3 py-1.5 rounded border border-slate-700 transition">REGISTER</button>
+            <!-- Login/Register Buttons wrapped in ID to hide after login -->
+            <div id="header-auth-buttons" class="flex items-center space-x-2">
+                <button onclick="switchTab('account')" class="bg-red-600 hover:bg-red-700 text-white text-xs font-bold px-3 py-1.5 rounded transition">LOGIN</button>
+                <button onclick="switchTab('account')" class="bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-bold px-3 py-1.5 rounded border border-slate-700 transition">REGISTER</button>
+            </div>
         </div>
     </header>
         <!-- Dynamic Notice Ticker Bar -->
@@ -88,8 +88,8 @@
             <div id="products-grid" class="grid grid-cols-2 gap-3">
                 <!-- Products Dynamically Rendered -->
             </div>
-        </div>
-                <!-- ADD FUND TAB -->
+                    </div>
+                           <!-- ADD FUND TAB -->
         <div id="tab-addfund" class="tab-content hidden space-y-4">
             <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 space-y-4 text-xs">
                 <h2 class="text-base font-bold text-yellow-400 border-b border-slate-800 pb-2">Add Money / Manual Payment</h2>
@@ -183,21 +183,22 @@
                 <span class="text-[10px] text-emerald-400">24/7 ACTIVE</span>
             </h3>
             
-            <!-- Main Admin -->
+            <!-- Main Admin (WhatsApp with 880 country code) -->
             <div class="p-2.5 bg-slate-950 rounded-lg flex items-center justify-between border border-slate-800 text-xs">
                 <div>
                     <p class="font-bold text-white">Main Admin (Shakil)</p>
                     <p class="text-slate-400 font-mono text-[11px]">WA: 01618024025 | TG: @lxshakilyt72</p>
                 </div>
-                <a href="https://wa.me/01618024025" target="_blank" class="bg-emerald-600 text-white p-2 rounded hover:opacity-90" title="WhatsApp"><i class="fa-brands fa-whatsapp text-xs"></i></a>
+                <a href="https://wa.me/8801618024025" target="_blank" class="bg-emerald-600 text-white px-2.5 py-2 rounded hover:opacity-90" title="WhatsApp"><i class="fa-brands fa-whatsapp text-sm"></i></a>
             </div>
 
-            <!-- 2nd Admin (Completely Cleaned) -->
+            <!-- Telegram Group Link -->
             <div class="p-2.5 bg-slate-950 rounded-lg flex items-center justify-between border border-slate-800 text-xs">
                 <div>
-                    <p class="font-bold text-white">2nd Admin / Support Leader</p>
-                    <p class="text-slate-400 font-mono text-[11px]">Support Team</p>
+                    <p class="font-bold text-white">Telegram Support Group</p>
+                    <p class="text-slate-400 font-mono text-[10px]">Join official community group</p>
                 </div>
+                <a href="https://t.me/+hbnMRX43ciU3MDBl" target="_blank" class="bg-blue-600 text-white px-2.5 py-1.5 rounded font-bold text-[10px]">Join Group</a>
             </div>
         </div>
                 <!-- EXPANDED ADMIN DASHBOARD MODAL -->
@@ -288,7 +289,7 @@
 
                     <!-- 7. Update Pop-up Welcome Notice -->
                     <div class="space-y-2 bg-slate-950 p-3 rounded border border-slate-800">
-                        <h3 class="font-bold text-blue-400">৭. পপ-আপ ওয়েলকাম নোটিশ পরিবর্তন (Scan Popup):</h3>
+                        <h3 class="font-bold text-blue-400">৭. পপ-আপ ওয়েলকাম নোটিশ পরিবর্তন:</h3>
                         <textarea id="admin-popup-notice-input" rows="1" placeholder="পপ-আপ ওয়েলকাম এর নোটিশ লিখুন..." class="bg-slate-900 border border-slate-800 rounded p-2 text-white text-xs w-full mb-1.5"></textarea>
                         <button onclick="updatePopupNotice()" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-1.5 rounded">পপ-আপ নোটিশ আপডেট করুন</button>
                     </div>
@@ -303,7 +304,7 @@
                     <!-- 9. Manual Panel Code Send -->
                     <div class="space-y-2 bg-slate-950 p-3 rounded border border-slate-800">
                         <h3 class="font-bold text-yellow-400">৯. ম্যানুয়াল প্যানেল কোড সেন্ড (Backup):</h3>
-                        <input type="text" id="admin-code-uid" placeholder="ইউজারের Custom UID দিন (যেমন: 1643425)" class="bg-slate-900 border border-slate-800 rounded p-2 text-white w-full mb-1.5">
+                        <input type="text" id="admin-code-uid" placeholder="ইউজারের Custom UID দিন" class="bg-slate-900 border border-slate-800 rounded p-2 text-white w-full mb-1.5">
                         <input type="text" id="admin-code-key" placeholder="প্যানেল লাইসেন্স কি বা কোড" class="bg-slate-900 border border-slate-800 rounded p-2 text-white w-full mb-1.5">
                         <button onclick="sendCodeToUser()" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-1.5 rounded">ম্যানুয়াল কোড পাঠান</button>
                     </div>
@@ -427,14 +428,18 @@
             signOut(auth).then(() => { alert('লগআউট হয়েছে!'); window.switchTab('home'); });
         };
 
+        // Auth State Changed (Automatically hides Header Login/Register buttons when logged in)
         onAuthStateChanged(auth, (user) => {
             currentUser = user;
             const authContainer = document.getElementById('auth-container');
             const userProfileView = document.getElementById('user-profile-view');
+            const headerAuthButtons = document.getElementById('header-auth-buttons');
 
             if (user) {
-                authContainer.classList.add('hidden');
-                userProfileView.classList.remove('hidden');
+                if(authContainer) authContainer.classList.add('hidden');
+                if(userProfileView) userProfileView.classList.remove('hidden');
+                if(headerAuthButtons) headerAuthButtons.classList.add('hidden'); // Hide header login/register buttons
+                
                 document.getElementById('profile-email').innerText = user.email;
                 
                 const userRef = ref(db, 'users/' + user.uid);
@@ -461,8 +466,10 @@
             } else {
                 currentUser = null;
                 currentUserCustomUid = "";
-                authContainer.classList.remove('hidden');
-                userProfileView.classList.add('hidden');
+                if(authContainer) authContainer.classList.remove('hidden');
+                if(userProfileView) userProfileView.classList.add('hidden');
+                if(headerAuthButtons) headerAuthButtons.classList.remove('hidden'); // Show header login/register buttons when logged out
+
                 document.getElementById('my-orders-list').innerHTML = `<p class="text-slate-400 text-center py-4">কোনো অর্ডার হিস্ট্রি নেই।</p>`;
                 document.getElementById('my-panel-codes-list').innerHTML = `<p class="text-slate-400 text-center py-4">কোনো কোড কেনা হয়নি।</p>`;
             }
@@ -480,11 +487,11 @@
             const trxID = document.getElementById('pay-trx').value.trim();
 
             if(!amount || amount < 50) {
-                alert('মিনিয়াম ৫০ টাকা বা তার বেশি ডিপোজিট করতে হবে! ৫০ টাকার নিচে ডিপোজিট গ্রহণ করা হয় না।');
+                alert('মিনিয়াম ৫০ টাকা বা তার বেশি ডিপোজিট করতে হবে!');
                 return;
             }
             if(!senderNo || !trxID) {
-                alert('সকল তথ্য (প্রেরক নম্বর ও TrxID) সঠিকভাবে পূরণ করুন!');
+                alert('সকল তথ্য সঠিকভাবে পূরণ করুন!');
                 return;
             }
 
@@ -498,7 +505,7 @@
                 status: 'Pending',
                 date: new Date().toLocaleString()
             }).then(() => {
-                alert('পেমেন্ট রিকোয়েস্ট সফলভাবে সাবমিট হয়েছে! অ্যাডমিন চেক করে ব্যালেন্স অ্যাড করে দেবেন।');
+                alert('পেমেন্ট রিকোয়েস্ট সফলভাবে সাবমিট হয়েছে!');
                 document.getElementById('pay-amount').value = '';
                 document.getElementById('pay-sender').value = '';
                 document.getElementById('pay-trx').value = '';
@@ -630,10 +637,10 @@
             onValue(userBalRef, (snapshot) => {
                 const bal = snapshot.val() || 0;
                 if(bal < price) {
-                    alert(`আপনার পর্যাপ্ত ব্যালেন্স নেই। প্যানেলটির মূল্য ${price}৳, আপনার ব্যালেন্স আছে ${bal}৳। দয়া করে Add Fund থেকে টাকা এড করুন।`);
+                    alert(`আপনার পর্যাপ্ত ব্যালেন্স নেই। প্যানেলটির মূল্য ${price}৳, আপনার ব্যালেন্স আছে ${bal}৳।`);
                     window.switchTab('addfund');
                 } else {
-                    if(confirm(`${title} প্যানেলটি কিনতে চান? আপনার অ্যাকাউন্ট থেকে ${price} কেটে হবে এবং ইনস্ট্যান্ট কোড দেওয়া হবে।`)) {
+                    if(confirm(`${title} প্যানেলটি কিনতে চান?`)) {
                         const singleProdRef = ref(db, 'products/' + prodId);
                         get(singleProdRef).then((pSnap) => {
                             if(!pSnap.exists()) return;
@@ -668,7 +675,7 @@
                                 status: 'Completed'
                             });
 
-                            alert(`🎉 অভিনন্দন! প্যানেল কেনা সফল হয়েছে। আপনার লাইসেন্স কি: ${assignedKey} (এটি আপনার Codes ট্যাবে সেভ করা হয়েছে)`);
+                            alert(`🎉 অভিনন্দন! প্যানেল কেনা সফল হয়েছে। লাইসেন্স কি: ${assignedKey}`);
                             window.switchTab('codes');
                         });
                     }
@@ -724,7 +731,7 @@
                     const currentBal = snapshot.val() || 0;
                     set(userBalRef, currentBal + amount);
                 }, { onlyOnce: true });
-                alert('পেমেন্ট অনুমোদিত হয়েছে এবং ইউজারের ব্যালেন্সে টাকা যোগ করা হয়েছে!');
+                alert('পেমেন্ট অনুমোদিত হয়েছে এবং ব্যালেন্স যোগ হয়েছে!');
             });
         };
 
@@ -763,7 +770,7 @@
 
         window.updateOrderStatus = function(orderKey, status) {
             update(ref(db, 'globalOrders/' + orderKey), { status: status }).then(() => {
-                alert(`অর্ডার স্ট্যাটাস সফলভাবে '${status}' করা হয়েছে!`);
+                alert(`অর্ডার স্ট্যাটাস '${status}' করা হয়েছে!`);
             });
         };
 
@@ -811,7 +818,7 @@
                 category: category,
                 status: status
             }).then(() => {
-                alert(`নতুন প্যানেল সফলভাবে এড করা হয়েছে! Keys স্টক সংখ্যা: ${finalStock}`);
+                alert('নতুন প্যানেল সফলভাবে এড করা হয়েছে!');
                 document.getElementById('admin-prod-title').value = '';
                 document.getElementById('admin-prod-price').value = '';
                 document.getElementById('admin-prod-duration').value = '';
@@ -830,8 +837,8 @@
                         let kCount = prod.keys ? (Array.isArray(prod.keys) ? prod.keys.length : 0) : (prod.stock || 0);
                         html += `<div class="bg-slate-900 p-2 rounded border border-slate-800 flex justify-between items-center text-[11px] mb-1">
                             <div>
-                                <p class="text-white font-bold">${prod.title} - ৳${prod.price} (${prod.duration || '1 Month'})</p>
-                                <p class="text-slate-400">Stock Keys: ${kCount} | Cat: ${prod.category} (${prod.status})</p>
+                                <p class="text-white font-bold">${prod.title} - ৳${prod.price}</p>
+                                <p class="text-slate-400">Stock: ${kCount} | Cat: ${prod.category} (${prod.status})</p>
                             </div>
                             <button onclick="deleteProduct('${id}')" class="bg-red-600 text-white px-2 py-1 rounded text-[10px]">Delete</button>
                         </div>`;
@@ -851,7 +858,7 @@
             const newNotice = document.getElementById('admin-notice-input').value.trim();
             if(!newNotice) { alert('নোটিশ লিখুন!'); return; }
             update(ref(db, 'settings'), { notice: newNotice }).then(() => {
-                alert('মারকিউ নোটিশ সফলভাবে আপডেট হয়েছে!');
+                alert('নোটিশ আপডেট হয়েছে!');
                 document.getElementById('admin-notice-input').value = '';
             });
         };
@@ -860,7 +867,7 @@
             const newPopup = document.getElementById('admin-popup-notice-input').value.trim();
             if(!newPopup) { alert('পপ-আপ নোটিশ লিখুন!'); return; }
             update(ref(db, 'settings'), { popupNotice: newPopup }).then(() => {
-                alert('পপ-আপ ওয়েলকাম নোটিশ আপডেট হয়েছে!');
+                alert('পপ-আপ নোটিশ আপডেট হয়েছে!');
                 document.getElementById('admin-popup-notice-input').value = '';
             });
         };
@@ -877,7 +884,7 @@
                 embedUrl = `https://www.youtube.com/embed/${videoId}`;
             }
             update(ref(db, 'settings'), { youtubeLink: embedUrl }).then(() => {
-                alert('ইউটিউব ভিডিও লিঙ্ক সফলভাবে আপডেট করা হয়েছে!');
+                alert('ভিডিও লিঙ্ক আপডেট হয়েছে!');
                 document.getElementById('admin-yt-input').value = '';
             });
         };
@@ -894,7 +901,7 @@
         window.sendCodeToUser = function() {
             const customUidTarget = document.getElementById('admin-code-uid').value.trim();
             const codeKey = document.getElementById('admin-code-key').value.trim();
-            if(!customUidTarget || !codeKey) { alert('Custom UID এবং লাইসেন্স কোড উভয়ই দিন!'); return; }
+            if(!customUidTarget || !codeKey) { alert('UID এবং কোড উভয়ই দিন!'); return; }
 
             get(ref(db, 'users')).then((snap) => {
                 const users = snap.val();
@@ -914,12 +921,12 @@
                         codeKey: codeKey,
                         date: new Date().toLocaleString()
                     }).then(() => {
-                        alert('ইউজারের প্যানেল কোড সফলভাবে পাঠানো হয়েছে!');
+                        alert('প্যানেল কোড পাঠানো হয়েছে!');
                         document.getElementById('admin-code-uid').value = '';
                         document.getElementById('admin-code-key').value = '';
                     });
                 } else {
-                    alert('এই Custom UID নিয়ে কোনো ইউজার পাওয়া যায়নি!');
+                    alert('এই UID নিয়ে কোনো ইউজার পাওয়া যায়নি!');
                 }
             });
         };
