@@ -88,8 +88,8 @@
             <div id="products-grid" class="grid grid-cols-2 gap-3">
                 <!-- Products Dynamically Rendered -->
             </div>
-                    </div>
-                           <!-- ADD FUND TAB -->
+        </div>
+                <!-- ADD FUND TAB -->
         <div id="tab-addfund" class="tab-content hidden space-y-4">
             <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 space-y-4 text-xs">
                 <h2 class="text-base font-bold text-yellow-400 border-b border-slate-800 pb-2">Add Money / Manual Payment</h2>
@@ -223,8 +223,8 @@
                         <div id="admin-deposits-list" class="space-y-2 bg-slate-950 p-3 rounded border border-slate-800 max-h-40 overflow-y-auto">
                             <p class="text-slate-400">কোনো নতুন পেমেন্ট রিকোয়েস্ট নেই।</p>
                         </div>
-                    </div>
-                                        <!-- 2. Customer Panel Orders Management -->
+    </div>
+                        <!-- 2. Customer Panel Orders Management -->
                     <div class="space-y-2">
                         <h3 class="font-bold text-yellow-400 border-l-2 border-yellow-400 pl-2">২. গ্রাহকদের প্যানেল অর্ডার লিস্ট:</h3>
                         <div id="admin-orders-list" class="space-y-2 bg-slate-950 p-3 rounded border border-slate-800 max-h-48 overflow-y-auto">
@@ -568,7 +568,7 @@
                 let codeHtml = '';
                 if(codepadata) {
                     Object.values(codepadata).forEach(c => {
-                        codeHtml += `<div class="bg-slate-950 p-3 rounded border border-slate-300 text-left mb-1.5">
+                        codeHtml += `<div class="bg-slate-950 p-3 rounded border border-slate-800 text-left mb-1.5">
                             <p class="text-emerald-400 font-bold text-[11px]">${c.title} Panel License Key</p>
                             <p class="text-yellow-400 font-mono text-xs select-all">Key: ${c.codeKey}</p>
                             <p class="text-[10px] text-slate-400">Date: ${c.date}</p>
@@ -585,7 +585,7 @@
             });
         }
 
-        // Load & Render Products
+        // Load & Render Products (Fixed Real Stock Calculation)
         const productsRef = ref(db, 'products');
         onValue(productsRef, (snapshot) => {
             const data = snapshot.val();
@@ -600,7 +600,14 @@
                     if(prod.status === 'Online') onlineCount++;
                     else offlineCount++;
 
-                    let availableKeys = prod.keys ? (Array.isArray(prod.keys) ? prod.keys.length : 0) : (prod.stock || 0);
+                    let availableKeys = 0;
+                    if (Array.isArray(prod.keys)) {
+                        availableKeys = prod.keys.length;
+                    } else if (typeof prod.keys === 'object' && prod.keys !== null) {
+                        availableKeys = Object.keys(prod.keys).length;
+                    } else {
+                        availableKeys = Number(prod.stock) || 0;
+                    }
 
                     if((currentFilterCat === 'ALL' || prod.category === currentFilterCat) && prod.status === 'Online') {
                         let imgContent = prod.imageUrl ? `<img src="${prod.imageUrl}" class="w-full h-full object-cover">` : `<span class="text-yellow-400 font-bold text-xs">LX PANEL</span>`;
@@ -623,7 +630,7 @@
             if(document.getElementById('stat-total')) document.getElementById('stat-total').innerText = totalCount;
             if(document.getElementById('stat-online')) document.getElementById('stat-online').innerText = onlineCount;
             if(document.getElementById('stat-offline')) document.getElementById('stat-offline').innerText = offlineCount;
-        }, { onlyOnce: true });
+        });
 
         // Instant Auto-Key Delivery Buy Function
         window.buyProduct = function(prodId, title, price) {
@@ -645,7 +652,7 @@
                         get(singleProdRef).then((pSnap) => {
                             if(!pSnap.exists()) return;
                             const prodData = pSnap.val();
-                            let keyList = prodData.keys || [];
+                            let keyList = Array.isArray(prodData.keys) ? prodData.keys : (prodData.keys ? Object.values(prodData.keys) : []);
 
                             if(keyList.length === 0) {
                                 alert('দুঃখিত! এই প্যানেলের স্টক শেষ হয়ে গেছে।');
@@ -804,7 +811,11 @@
 
             if(!title || !price) { alert('প্যানেলের নাম এবং মূল্য দিন!'); return; }
 
-            let keysArray = keysInput ? keysInput.split(',').map(k => k.trim()).filter(k => k.length > 0) : [];
+            let keysArray = [];
+            if (keysInput) {
+                keysArray = keysInput.split(/[\n,]+/).map(k => k.trim()).filter(k => k.length > 0);
+            }
+
             let finalStock = keysArray.length > 0 ? keysArray.length : stockVal;
 
             const prodRef = push(ref(db, 'products'));
@@ -818,7 +829,7 @@
                 category: category,
                 status: status
             }).then(() => {
-                alert('নতুন প্যানেল সফলভাবে এড করা হয়েছে!');
+                alert(`নতুন প্যানেল সফলভাবে এড করা হয়েছে! মোট স্টক: ${finalStock} টি`);
                 document.getElementById('admin-prod-title').value = '';
                 document.getElementById('admin-prod-price').value = '';
                 document.getElementById('admin-prod-duration').value = '';
@@ -834,7 +845,7 @@
                 let html = '';
                 if(data) {
                     Object.entries(data).forEach(([id, prod]) => {
-                        let kCount = prod.keys ? (Array.isArray(prod.keys) ? prod.keys.length : 0) : (prod.stock || 0);
+                        let kCount = Array.isArray(prod.keys) ? prod.keys.length : (prod.stock || 0);
                         html += `<div class="bg-slate-900 p-2 rounded border border-slate-800 flex justify-between items-center text-[11px] mb-1">
                             <div>
                                 <p class="text-white font-bold">${prod.title} - ৳${prod.price}</p>
@@ -944,7 +955,7 @@
                 let html = '';
                 if(data) {
                     Object.entries(data).forEach(([id, prod]) => {
-                        let availableKeys = prod.keys ? (Array.isArray(prod.keys) ? prod.keys.length : 0) : (prod.stock || 0);
+                        let availableKeys = Array.isArray(prod.keys) ? prod.keys.length : (prod.stock || 0);
                         if((currentFilterCat === 'ALL' || prod.category === currentFilterCat) && prod.status === 'Online') {
                             let imgContent = prod.imageUrl ? `<img src="${prod.imageUrl}" class="w-full h-full object-cover">` : `<span class="text-yellow-400 font-bold text-xs">LX PANEL</span>`;
                             let durationText = prod.duration ? prod.duration : '1 Month';
