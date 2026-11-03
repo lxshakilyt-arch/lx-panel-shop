@@ -183,7 +183,7 @@
                 <span class="text-[10px] text-emerald-400">24/7 ACTIVE</span>
             </h3>
             
-            <!-- Main Admin (Fast Admin with requested number & telegram) -->
+            <!-- Main Admin -->
             <div class="p-2.5 bg-slate-950 rounded-lg flex items-center justify-between border border-slate-800 text-xs">
                 <div>
                     <p class="font-bold text-white">Main Admin (Shakil)</p>
@@ -192,7 +192,7 @@
                 <a href="https://wa.me/01618024025" target="_blank" class="bg-emerald-600 text-white p-2 rounded hover:opacity-90" title="WhatsApp"><i class="fa-brands fa-whatsapp text-xs"></i></a>
             </div>
 
-            <!-- 2nd Admin (Completely Removed Info & Buttons) -->
+            <!-- 2nd Admin (Completely Cleaned) -->
             <div class="p-2.5 bg-slate-950 rounded-lg flex items-center justify-between border border-slate-800 text-xs">
                 <div>
                     <p class="font-bold text-white">2nd Admin / Support Leader</p>
@@ -270,8 +270,8 @@
                             </select>
                         </div>
                         <button onclick="addProduct()" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-1.5 rounded">প্যানেল সাবমিট করুন</button>
-                            </div>
-                                                <!-- 5. Manage / Delete Products -->
+                    </div>
+                                        <!-- 5. Manage / Delete Products -->
                     <div class="space-y-2">
                         <h3 class="font-bold text-red-400 border-l-2 border-red-400 pl-2">৫. প্রোডাক্ট ম্যানেজ / ডিলিট করুন:</h3>
                         <div id="admin-manage-products" class="space-y-2 bg-slate-950 p-3 rounded border border-slate-800 max-h-40 overflow-y-auto">
@@ -343,13 +343,13 @@
         import { getDatabase, ref, set, push, onValue, update, remove, get } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 
         const firebaseConfig = {
-            apiKey: "AIzaSyC1-rUsQSziUmYPrOjyUnT40jW-1FO7q_",
+            apiKey: "AIzaSyCi-cuSz81umWbpl0ryfsUmT48jM-IP07o",
             authDomain: "lx-panel-store-debce.firebaseapp.com",
-            databaseURL: "https://lx-panel-store-debce-default-rtdb.firebaseio.com/",
+            databaseURL: "https://lx-panel-store-debce-default-rtdb.firebaseio.com",
             projectId: "lx-panel-store-debce",
-            storageBucket: "lx-panel-store-debce.appspot.com",
-            messagingSenderId: "616864919729",
-            appId: "1:616864919729:web:0129a146b95562187db718"
+            storageBucket: "lx-panel-store-debce.firebasestorage.app",
+            messagingSenderId: "618694919729",
+            appId: "1:618694919729:web:0129a146b95562187db710"
         };
 
         const app = initializeApp(firebaseConfig);
@@ -677,7 +677,7 @@
         };
                 window.toggleAdminModal = function() {
             const pass = prompt('অ্যাডমিন পাসওয়ার্ড দিন:');
-            if(pass === '1900s') {
+            if(pass === '19000s') {
                 document.getElementById('admin-dashboard-modal').classList.remove('hidden');
                 loadAdminDeposits();
                 loadAdminGlobalOrders();
