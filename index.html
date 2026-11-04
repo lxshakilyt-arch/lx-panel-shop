@@ -46,7 +46,6 @@
             <button onclick="toggleAdminModal()" class="text-slate-400 hover:text-blue-400 transition p-2" title="Admin Login">
                 <i class="fa-solid fa-key text-yellow-400"></i>
             </button>
-            <!-- Login/Register Buttons wrapped in ID to hide after login -->
             <div id="header-auth-buttons" class="flex items-center space-x-2">
                 <button onclick="switchTab('account')" class="bg-red-600 hover:bg-red-700 text-white text-xs font-bold px-3 py-1.5 rounded transition">LOGIN</button>
                 <button onclick="switchTab('account')" class="bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-bold px-3 py-1.5 rounded border border-slate-700 transition">REGISTER</button>
@@ -79,7 +78,8 @@
             <!-- Category Pills -->
             <div class="flex items-center space-x-2 overflow-x-auto pb-2 no-scrollbar">
                 <button onclick="filterCategory('ALL', event)" class="cat-btn active bg-blue-600 text-white px-4 py-1.5 rounded-full text-xs font-bold shadow-md whitespace-nowrap">ALL</button>
-                <button onclick="filterCategory('ROOT', event)" class="cat-btn bg-slate-800 text-slate-300 hover:bg-slate-700 px-4 py-1.5 rounded-full text-xs font-bold whitespace-nowrap">NON ROOT</button>
+                <button onclick="filterCategory('NON ROOT', event)" class="cat-btn bg-slate-800 text-slate-300 hover:bg-slate-700 px-4 py-1.5 rounded-full text-xs font-bold whitespace-nowrap">NON ROOT</button>
+                <button onclick="filterCategory('ROOT', event)" class="cat-btn bg-slate-800 text-slate-300 hover:bg-slate-700 px-4 py-1.5 rounded-full text-xs font-bold whitespace-nowrap">ROOT</button>
                 <button onclick="filterCategory('IPHONE', event)" class="cat-btn bg-slate-800 text-slate-300 hover:bg-slate-700 px-4 py-1.5 rounded-full text-xs font-bold whitespace-nowrap">IPHONE</button>
                 <button onclick="filterCategory('PC', event)" class="cat-btn bg-slate-800 text-slate-300 hover:bg-slate-700 px-4 py-1.5 rounded-full text-xs font-bold whitespace-nowrap">PC</button>
             </div>
@@ -183,7 +183,6 @@
                 <span class="text-[10px] text-emerald-400">24/7 ACTIVE</span>
             </h3>
             
-            <!-- Main Admin (WhatsApp with 880 country code) -->
             <div class="p-2.5 bg-slate-950 rounded-lg flex items-center justify-between border border-slate-800 text-xs">
                 <div>
                     <p class="font-bold text-white">Main Admin (Shakil)</p>
@@ -192,7 +191,6 @@
                 <a href="https://wa.me/8801618024025" target="_blank" class="bg-emerald-600 text-white px-2.5 py-2 rounded hover:opacity-90" title="WhatsApp"><i class="fa-brands fa-whatsapp text-sm"></i></a>
             </div>
 
-            <!-- Telegram Group Link -->
             <div class="p-2.5 bg-slate-950 rounded-lg flex items-center justify-between border border-slate-800 text-xs">
                 <div>
                     <p class="font-bold text-white">Telegram Support Group</p>
@@ -223,8 +221,8 @@
                         <div id="admin-deposits-list" class="space-y-2 bg-slate-950 p-3 rounded border border-slate-800 max-h-40 overflow-y-auto">
                             <p class="text-slate-400">কোনো নতুন পেমেন্ট রিকোয়েস্ট নেই।</p>
                         </div>
-    </div>
-                        <!-- 2. Customer Panel Orders Management -->
+                    </div>
+                                        <!-- 2. Customer Panel Orders Management -->
                     <div class="space-y-2">
                         <h3 class="font-bold text-yellow-400 border-l-2 border-yellow-400 pl-2">২. গ্রাহকদের প্যানেল অর্ডার লিস্ট:</h3>
                         <div id="admin-orders-list" class="space-y-2 bg-slate-950 p-3 rounded border border-slate-800 max-h-48 overflow-y-auto">
@@ -240,23 +238,30 @@
                         </div>
                     </div>
 
-                    <!-- 4. Add New Product / Panel with Duration, Keys, Stock -->
+                    <!-- Balance Manage by Admin -->
+                    <div class="space-y-2 bg-slate-950 p-3 rounded border border-slate-800">
+                        <h3 class="font-bold text-emerald-400">ইউজারের ব্যালেন্স বাড়ান বা কমান (Admin Balance Control):</h3>
+                        <input type="text" id="admin-bal-uid" placeholder="ইউজারের Custom UID দিন" class="bg-slate-900 border border-slate-800 rounded p-2 text-white w-full mb-1.5 text-xs">
+                        <input type="number" id="admin-bal-amount" placeholder="টাকার পরিমাণ (যেমন: 100 বা -50)" class="bg-slate-900 border border-slate-800 rounded p-2 text-white w-full mb-1.5 text-xs">
+                        <button onclick="adminModifyBalance()" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-1.5 rounded text-xs">ব্যালেন্স আপডেট করুন</button>
+                    </div>
+
+                    <!-- 4. Add New Product / Panel -->
                     <div class="space-y-2 bg-slate-950 p-3 rounded border border-slate-800">
                         <h3 class="font-bold text-yellow-400 border-l-2 border-yellow-400 pl-2">৪. নতুন প্যানেল অ্যাড করুন (অটো কোড সহ):</h3>
-                        <input type="text" id="admin-prod-title" placeholder="প্যানেলের নাম (যেমন: Free Fire Panel)" class="bg-slate-900 border border-slate-800 rounded p-2 text-white w-full mb-1.5">
+                        <input type="text" id="admin-prod-title" placeholder="প্যানেলের নাম" class="bg-slate-900 border border-slate-800 rounded p-2 text-white w-full mb-1.5">
                         
                         <div class="grid grid-cols-2 gap-2 mb-1.5">
                             <input type="number" id="admin-prod-price" placeholder="মূল্য (যেমন: 19 বা 350)" class="bg-slate-900 border border-slate-800 rounded p-2 text-white">
                             <input type="text" id="admin-prod-duration" placeholder="মেয়াদ (যেমন: 1 Hour, 1 Month)" class="bg-slate-900 border border-slate-800 rounded p-2 text-white">
                         </div>
 
-                        <!-- Stock Input -->
                         <div class="mb-1.5">
-                            <input type="number" id="admin-prod-stock" placeholder="স্টক সংখ্যা (যেমন: 10 বা 50)" class="bg-slate-900 border border-slate-800 rounded p-2 text-white w-full">
+                            <input type="number" id="admin-prod-stock" placeholder="স্টক সংখ্যা" class="bg-slate-900 border border-slate-800 rounded p-2 text-white w-full">
                         </div>
 
                         <input type="text" id="admin-prod-img" placeholder="ছবির URL (লিঙ্ক)" class="bg-slate-900 border border-slate-800 rounded p-2 text-white w-full mb-1.5">
-                        <textarea id="admin-prod-keys" rows="2" placeholder="লাইসেন্স Keys (কমা দিয়ে লিখুন: KEY1, KEY2, KEY3)" class="bg-slate-900 border border-slate-800 rounded p-2 text-white font-mono text-xs w-full mb-1.5"></textarea>
+                        <textarea id="admin-prod-keys" rows="2" placeholder="লাইসেন্স Keys (KEY1, KEY2, KEY3)" class="bg-slate-900 border border-slate-800 rounded p-2 text-white font-mono text-xs w-full mb-1.5"></textarea>
                         
                         <div class="grid grid-cols-2 gap-2 mb-1.5">
                             <select id="admin-prod-cat" class="bg-slate-900 border border-slate-800 rounded p-2 text-white">
@@ -428,7 +433,6 @@
             signOut(auth).then(() => { alert('লগআউট হয়েছে!'); window.switchTab('home'); });
         };
 
-        // Auth State Changed (Automatically hides Header Login/Register buttons when logged in)
         onAuthStateChanged(auth, (user) => {
             currentUser = user;
             const authContainer = document.getElementById('auth-container');
@@ -438,7 +442,7 @@
             if (user) {
                 if(authContainer) authContainer.classList.add('hidden');
                 if(userProfileView) userProfileView.classList.remove('hidden');
-                if(headerAuthButtons) headerAuthButtons.classList.add('hidden'); // Hide header login/register buttons
+                if(headerAuthButtons) headerAuthButtons.classList.add('hidden');
                 
                 document.getElementById('profile-email').innerText = user.email;
                 
@@ -468,7 +472,7 @@
                 currentUserCustomUid = "";
                 if(authContainer) authContainer.classList.remove('hidden');
                 if(userProfileView) userProfileView.classList.add('hidden');
-                if(headerAuthButtons) headerAuthButtons.classList.remove('hidden'); // Show header login/register buttons when logged out
+                if(headerAuthButtons) headerAuthButtons.classList.remove('hidden');
 
                 document.getElementById('my-orders-list').innerHTML = `<p class="text-slate-400 text-center py-4">কোনো অর্ডার হিস্ট্রি নেই।</p>`;
                 document.getElementById('my-panel-codes-list').innerHTML = `<p class="text-slate-400 text-center py-4">কোনো কোড কেনা হয়নি।</p>`;
@@ -585,7 +589,7 @@
             });
         }
 
-        // Load & Render Products (Fixed Real Stock Calculation)
+        // Load & Render Products
         const productsRef = ref(db, 'products');
         onValue(productsRef, (snapshot) => {
             const data = snapshot.val();
@@ -632,7 +636,6 @@
             if(document.getElementById('stat-offline')) document.getElementById('stat-offline').innerText = offlineCount;
         });
 
-        // Instant Auto-Key Delivery Buy Function
         window.buyProduct = function(prodId, title, price) {
             if(!currentUser) {
                 alert('প্যানেল কিনতে হলে প্রথমে লগইন করুন!');
@@ -798,6 +801,45 @@
                 document.getElementById('admin-users-list').innerHTML = html || `<p class="text-slate-400">কোনো ইউজার নেই।</p>`;
             });
         }
+
+        // Admin Balance Modifier Function
+        window.adminModifyBalance = function() {
+            const targetCustomUid = document.getElementById('admin-bal-uid').value.trim();
+            const amountChange = Number(document.getElementById('admin-bal-amount').value);
+
+            if(!targetCustomUid || isNaN(amountChange)) {
+                alert('দয়া করে সঠিক Custom UID এবং টাকার পরিমাণ দিন!');
+                return;
+            }
+
+            get(ref(db, 'users')).then((snap) => {
+                const users = snap.val();
+                let foundAuthUid = null;
+                let currentBalance = 0;
+
+                if(users) {
+                    Object.entries(users).forEach(([uid, u]) => {
+                        if(u.customUid === targetCustomUid || uid === targetCustomUid) {
+                            foundAuthUid = uid;
+                            currentBalance = u.balance || 0;
+                        }
+                    });
+                }
+
+                if(foundAuthUid) {
+                    const newBalance = currentBalance + amountChange;
+                    const userBalRef = ref(db, 'users/' + foundAuthUid + '/balance');
+                    
+                    set(userBalRef, newBalance).then(() => {
+                        alert(`সফলভাবে ব্যালেন্স আপডেট করা হয়েছে! নতুন ব্যালেন্স: ৳${newBalance}`);
+                        document.getElementById('admin-bal-uid').value = '';
+                        document.getElementById('admin-bal-amount').value = '';
+                    });
+                } else {
+                    alert('এই Custom UID দিয়ে কোনো ইউজার খুঁজে পাওয়া যায়নি!');
+                }
+            });
+        };
 
         window.addProduct = function() {
             const title = document.getElementById('admin-prod-title').value.trim();
