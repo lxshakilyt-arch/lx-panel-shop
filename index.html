@@ -141,8 +141,8 @@
                     <p class="text-slate-400 text-py-4">কোনো কোড কেনা হয়নি।</p>
                 </div>
             </div>
-        </div>
-                <!-- ACCOUNT TAB -->
+    </div>
+            <!-- ACCOUNT TAB -->
         <div id="tab-account" class="tab-content hidden space-y-4">
             <div id="auth-container" class="bg-slate-900 border border-slate-800 rounded-xl p-4 text-xs">
                 <div class="flex border-b border-slate-800 pb-2">
@@ -238,12 +238,12 @@
                         </div>
                     </div>
 
-                    <!-- Balance Manage by Admin -->
-                    <div class="space-y-2 bg-slate-950 p-3 rounded border border-slate-800">
-                        <h3 class="font-bold text-emerald-400">ইউজারের ব্যালেন্স বাড়ান বা কমান (Admin Balance Control):</h3>
-                        <input type="text" id="admin-bal-uid" placeholder="ইউজারের Custom UID দিন" class="bg-slate-900 border border-slate-800 rounded p-2 text-white w-full mb-1.5 text-xs">
-                        <input type="number" id="admin-bal-amount" placeholder="টাকার পরিমাণ (যেমন: 100 বা -50)" class="bg-slate-900 border border-slate-800 rounded p-2 text-white w-full mb-1.5 text-xs">
-                        <button onclick="adminModifyBalance()" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-1.5 rounded text-xs">ব্যালেন্স আপডেট করুন</button>
+                    <!-- Balance Manage by Admin (UID or Gmail Support) -->
+                    <div class="space-y-2 bg-slate-950 p-3 rounded border border-slate-800 text-xs">
+                        <h3 class="font-bold text-emerald-400">ইউজারের ব্যালেন্স বাড়ান বা কমান (UID / Gmail Control):</h3>
+                        <input type="text" id="admin-bal-target" placeholder="ইউজারের Custom UID অথবা Gmail দিন" class="bg-slate-900 border border-slate-800 rounded p-2 text-white w-full mb-1.5">
+                        <input type="number" id="admin-bal-amount" placeholder="টাকার পরিমাণ (যেমন: 100 বা -50)" class="bg-slate-900 border border-slate-800 rounded p-2 text-white w-full mb-1.5">
+                        <button onclick="adminModifyBalance()" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-1.5 rounded">ব্যালেন্স আপডেট করুন</button>
                     </div>
 
                     <!-- 4. Add New Product / Panel -->
@@ -802,13 +802,13 @@
             });
         }
 
-        // Admin Balance Modifier Function
+        // Admin Balance Modifier Function (UID or Gmail Support)
         window.adminModifyBalance = function() {
-            const targetCustomUid = document.getElementById('admin-bal-uid').value.trim();
+            const targetInput = document.getElementById('admin-bal-target').value.trim().toLowerCase();
             const amountChange = Number(document.getElementById('admin-bal-amount').value);
 
-            if(!targetCustomUid || isNaN(amountChange)) {
-                alert('দয়া করে সঠিক Custom UID এবং টাকার পরিমাণ দিন!');
+            if(!targetInput || isNaN(amountChange)) {
+                alert('দয়া করে সঠিক UID অথবা Gmail এবং টাকার পরিমাণ দিন!');
                 return;
             }
 
@@ -816,12 +816,17 @@
                 const users = snap.val();
                 let foundAuthUid = null;
                 let currentBalance = 0;
+                let foundUserEmail = "";
 
                 if(users) {
                     Object.entries(users).forEach(([uid, u]) => {
-                        if(u.customUid === targetCustomUid || uid === targetCustomUid) {
+                        const userEmail = (u.email || "").toLowerCase();
+                        const userCustomUid = (u.customUid || "").toString();
+
+                        if(userCustomUid === targetInput || userEmail === targetInput || uid === targetInput) {
                             foundAuthUid = uid;
                             currentBalance = u.balance || 0;
+                            foundUserEmail = u.email;
                         }
                     });
                 }
@@ -831,12 +836,12 @@
                     const userBalRef = ref(db, 'users/' + foundAuthUid + '/balance');
                     
                     set(userBalRef, newBalance).then(() => {
-                        alert(`সফলভাবে ব্যালেন্স আপডেট করা হয়েছে! নতুন ব্যালেন্স: ৳${newBalance}`);
-                        document.getElementById('admin-bal-uid').value = '';
+                        alert(`সফলভাবে ব্যালেন্স আপডেট করা হয়েছে!\nইউজার: ${foundUserEmail}\nনতুন ব্যালেন্স: ৳${newBalance}`);
+                        document.getElementById('admin-bal-target').value = '';
                         document.getElementById('admin-bal-amount').value = '';
                     });
                 } else {
-                    alert('এই Custom UID দিয়ে কোনো ইউজার খুঁজে পাওয়া যায়নি!');
+                    alert('এই UID বা Gmail দিয়ে কোনো ইউজার খুঁজে পাওয়া যায়নি!');
                 }
             });
         };
