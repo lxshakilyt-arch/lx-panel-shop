@@ -37,8 +37,7 @@
             </button>
         </div>
     </div>
-
-    <!-- Header Navigation -->
+        <!-- Header Navigation -->
     <header class="sticky top-0 z-40 bg-slate-900/95 backdrop-blur-md border-b border-slate-800 px-4 py-3 flex items-center justify-between">
         <div class="flex items-center space-x-2">
             <span class="text-xl font-black text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 via-orange-500 to-red-500">
@@ -46,7 +45,6 @@
             </span>
         </div>
         <div class="flex items-center space-x-2">
-            <!-- Language Toggle Button -->
             <button onclick="toggleLanguage()" class="bg-slate-800 border border-slate-700 text-yellow-400 text-[10px] font-bold px-2 py-1 rounded transition hover:bg-slate-700">
                 <i class="fa-solid fa-globe mr-1"></i><span id="lang-btn-text">ENG</span>
             </button>
@@ -81,8 +79,7 @@
                     <span class="text-slate-400" data-en="Watch video to use panel easily." data-bn="ভিডিওটি দেখে প্যানেল ব্যবহার করুন।">ভিডিওটি দেখে প্যানেল ব্যবহার করুন।</span>
                 </div>
             </div>
-
-            <!-- Category Pills -->
+                        <!-- Category Pills -->
             <div class="flex items-center space-x-2 overflow-x-auto pb-2 no-scrollbar">
                 <button onclick="filterCategory('ALL', event)" class="cat-btn active bg-blue-600 text-white px-4 py-1.5 rounded-full text-xs font-bold shadow-md whitespace-nowrap">ALL</button>
                 <button onclick="filterCategory('NON ROOT', event)" class="cat-btn bg-slate-800 text-slate-300 hover:bg-slate-700 px-4 py-1.5 rounded-full text-xs font-bold whitespace-nowrap">NON ROOT</button>
@@ -121,14 +118,14 @@
             <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 space-y-4 text-xs">
                 <h2 class="text-base font-bold text-yellow-400 border-b border-slate-800 pb-2" data-en="Add Money / Manual Payment" data-bn="টাকা অ্যাড করুন / ম্যানুয়াল পেমেন্ট">Add Money / Manual Payment</h2>
                 
-                <!-- 1-Click Copy Number Box -->
+                <!-- 1-Click Copy Number Box (Corrected Number) -->
                 <div class="bg-slate-950 p-3 rounded-xl border border-slate-800 space-y-2">
                     <div class="flex justify-between items-center">
                         <span class="text-slate-300 font-bold" data-en="Bkash / Nagad Personal:" data-bn="বিকাশ / নগদ পার্সোনাল নম্বর:">বিকাশ / নগদ পার্সোনাল নম্বর:</span>
                         <span class="text-[10px] bg-emerald-500/20 text-emerald-400 px-2 py-0.5 rounded font-bold">SEND MONEY</span>
                     </div>
                     <div class="flex items-center justify-between bg-slate-900 p-2 rounded-lg border border-slate-800">
-                        <span id="admin-pay-number" class="text-emerald-400 font-mono text-sm font-bold tracking-wider">01973388420</span>
+                        <span id="admin-pay-number" class="text-emerald-400 font-mono text-sm font-bold tracking-wider">01973386420</span>
                         <button onclick="copyAdminNumber()" class="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1.5 rounded-lg text-xs font-bold transition flex items-center space-x-1 shadow-md">
                             <i class="fa-regular fa-copy"></i> <span data-en="Copy" data-bn="কপি">কপি</span>
                         </button>
@@ -170,12 +167,11 @@
             </div>
         </div>
 
-        <!-- CODES TAB (With Key Gift/Transfer Feature) -->
+        <!-- CODES TAB -->
         <div id="tab-codes" class="tab-content hidden space-y-4">
             <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 text-center text-xs space-y-3">
                 <h2 class="text-sm font-bold text-blue-400 border-b border-slate-800 pb-2" data-en="My Panel Codes (Auto Delivered)" data-bn="My Panel Codes (Auto Delivered)">My Panel Codes (Auto Delivered)</h2>
                 
-                <!-- Gift Key Modal Trigger Box or Info -->
                 <div class="bg-slate-950 p-2.5 rounded-lg border border-slate-800 text-left space-y-1">
                     <p class="font-bold text-yellow-400 text-[11px]" data-en="🎁 Gift Key to Friend" data-bn="🎁 বন্ধুকে কি (Key) গিফট করুন">🎁 বন্ধুকে কি (Key) গিফট করুন</p>
                     <p class="text-[10px] text-slate-400" data-en="You can transfer your purchased key to another user's Custom UID." data-bn="আপনার কেনা কি (Key) অন্য কোনো ইউজারের Custom UID-তে ট্রান্সফার করতে পারবেন।">আপনার কেনা কি (Key) অন্য কোনো ইউজারের Custom UID-তে ট্রান্সফার করতে পারবেন।</p>
@@ -210,7 +206,6 @@
                     <div>
                         <div class="flex items-center space-x-2">
                             <h2 id="profile-email" class="font-bold text-white text-sm">user@gmail.com</h2>
-                            <!-- VIP Membership Badge Display -->
                             <span id="profile-vip-badge" class="bg-amber-500/20 text-amber-400 border border-amber-500/40 text-[10px] font-extrabold px-2 py-0.5 rounded-full shadow">VIP 0</span>
                         </div>
                         <p class="text-[10px] text-slate-400 font-mono mt-0.5">Custom UID: <span id="profile-custom-uid" class="text-blue-400 select-all font-bold"></span></p>
@@ -246,8 +241,8 @@
                 </div>
                 <a href="https://t.me/+hbnMRX43ciU3MDBl" target="_blank" class="bg-blue-600 text-white px-2.5 py-1.5 rounded font-bold text-[10px]">Join Group</a>
             </div>
-                        </div>
-                                <!-- EXPANDED ADMIN DASHBOARD MODAL -->
+        </div>
+                <!-- EXPANDED ADMIN DASHBOARD MODAL -->
         <div id="admin-dashboard-modal" class="hidden fixed inset-0 bg-black/90 z-50 p-4 overflow-y-auto">
             <div class="bg-slate-950 border border-yellow-500/50 max-w-lg mx-auto rounded-xl p-4 space-y-4">
                 <div class="flex justify-between items-center border-b border-slate-800 pb-2">
@@ -256,7 +251,7 @@
                 </div>
 
                 <div class="space-y-4 max-h-[75vh] overflow-y-auto pr-1">
-                    <!-- Analytics & Sales Summary Box (Feature 4) -->
+                    <!-- Analytics & Sales Summary Box -->
                     <div class="bg-slate-900 border border-blue-500/30 p-3 rounded-xl space-y-2">
                         <h3 class="text-xs font-bold text-blue-400 border-b border-slate-800 pb-1.5"><i class="fa-solid fa-chart-line mr-1"></i> Sales & Revenue Analytics</h3>
                         <div class="grid grid-cols-2 gap-2 text-center text-xs">
@@ -293,23 +288,22 @@
                         </div>
                     </div>
 
-                    <!-- 3. Registered Users & Custom UIDs -->
+                    <!-- 3. Registered Users (Only Specific 2 Emails Allowed) -->
                     <div class="space-y-2">
-                        <h3 class="font-bold text-emerald-400 border-l-2 border-emerald-400 pl-2">৩. রেজিস্টার্ড ইউজার ও কাস্টম UID লিস্ট (VIP Status):</h3>
+                        <h3 class="font-bold text-emerald-400 border-l-2 border-emerald-400 pl-2">৩. নির্দিষ্ট ইউজার লিস্ট (শর্তাধীন জিমেইল):</h3>
                         <div id="admin-users-list" class="space-y-2 bg-slate-950 p-3 rounded border border-slate-800 max-h-40 overflow-y-auto">
                             <p class="text-slate-400">কোনো ইউজার নেই।</p>
                         </div>
                     </div>
 
-                    <!-- Balance Manage by Admin (UID or Gmail) -->
+                    <!-- Balance Manage by Admin -->
                     <div class="space-y-2 bg-slate-950 p-3 rounded border border-slate-800 text-xs">
                         <h3 class="font-bold text-emerald-400">ইউজারের ব্যালেন্স বাড়ান বা কমান (UID / Gmail Control):</h3>
                         <input type="text" id="admin-bal-target" placeholder="ইউজারের Custom UID অথবা Gmail দিন" class="bg-slate-900 border border-slate-800 rounded p-2 text-white w-full mb-1.5">
                         <input type="number" id="admin-bal-amount" placeholder="টাকার পরিমাণ (যেমন: 100 বা -50)" class="bg-slate-900 border border-slate-800 rounded p-2 text-white w-full mb-1.5">
                         <button onclick="adminModifyBalance()" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-1.5 rounded">ব্যালেন্স আপডেট করুন</button>
                     </div>
-
-                    <!-- 4. Add New Product / Panel -->
+                                        <!-- 4. Add New Product / Panel -->
                     <div class="space-y-2 bg-slate-950 p-3 rounded border border-slate-800">
                         <h3 class="font-bold text-yellow-400 border-l-2 border-yellow-400 pl-2">৪. নতুন প্যানেল অ্যাড করুন (অটো কোড সহ):</h3>
                         <input type="text" id="admin-prod-title" placeholder="প্যানেলের নাম" class="bg-slate-900 border border-slate-800 rounded p-2 text-white w-full mb-1.5">
@@ -340,15 +334,15 @@
                         </div>
                         <button onclick="addProduct()" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-1.5 rounded">প্যানেল সাবমিট করুন</button>
                     </div>
-                                        <!-- 5. Manage / Delete Products -->
+
+                    <!-- 5. Manage / Delete Products -->
                     <div class="space-y-2">
                         <h3 class="font-bold text-red-400 border-l-2 border-red-400 pl-2">৫. প্রোডাক্ট ম্যানেজ / ডিলিট করুন:</h3>
                         <div id="admin-manage-products" class="space-y-2 bg-slate-950 p-3 rounded border border-slate-800 max-h-40 overflow-y-auto">
                             <p class="text-slate-400">কোনো প্রোডাক্ট নেই।</p>
                         </div>
                     </div>
-
-                    <!-- 6. Payment Gateway Maintenance Switch (Feature 6) -->
+                                        <!-- 6. Payment Gateway Maintenance Switch -->
                     <div class="space-y-2 bg-slate-950 p-3 rounded border border-slate-800 text-xs">
                         <h3 class="font-bold text-red-400">৬. পেমেন্ট গেটওয়ে মেইনটেন্যান্স নোটিশ কন্ট্রোল:</h3>
                         <select id="admin-gateway-status" class="bg-slate-900 border border-slate-800 rounded p-2 text-white w-full mb-1.5">
@@ -359,7 +353,7 @@
                         <button onclick="updateGatewayStatus()" class="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-1.5 rounded">গেটওয়ে স্ট্যাটাস আপডেট</button>
                     </div>
 
-                    <!-- 7. Update Pop-up Notice with Image (Feature 3) -->
+                    <!-- 7. Update Pop-up Notice with Image -->
                     <div class="space-y-2 bg-slate-950 p-3 rounded border border-slate-800 text-xs">
                         <h3 class="font-bold text-blue-400">৭. পপ-আপ ওয়েলকাম নোটিশ ও ইমেজ কন্ট্রোল:</h3>
                         <input type="text" id="admin-popup-img-input" placeholder="পপ-আপ ছবির URL (লিঙ্ক)" class="bg-slate-900 border border-slate-800 rounded p-2 text-white w-full mb-1.5">
@@ -434,9 +428,8 @@
         let currentUser = null;
         let currentUserCustomUid = "";
         let currentFilterCat = "ALL";
-        let currentLang = "bn"; // Default Language Bangla
+        let currentLang = "bn";
 
-        // Multi-Language Toggle Logic (Feature 5)
         window.toggleLanguage = function() {
             currentLang = currentLang === "bn" ? "en" : "bn";
             document.getElementById('lang-btn-text').innerText = currentLang === "bn" ? "ENG" : "বাংলা";
@@ -448,7 +441,6 @@
             });
         };
 
-        // 1-Click Copy Admin Number (Feature 1)
         window.copyAdminNumber = function() {
             const num = document.getElementById('admin-pay-number').innerText;
             navigator.clipboard.writeText(num).then(() => {
@@ -491,8 +483,7 @@
                 document.getElementById('auth-tab-register').className = "flex-1 text-center font-bold text-emerald-400 border-b-2 border-emerald-500";
             }
         };
-                // VIP Badge Calculator based on Total Deposit (Feature 2)
-        function calculateVipLevel(totalDep) {
+                function calculateVipLevel(totalDep) {
             if(totalDep >= 15000) return "VIP 10";
             if(totalDep >= 13500) return "VIP 9";
             if(totalDep >= 12000) return "VIP 8";
@@ -502,7 +493,6 @@
             if(totalDep >= 6000) return "VIP 4";
             if(totalDep >= 4500) return "VIP 3";
             if(totalDep >= 3000) return "VIP 2";
-            if(totalDep >= 15000) return "VIP 1"; // handled below properly
             if(totalDep >= 1000) return "VIP 1";
             return "VIP 0";
         }
@@ -677,7 +667,6 @@
                 });
             });
 
-            // User Codes with Gift Key Button (Feature 8)
             const codesRef = ref(db, 'userCodes/' + uid);
             onValue(codesRef, (snapshot) => {
                 const codepadata = snapshot.val();
@@ -706,7 +695,6 @@
             });
         }
 
-        // Gift Key to Friend Function (Feature 8)
         window.openGiftModal = function(codeKeyId, title, keyStr) {
             const targetUid = prompt(`"${title}" প্যানেলের কি (Key) অন্য বন্ধুকে পাঠাতে তার Custom UID দিন:`);
             if(!targetUid) return;
@@ -736,14 +724,12 @@
                 }
 
                 if(confirm(`আপনি কি নিশ্চিতভাবে ${recipientEmail} (UID: ${targetUid}) এই ইউজারের কাছে কি (Key) ট্রান্সফার করতে চান?`)) {
-                    // Add to recipient's codes
                     const recipientCodesRef = push(ref(db, 'userCodes/' + recipientAuthUid));
                     set(recipientCodesRef, {
                         title: title + ' (Gifted)',
                         codeKey: keyStr,
                         date: new Date().toLocaleString()
                     }).then(() => {
-                        // Remove from sender's codes
                         remove(ref(db, 'userCodes/' + currentUser.uid + '/' + codeKeyId));
                         alert('সফলভাবে কি (Key) গিফট করা হয়েছে!');
                     });
@@ -751,7 +737,6 @@
             });
         };
 
-        // Leaderboard Fetching & Rendering (Feature 7)
         onValue(ref(db, 'users'), (snapshot) => {
             const usersData = snapshot.val();
             let leaderboardHtml = '';
@@ -774,7 +759,6 @@
             document.getElementById('leaderboard-list').innerHTML = leaderboardHtml || `<p class="text-slate-400 text-center py-2 text-[11px]">কোনো ডাটা নেই।</p>`;
         });
 
-        // Load & Render Products
         const productsRef = ref(db, 'products');
         onValue(productsRef, (snapshot) => {
             const data = snapshot.val();
@@ -889,7 +873,6 @@
             document.getElementById('admin-dashboard-modal').classList.add('hidden');
         };
 
-        // Admin Analytics Calculation (Feature 4)
         function loadAdminAnalytics() {
             const gOrderRef = ref(db, 'globalOrders');
             const depRef = ref(db, 'deposits');
@@ -1004,24 +987,30 @@
             });
         };
 
+        // Admin Users List Filtered for Only Specific 2 Emails
         function loadAdminUsers() {
             const usersRef = ref(db, 'users');
+            const allowedEmails = ["mdshakilali9853@gmail.com", "lxshakilyt30@gmail.com"];
+
             onValue(usersRef, (snapshot) => {
                 const data = snapshot.val();
                 let html = '';
                 if(data) {
                     Object.entries(data).forEach(([uid, u]) => {
-                        let vipName = calculateVipLevel(u.totalDeposit || 0);
-                        html += `<div class="bg-slate-900 p-2 rounded border border-slate-800 text-[11px] mb-1 flex justify-between items-center">
-                            <div>
-                                <p class="text-white font-bold">${u.email} <span class="text-amber-400">[${vipName}]</span></p>
-                                <p class="text-emerald-400 font-mono">UID: ${u.customUid || 'N/A'} | Dep: ৳${u.totalDeposit || 0}</p>
-                            </div>
-                            <p class="text-yellow-400 font-bold">৳${u.balance || 0}</p>
-                        </div>`;
+                        const userEmailLower = (u.email || "").toLowerCase().trim();
+                        if(allowedEmails.includes(userEmailLower)) {
+                            let vipName = calculateVipLevel(u.totalDeposit || 0);
+                            html += `<div class="bg-slate-900 p-2 rounded border border-slate-800 text-[11px] mb-1 flex justify-between items-center">
+                                <div>
+                                    <p class="text-white font-bold">${u.email} <span class="text-amber-400">[${vipName}]</span></p>
+                                    <p class="text-emerald-400 font-mono">UID: ${u.customUid || 'N/A'} | Dep: ৳${u.totalDeposit || 0}</p>
+                                </div>
+                                <p class="text-yellow-400 font-bold">৳${u.balance || 0}</p>
+                            </div>`;
+                        }
                     });
                 }
-                document.getElementById('admin-users-list').innerHTML = html || `<p class="text-slate-400">কোনো ইউজার নেই।</p>`;
+                document.getElementById('admin-users-list').innerHTML = html || `<p class="text-slate-400">নির্দিষ্ট জিমেইলের কোনো ইউজার পাওয়া যায়নি।</p>`;
             });
         }
 
@@ -1262,4 +1251,3 @@
     </script>
 </body>
 </html>
-    
