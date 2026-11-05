@@ -279,8 +279,8 @@
                         <div id="admin-deposits-list" class="space-y-2 bg-slate-950 p-3 rounded border border-slate-800 max-h-40 overflow-y-auto">
                             <p class="text-slate-400">কোনো নতুন পেমেন্ট রিকোয়েস্ট নেই।</p>
                         </div>
-                    </div>
-                                        <!-- 2. Customer Panel Orders Management -->
+                                </div>
+                                                    <!-- 2. Customer Panel Orders Management -->
                     <div class="space-y-2">
                         <h3 class="font-bold text-yellow-400 border-l-2 border-yellow-400 pl-2">২. গ্রাহকদের প্যানেল অর্ডার লিস্ট:</h3>
                         <div id="admin-orders-list" class="space-y-2 bg-slate-950 p-3 rounded border border-slate-800 max-h-48 overflow-y-auto">
@@ -737,6 +737,7 @@
             });
         };
 
+        // Leaderboard with Masked Email (Half Show)
         onValue(ref(db, 'users'), (snapshot) => {
             const usersData = snapshot.val();
             let leaderboardHtml = '';
@@ -744,11 +745,22 @@
                 const sortedUsers = Object.values(usersData).sort((a, b) => (b.totalDeposit || 0) - (a.totalDeposit || 0)).slice(0, 5);
                 sortedUsers.forEach((u, index) => {
                     let rankBadge = index === 0 ? 'bg-yellow-500 text-slate-950 font-black' : (index === 1 ? 'bg-slate-300 text-slate-950 font-bold' : (index === 2 ? 'bg-amber-700 text-white font-bold' : 'bg-slate-800 text-slate-400'));
+                    
+                    let fullEmail = u.email || "user@gmail.com";
+                    let maskedEmail = fullEmail;
+                    if(fullEmail.includes('@')) {
+                        let parts = fullEmail.split('@');
+                        let namePart = parts[0];
+                        let domainPart = parts[1];
+                        let visibleLen = Math.max(1, Math.floor(namePart.length / 2));
+                        maskedEmail = namePart.substring(0, visibleLen) + '***@' + domainPart;
+                    }
+
                     leaderboardHtml += `<div class="bg-slate-950 p-2 rounded-lg border border-slate-800 flex items-center justify-between">
                         <div class="flex items-center space-x-2">
                             <span class="w-5 h-5 rounded-full flex items-center justify-center text-[10px] ${rankBadge}">${index + 1}</span>
                             <div>
-                                <p class="text-white font-bold text-[11px]">${u.email.split('@')[0]}***</p>
+                                <p class="text-white font-bold text-[11px]">${maskedEmail}</p>
                                 <p class="text-[9px] text-slate-400 font-mono">UID: ${u.customUid || 'N/A'}</p>
                             </div>
                         </div>
@@ -758,8 +770,7 @@
             }
             document.getElementById('leaderboard-list').innerHTML = leaderboardHtml || `<p class="text-slate-400 text-center py-2 text-[11px]">কোনো ডাটা নেই।</p>`;
         });
-
-        const productsRef = ref(db, 'products');
+                const productsRef = ref(db, 'products');
         onValue(productsRef, (snapshot) => {
             const data = snapshot.val();
             let html = '';
@@ -953,7 +964,7 @@
             alert('পেমেন্ট রিকোয়েস্ট বাতিল করা হয়েছে!');
         };
 
-                function loadAdminGlobalOrders() {
+        function loadAdminGlobalOrders() {
             const gOrderRef = ref(db, 'globalOrders');
             onValue(gOrderRef, (snapshot) => {
                 const data = snapshot.val();
@@ -1156,7 +1167,7 @@
             });
         };
 
-        onValue(ref(db, 'settings'), (snapshot) => {
+                onValue(ref(db, 'settings'), (snapshot) => {
             const s = snapshot.val();
             if(s) {
                 if(s.notice) document.getElementById('marquee-notice').innerText = s.notice;
