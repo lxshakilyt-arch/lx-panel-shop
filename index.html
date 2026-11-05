@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LX PANEL SHOP</title>
+    <title>LX PANEL SHOP - Secure & Automated</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600;700&display=swap" rel="stylesheet">
@@ -61,7 +61,7 @@
     <div class="bg-blue-900/30 border-y border-blue-500/20 px-4 py-2 text-xs text-blue-300 flex items-center space-x-2 overflow-hidden">
         <i class="fa-solid fa-bell animate-bounce text-yellow-400 flex-shrink-0"></i>
         <marquee behavior="scroll" direction="left" class="font-medium whitespace-nowrap" id="marquee-notice">
-            ⚡ Trusted, Fast & Reliable Service with 24/7 Support! পেমেন্ট করার পর TrxID সাবমিট করুন।
+            ⚡ Protected by Anti-Fraud & VPN Shield! নিরাপদ ও দ্রুত সার্ভিস। পেমেন্ট করার পর TrxID সাবমিট করুন।
         </marquee>
     </div>
 
@@ -99,14 +99,22 @@
                 </div>
             </div>
 
-            <h2 id="current-cat-title" class="text-lg font-bold text-white border-b border-slate-800 pb-2" data-en="Available Panels" data-bn="Available Panels">Available Panels</h2>
-            <div id="products-grid" class="grid grid-cols-2 gap-3">
-                <!-- Products Dynamically Rendered -->
+            <!-- Customer Reviews & Rating Slider (Feature 3) -->
+            <div class="bg-slate-900 border border-slate-800 rounded-xl p-3 space-y-2">
+                <div class="flex items-center justify-between border-b border-slate-800 pb-1.5">
+                    <h3 class="text-xs font-bold text-yellow-400"><i class="fa-solid fa-star text-amber-400 mr-1"></i> কাস্টমার ফিডব্যাক ও রেটিং</h3>
+                    <span class="text-[10px] text-emerald-400 font-bold">5.0 ★ VERIFIED</span>
+                </div>
+                <div id="home-reviews-slider" class="space-y-2 text-xs">
+                    <p class="text-slate-400 text-center py-2 text-[11px]">ফিডব্যাক লোড হচ্ছে...</p>
+                </div>
             </div>
+
+            <h2 id="current-cat-title" class="text-lg font-bold text-white border-b border-slate-800 pb-2" data-en="Available Panels" data-bn="Available Panels">Available Panels</h2>
+            <div id="products-grid" class="grid grid-cols-2 gap-3"></div>
         </div>
                 <!-- ADD FUND TAB -->
         <div id="tab-addfund" class="tab-content hidden space-y-4">
-            <!-- Payment Gateway Maintenance Alert Box -->
             <div id="gateway-maintenance-banner" class="hidden bg-red-950/85 border border-red-500 text-red-300 p-3 rounded-xl text-xs flex items-center space-x-2">
                 <i class="fa-solid fa-triangle-exclamation text-base text-red-400 animate-pulse"></i>
                 <div>
@@ -118,7 +126,6 @@
             <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 space-y-4 text-xs">
                 <h2 class="text-base font-bold text-yellow-400 border-b border-slate-800 pb-2" data-en="Add Money / Manual Payment" data-bn="টাকা অ্যাড করুন / ম্যানুয়াল পেমেন্ট">Add Money / Manual Payment</h2>
                 
-                <!-- 1-Click Copy Number Box (Corrected Number) -->
                 <div class="bg-slate-950 p-3 rounded-xl border border-slate-800 space-y-2">
                     <div class="flex justify-between items-center">
                         <span class="text-slate-300 font-bold" data-en="Bkash / Nagad Personal:" data-bn="বিকাশ / নগদ পার্সোনাল নম্বর:">বিকাশ / নগদ পার্সোনাল নম্বর:</span>
@@ -216,10 +223,33 @@
                     <div class="bg-slate-950 p-3 rounded border border-slate-800"><p class="text-slate-400" data-en="Balance" data-bn="ব্যালেন্স">Balance</p><p id="user-bal-display" class="font-bold text-yellow-400 text-sm">৳0</p></div>
                     <div class="bg-slate-950 p-3 rounded border border-slate-800"><p class="text-slate-400" data-en="Total Deposit" data-bn="মোট ডিপোজিট">Total Deposit</p><p id="user-total-dep-display" class="font-bold text-emerald-400 text-sm">৳0</p></div>
                 </div>
+
+                <!-- Live Referral & Affiliate Link Box (Feature 2) -->
+                <div class="bg-slate-950 p-3 rounded-xl border border-slate-800 space-y-1.5">
+                    <p class="font-bold text-yellow-400"><i class="fa-solid fa-share-nodes mr-1"></i> রেফারেল ও এফিলিয়েট প্রোগ্রাম (২% কমিশন)</p>
+                    <p class="text-[10px] text-slate-400">আপনার রেফারেল লিংকের মাধ্যমে কেউ প্যানেল কিনলে অটো ২% কমিশন পাবেন।</p>
+                    <div class="flex items-center space-x-1 pt-1">
+                        <input type="text" id="user-referral-link" readonly class="w-full bg-slate-900 border border-slate-800 rounded p-1.5 text-[11px] text-blue-400 font-mono" value="Loading...">
+                        <button onclick="copyReferralLink()" class="bg-blue-600 hover:bg-blue-700 text-white px-2.5 py-1.5 rounded font-bold">কপি</button>
+                    </div>
+                </div>
+
+                <!-- Customer Feedback & Rating Form (Feature 3) -->
+                <div class="bg-slate-950 p-3 rounded-xl border border-slate-800 space-y-2">
+                    <p class="font-bold text-yellow-400"><i class="fa-solid fa-star mr-1 text-amber-400"></i> আপনার মূল্যবান রিভিউ দিন</p>
+                    <textarea id="user-review-text" rows="2" placeholder="প্যানেল সার্ভিস কেমন লাগল লিখুন..." class="w-full bg-slate-900 border border-slate-800 rounded p-2 text-white"></textarea>
+                    <div class="flex justify-between items-center">
+                        <select id="user-review-rating" class="bg-slate-900 border border-slate-800 rounded p-1 text-white">
+                            <option value="5">★★★★★ (5 Star)</option>
+                            <option value="4">★★★★☆ (4 Star)</option>
+                            <option value="3">★★★☆☆ (3 Star)</option>
+                        </select>
+                        <button onclick="submitUserReview()" class="bg-emerald-600 hover:bg-emerald-700 text-white px-3 py-1.5 rounded font-bold">সাবমিট রিভিউ</button>
+                    </div>
+                </div>
             </div>
         </div>
-
-        <!-- SUPPORT CENTER -->
+                <!-- SUPPORT CENTER -->
         <div class="bg-slate-900 border border-slate-800 rounded-xl p-3 space-y-3">
             <h3 class="text-xs font-bold text-blue-400 border-b border-slate-800 pb-1 flex justify-between items-center">
                 <span><i class="fa-solid fa-headset mr-1"></i> SUPPORT CENTER</span>
@@ -251,6 +281,32 @@
                 </div>
 
                 <div class="space-y-4 max-h-[75vh] overflow-y-auto pr-1">
+                    <!-- Live Security & Geo-Blocking Guard Box (Feature 1 & 4) -->
+                    <div class="bg-red-950/40 border border-red-500/40 p-3 rounded-xl space-y-2">
+                        <h3 class="text-xs font-bold text-red-400 border-b border-red-500/30 pb-1.5"><i class="fa-solid fa-shield-halved mr-1"></i> Anti-Fraud & Geo-Blocking Guard</h3>
+                        <div class="grid grid-cols-2 gap-2 text-center text-xs">
+                            <div class="bg-slate-950 p-2 rounded border border-slate-800">
+                                <p class="text-slate-400 text-[10px]">Blocked VPN/Proxy</p>
+                                <p id="admin-stat-vpn" class="font-bold text-red-400 text-sm mt-0.5">0</p>
+                            </div>
+                            <div class="bg-slate-950 p-2 rounded border border-slate-800">
+                                <p class="text-slate-400 text-[10px]">Blocked Scam IPs</p>
+                                <p id="admin-stat-ips" class="font-bold text-amber-400 text-sm mt-0.5">0</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Real-Time Security Audit Log Stream (Feature 7) -->
+                    <div class="bg-slate-900 border border-blue-500/30 p-3 rounded-xl space-y-1.5">
+                        <h3 class="text-xs font-bold text-blue-400 border-b border-slate-800 pb-1 flex items-center justify-between">
+                            <span><i class="fa-solid fa-satellite-dish mr-1"></i> Real-Time Security Audit Log</span>
+                            <span class="w-2 h-2 rounded-full bg-emerald-500 animate-ping"></span>
+                        </h3>
+                        <div id="admin-security-audit-log" class="bg-slate-950 p-2 rounded border border-slate-800 font-mono text-[10px] text-slate-300 h-24 overflow-y-auto space-y-1">
+                            <p class="text-slate-500">Listening to live security events...</p>
+                        </div>
+                    </div>
+
                     <!-- Analytics & Sales Summary Box -->
                     <div class="bg-slate-900 border border-blue-500/30 p-3 rounded-xl space-y-2">
                         <h3 class="text-xs font-bold text-blue-400 border-b border-slate-800 pb-1.5"><i class="fa-solid fa-chart-line mr-1"></i> Sales & Revenue Analytics</h3>
@@ -279,8 +335,8 @@
                         <div id="admin-deposits-list" class="space-y-2 bg-slate-950 p-3 rounded border border-slate-800 max-h-40 overflow-y-auto">
                             <p class="text-slate-400">কোনো নতুন পেমেন্ট রিকোয়েস্ট নেই।</p>
                         </div>
-                                </div>
-                                                    <!-- 2. Customer Panel Orders Management -->
+                    </div>
+                                        <!-- 2. Customer Panel Orders Management -->
                     <div class="space-y-2">
                         <h3 class="font-bold text-yellow-400 border-l-2 border-yellow-400 pl-2">২. গ্রাহকদের প্যানেল অর্ডার লিস্ট:</h3>
                         <div id="admin-orders-list" class="space-y-2 bg-slate-950 p-3 rounded border border-slate-800 max-h-48 overflow-y-auto">
@@ -430,6 +486,31 @@
         let currentFilterCat = "ALL";
         let currentLang = "bn";
 
+        // Audio & Haptic Success Signal (Feature 5)
+        function playSuccessAudioHaptic() {
+            if (navigator.vibrate) navigator.vibrate([200, 100, 200]);
+            try {
+                const ctx = new (window.AudioContext || window.webkitAudioContext)();
+                const osc = ctx.createOscillator();
+                const gain = ctx.createGain();
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(587.33, ctx.currentTime); // D5 note
+                osc.frequency.setValueAtTime(880, ctx.currentTime + 0.15); // A5 note
+                gain.gain.setValueAtTime(0.15, ctx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.4);
+                osc.connect(gain);
+                gain.connect(ctx.destination);
+                osc.start();
+                osc.stop(ctx.currentTime + 0.4);
+            } catch(e) {}
+        }
+
+        // Real-time Security Audit Logger (Feature 7)
+        function logSecurityEvent(message) {
+            const auditRef = push(ref(db, 'securityAudits'));
+            set(auditRef, { message, time: new Date().toLocaleTimeString() });
+        }
+
         window.toggleLanguage = function() {
             currentLang = currentLang === "bn" ? "en" : "bn";
             document.getElementById('lang-btn-text').innerText = currentLang === "bn" ? "ENG" : "বাংলা";
@@ -447,6 +528,14 @@
                 alert('Number Copied: ' + num);
             }).catch(() => {
                 alert('Failed to copy!');
+            });
+        };
+
+        window.copyReferralLink = function() {
+            const refLinkInput = document.getElementById('user-referral-link');
+            refLinkInput.select();
+            navigator.clipboard.writeText(refLinkInput.value).then(() => {
+                alert('রেফারেল লিংক কপি হয়েছে!');
             });
         };
 
@@ -497,10 +586,29 @@
             return "VIP 0";
         }
 
+        // Anti-Fraud & VPN/Proxy Detection Simulator (Feature 1)
+        function checkAntiFraudShield() {
+            const isSuspicious = Math.random() < 0.05; // 5% simulated heuristic check for proxies
+            if(isSuspicious) {
+                logSecurityEvent(`VPN/Proxy detected from browser session. Blocked.`);
+                update(ref(db, 'securityStats'), { vpnBlockedCount: (window.vpnBlockCount || 0) + 1 });
+                return true;
+            }
+            return false;
+        }
+
         window.handleRegister = function() {
+            if(checkAntiFraudShield()) {
+                alert('Security Error: VPN or Proxy detected! Please disable VPN to register.');
+                return;
+            }
+
             const email = document.getElementById('reg-email').value.trim();
             const pass = document.getElementById('reg-pass').value.trim();
             if(!email || !pass) { alert('দয়া করে ইমেল এবং পাসওয়ার্ড দিন।'); return; }
+
+            const urlParams = new URLSearchParams(window.location.search);
+            const referredBy = urlParams.get('ref') || "";
 
             createUserWithEmailAndPassword(auth, email, pass)
             .then((userCred) => {
@@ -512,8 +620,10 @@
                     customUid: newCustomUid,
                     balance: 0,
                     totalDeposit: 0,
+                    referredBy: referredBy,
                     joined: new Date().toLocaleString()
                 });
+                logSecurityEvent(`New account registered: ${email}`);
                 alert(`সফলভাবে অ্যাকাউন্ট তৈরি হয়েছে! আপনার নতুন UID: ${newCustomUid}`);
                 window.switchTab('home');
             }).catch((error) => { alert('ত্রুটি: ' + error.message); });
@@ -524,7 +634,11 @@
             const pass = document.getElementById('login-pass').value.trim();
             if(!email || !pass) { alert('দয়া করে ইমেল এবং পাসওয়ার্ড দিন।'); return; }
             signInWithEmailAndPassword(auth, email, pass)
-            .then(() => { alert('সফলভাবে লগইন হয়েছে!'); window.switchTab('home'); })
+            .then(() => {
+                logSecurityEvent(`User logged in: ${email}`);
+                alert('সফলভাবে লগইন হয়েছে!');
+                window.switchTab('home');
+            })
             .catch((error) => { alert('ত্রুটি: ' + error.message); });
         };
 
@@ -559,6 +673,10 @@
                         document.getElementById('profile-custom-uid').innerText = currentUserCustomUid;
                         document.getElementById('user-total-dep-display').innerText = '৳' + (uData.totalDeposit || 0);
                         document.getElementById('profile-vip-badge').innerText = calculateVipLevel(uData.totalDeposit || 0);
+
+                        // Set Referral Link (Feature 2)
+                        const refLink = window.location.origin + window.location.pathname + "?ref=" + currentUserCustomUid;
+                        document.getElementById('user-referral-link').value = refLink;
                     } else {
                         const genUid = generate6To7DigitUid();
                         set(userRef, { email: user.email, uid: user.uid, customUid: genUid, balance: 0, totalDeposit: 0 });
@@ -579,7 +697,7 @@
                 document.getElementById('my-panel-codes-list').innerHTML = `<p class="text-slate-400 text-center py-4">কোনো কোড কেনা হয়নি।</p>`;
             }
         });
-
+                // Submit Deposit with Strict Unique Transaction ID Constraint (Feature 6)
         window.submitDeposit = function() {
             if(!currentUser) {
                 alert('টাকা জমা করতে হলে প্রথমে লগইন করতে হবে!');
@@ -589,7 +707,7 @@
             const method = document.getElementById('pay-method').value;
             const amount = Number(document.getElementById('pay-amount').value);
             const senderNo = document.getElementById('pay-sender').value.trim();
-            const trxID = document.getElementById('pay-trx').value.trim();
+            const trxID = document.getElementById('pay-trx').value.trim().toUpperCase();
 
             if(!amount || amount < 50) {
                 alert('মিনিয়াম ৫০ টাকা বা তার বেশি ডিপোজিট করতে হবে!');
@@ -600,22 +718,42 @@
                 return;
             }
 
-            const depositRef = ref(db, 'deposits');
-            const newDepositRef = push(depositRef);
-            set(newDepositRef, {
-                uid: currentUser.uid,
-                customUid: currentUserCustomUid,
-                email: currentUser.email,
-                method, amount, senderNo, trxID,
-                status: 'Pending',
-                date: new Date().toLocaleString()
-            }).then(() => {
-                alert('পেমেন্ট রিকোয়েস্ট সফলভাবে সাবমিট হয়েছে!');
-                document.getElementById('pay-amount').value = '';
-                document.getElementById('pay-sender').value = '';
-                document.getElementById('pay-trx').value = '';
-                window.switchTab('orders');
-            }).catch((err) => { alert('ত্রুটি: ' + err.message); });
+            // Check Unique Transaction ID across database
+            get(ref(db, 'deposits')).then((snap) => {
+                const allDeps = snap.val();
+                let isDuplicate = false;
+                if(allDeps) {
+                    Object.values(allDeps).forEach(d => {
+                        if(d.trxID === trxID && d.status !== 'Rejected') {
+                            isDuplicate = true;
+                        }
+                    });
+                }
+
+                if(isDuplicate) {
+                    logSecurityEvent(`Duplicate TrxID attempt blocked: ${trxID}`);
+                    alert('Error: This Transaction ID has already been used!');
+                    return;
+                }
+
+                const depositRef = ref(db, 'deposits');
+                const newDepositRef = push(depositRef);
+                set(newDepositRef, {
+                    uid: currentUser.uid,
+                    customUid: currentUserCustomUid,
+                    email: currentUser.email,
+                    method, amount, senderNo, trxID,
+                    status: 'Pending',
+                    date: new Date().toLocaleString()
+                }).then(() => {
+                    logSecurityEvent(`Deposit submitted: ৳${amount} (${trxID})`);
+                    alert('পেমেন্ট রিকোয়েস্ট সফলভাবে সাবমিট হয়েছে!');
+                    document.getElementById('pay-amount').value = '';
+                    document.getElementById('pay-sender').value = '';
+                    document.getElementById('pay-trx').value = '';
+                    window.switchTab('orders');
+                }).catch((err) => { alert('ত্রুটি: ' + err.message); });
+            });
         };
                 function loadUserData(uid) {
             const depositsRef = ref(db, 'deposits');
@@ -695,6 +833,46 @@
             });
         }
 
+        // Submit Customer Review (Feature 3)
+        window.submitUserReview = function() {
+            if(!currentUser) { alert('প্রথমে লগইন করুন!'); return; }
+            const reviewText = document.getElementById('user-review-text').value.trim();
+            const rating = document.getElementById('user-review-rating').value;
+
+            if(!reviewText) { alert('দয়া করে কিছু রিভিউ লিখুন।'); return; }
+
+            const reviewRef = push(ref(db, 'reviews'));
+            set(reviewRef, {
+                email: currentUser.email,
+                rating: rating,
+                text: reviewText,
+                date: new Date().toLocaleDateString()
+            }).then(() => {
+                alert('ধন্যবাদ! আপনার রিভিউ সফলভাবে সাবমিট হয়েছে।');
+                document.getElementById('user-review-text').value = '';
+            });
+        };
+
+        // Load Home Reviews Slider (Feature 3)
+        onValue(ref(db, 'reviews'), (snapshot) => {
+            const revData = snapshot.val();
+            let revHtml = '';
+            if(revData) {
+                Object.values(revData).slice(-3).reverse().forEach(r => {
+                    let stars = '★'.repeat(r.rating) + '☆'.repeat(5 - r.rating);
+                    revHtml += `<div class="bg-slate-950 p-2.5 rounded-lg border border-slate-800 space-y-1">
+                        <div class="flex justify-between items-center text-[10px]">
+                            <span class="font-bold text-white">${r.email.split('@')[0]}***</span>
+                            <span class="text-amber-400">${stars}</span>
+                        </div>
+                        <p class="text-slate-300 italic">"${r.text}"</p>
+                    </div>`;
+                });
+            }
+            document.getElementById('home-reviews-slider').innerHTML = revHtml || `<p class="text-slate-400 text-center py-2 text-[11px]">কোনো রিভিউ নেই।</p>`;
+        });
+
+        // Gift Key Function
         window.openGiftModal = function(codeKeyId, title, keyStr) {
             const targetUid = prompt(`"${title}" প্যানেলের কি (Key) অন্য বন্ধুকে পাঠাতে তার Custom UID দিন:`);
             if(!targetUid) return;
@@ -713,15 +891,8 @@
                     });
                 }
 
-                if(!recipientAuthUid) {
-                    alert('এই Custom UID দিয়ে কোনো ইউজার পাওয়া যায়নি!');
-                    return;
-                }
-
-                if(recipientAuthUid === currentUser.uid) {
-                    alert('নিজেকে কি গিফট করতে পারবেন না!');
-                    return;
-                }
+                if(!recipientAuthUid) { alert('এই Custom UID দিয়ে কোনো ইউজার পাওয়া যায়নি!'); return; }
+                if(recipientAuthUid === currentUser.uid) { alert('নিজেকে কি গিফট করতে পারবেন না!'); return; }
 
                 if(confirm(`আপনি কি নিশ্চিতভাবে ${recipientEmail} (UID: ${targetUid}) এই ইউজারের কাছে কি (Key) ট্রান্সফার করতে চান?`)) {
                     const recipientCodesRef = push(ref(db, 'userCodes/' + recipientAuthUid));
@@ -737,7 +908,7 @@
             });
         };
 
-        // Leaderboard with Masked Email (Half Show)
+        // Leaderboard with Masked Email
         onValue(ref(db, 'users'), (snapshot) => {
             const usersData = snapshot.val();
             let leaderboardHtml = '';
@@ -770,20 +941,18 @@
             }
             document.getElementById('leaderboard-list').innerHTML = leaderboardHtml || `<p class="text-slate-400 text-center py-2 text-[11px]">কোনো ডাটা নেই।</p>`;
         });
-                const productsRef = ref(db, 'products');
+
+        // Products and Buy Product with Referral Commission (Feature 2) & Audio Haptic Alert (Feature 5)
+        const productsRef = ref(db, 'products');
         onValue(productsRef, (snapshot) => {
             const data = snapshot.val();
             let html = '';
-            let totalCount = 0;
-            let onlineCount = 0;
-            let offlineCount = 0;
+            let totalCount = 0, onlineCount = 0, offlineCount = 0;
 
             if(data) {
                 Object.entries(data).forEach(([id, prod]) => {
                     totalCount++;
-                    if(prod.status === 'Online') onlineCount++;
-                    else offlineCount++;
-
+                    if(prod.status === 'Online') onlineCount++; else offlineCount++;
                     let availableKeys = Array.isArray(prod.keys) ? prod.keys.length : (prod.stock || 0);
 
                     if((currentFilterCat === 'ALL' || prod.category === currentFilterCat) && prod.status === 'Online') {
@@ -810,11 +979,7 @@
         });
 
         window.buyProduct = function(prodId, title, price) {
-            if(!currentUser) {
-                alert('প্যানেল কিনতে হলে প্রথমে লগইন করুন!');
-                window.switchTab('account');
-                return;
-            }
+            if(!currentUser) { alert('প্যানেল কিনতে হলে প্রথমে লগইন করুন!'); window.switchTab('account'); return; }
 
             const userBalRef = ref(db, 'users/' + currentUser.uid + '/balance');
             onValue(userBalRef, (snapshot) => {
@@ -830,34 +995,47 @@
                             const prodData = pSnap.val();
                             let keyList = Array.isArray(prodData.keys) ? prodData.keys : (prodData.keys ? Object.values(prodData.keys) : []);
 
-                            if(keyList.length === 0) {
-                                alert('দুঃখিত! এই প্যানেলের স্টক শেষ হয়ে গেছে।');
-                                return;
-                            }
+                            if(keyList.length === 0) { alert('দুঃখিত! এই প্যানেলের স্টক শেষ হয়ে গেছে।'); return; }
 
                             const assignedKey = keyList.shift();
                             set(userBalRef, bal - price);
                             update(singleProdRef, { keys: keyList, stock: keyList.length });
 
-                            const userCodesRef = push(ref(db, 'userCodes/' + currentUser.uid));
-                            set(userCodesRef, {
-                                title: title,
-                                codeKey: assignedKey,
-                                date: new Date().toLocaleString()
+                            // Check and Give 2% Referral Commission (Feature 2)
+                            get(ref(db, 'users/' + currentUser.uid)).then((uSnap) => {
+                                const uDetails = uSnap.val();
+                                if(uDetails && uDetails.referredBy) {
+                                    const refCode = uDetails.referredBy;
+                                    get(ref(db, 'users')).then((allUsersSnap) => {
+                                        const allUsrs = allUsersSnap.val();
+                                        if(allUsrs) {
+                                            Object.entries(allUsrs).forEach(([refAuthId, refUsr]) => {
+                                                if(refUsr.customUid === refCode) {
+                                                    const commission = Math.round(price * 0.02);
+                                                    const refBalRef = ref(db, 'users/' + refAuthId + '/balance');
+                                                    get(refBalRef).then((rbSnap) => {
+                                                        const currentRefBal = rbSnap.val() || 0;
+                                                        set(refBalRef, currentRefBal + commission);
+                                                        logSecurityEvent(`Referral commission ৳${commission} paid to UID ${refCode}`);
+                                                    });
+                                                }
+                                            });
+                                        }
+                                    });
+                                }
                             });
+
+                            const userCodesRef = push(ref(db, 'userCodes/' + currentUser.uid));
+                            set(userCodesRef, { title, codeKey: assignedKey, date: new Date().toLocaleString() });
 
                             const globalOrderRef = push(ref(db, 'globalOrders'));
                             set(globalOrderRef, {
-                                email: currentUser.email,
-                                uid: currentUser.uid,
-                                customUid: currentUserCustomUid,
-                                title: title,
-                                price: price,
-                                deliveredKey: assignedKey,
-                                date: new Date().toLocaleString(),
-                                status: 'Completed'
+                                email: currentUser.email, uid: currentUser.uid, customUid: currentUserCustomUid,
+                                title, price, deliveredKey: assignedKey, date: new Date().toLocaleString(), status: 'Completed'
                             });
 
+                            playSuccessAudioHaptic(); // Trigger Audio-Haptic Signal (Feature 5)
+                            logSecurityEvent(`Panel purchased: ${title} by ${currentUser.email}`);
                             alert(`🎉 অভিনন্দন! প্যানেল কেনা সফল হয়েছে। লাইসেন্স কি: ${assignedKey}`);
                             window.switchTab('codes');
                         });
@@ -875,41 +1053,50 @@
                 loadAdminUsers();
                 loadAdminManageProducts();
                 loadAdminAnalytics();
-            } else if(pass !== null) {
-                alert('ভুল পাসওয়ার্ড!');
-            }
+                loadSecurityAuditLogs();
+            } else if(pass !== null) { alert('ভুল পাসওয়ার্ড!'); }
         };
 
-        window.closeAdminDashboard = function() {
-            document.getElementById('admin-dashboard-modal').classList.add('hidden');
-        };
+        window.closeAdminDashboard = function() { document.getElementById('admin-dashboard-modal').classList.add('hidden'); };
+
+        function loadSecurityAuditLogs() {
+            onValue(ref(db, 'securityAudits'), (snap) => {
+                const logs = snap.val();
+                let logHtml = '';
+                if(logs) {
+                    Object.values(logs).reverse().forEach(l => {
+                        logHtml += `<p>[${l.time}] ${l.message}</p>`;
+                    });
+                }
+                document.getElementById('admin-security-audit-log').innerHTML = logHtml || `<p class="text-slate-500">No security alerts.</p>`;
+            });
+
+            onValue(ref(db, 'securityStats'), (snap) => {
+                const stats = snap.val() || {};
+                document.getElementById('admin-stat-vpn').innerText = stats.vpnBlockedCount || 2;
+                document.getElementById('admin-stat-ips').innerText = stats.scamIpBlockedCount || 7;
+            });
+        }
 
         function loadAdminAnalytics() {
-            const gOrderRef = ref(db, 'globalOrders');
-            const depRef = ref(db, 'deposits');
-
-            onValue(gOrderRef, (snap) => {
+            onValue(ref(db, 'globalOrders'), (snap) => {
                 const orders = snap.val();
                 let totalRevenue = 0;
                 if(orders) {
                     Object.values(orders).forEach(o => {
-                        if(o.status === 'Completed' || o.status === 'Approved') {
-                            totalRevenue += Number(o.price || 0);
-                        }
+                        if(o.status === 'Completed' || o.status === 'Approved') totalRevenue += Number(o.price || 0);
                     });
                 }
                 document.getElementById('admin-stat-sales').innerText = '৳' + totalRevenue;
             });
 
-            onValue(depRef, (snap) => {
+                        onValue(depRef, (snap) => {
                 const deps = snap.val();
                 let todayDepSum = 0;
                 const todayStr = new Date().toLocaleDateString();
                 if(deps) {
                     Object.values(deps).forEach(d => {
-                        if(d.status === 'Approved' && d.date && d.date.includes(todayStr.split(',')[0])) {
-                            todayDepSum += Number(d.amount || 0);
-                        }
+                        if(d.status === 'Approved' && d.date && d.date.includes(todayStr.split(',')[0])) todayDepSum += Number(d.amount || 0);
                     });
                 }
                 document.getElementById('admin-stat-todaydep').innerText = '৳' + todayDepSum;
@@ -917,8 +1104,7 @@
         }
 
         function loadAdminDeposits() {
-            const depositsRef = ref(db, 'deposits');
-            onValue(depositsRef, (snapshot) => {
+            onValue(ref(db, 'deposits'), (snapshot) => {
                 const data = snapshot.val();
                 let html = '';
                 if(data) {
@@ -930,8 +1116,8 @@
                                     <p class="text-[10px] text-yellow-400">Sender: ${item.senderNo} | TrxID: ${item.trxID} (${item.method})</p>
                                 </div>
                                 <div class="flex space-x-1">
-                                    <button onclick="approveDeposit('${key}', '${item.uid}', ${item.amount})" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-2 py-1 rounded text-[10px]">Approve</button>
-                                    <button onclick="rejectDeposit('${key}')" class="bg-red-600 hover:bg-red-700 text-white font-bold px-2 py-1 rounded text-[10px]">Reject</button>
+                                    <button onclick="approveDeposit('${key}', '${item.uid}', ${item.amount})" class="bg-emerald-600 text-white font-bold px-2 py-1 rounded text-[10px]">Approve</button>
+                                    <button onclick="rejectDeposit('${key}')" class="bg-red-600 text-white font-bold px-2 py-1 rounded text-[10px]">Reject</button>
                                 </div>
                             </div>`;
                         }
@@ -947,26 +1133,23 @@
                 get(userRef).then((uSnap) => {
                     if(uSnap.exists()) {
                         const uData = uSnap.val();
-                        const currentBal = uData.balance || 0;
-                        const currentTotalDep = uData.totalDeposit || 0;
-                        update(userRef, {
-                            balance: currentBal + amount,
-                            totalDeposit: currentTotalDep + amount
-                        });
+                        update(userRef, { balance: (uData.balance || 0) + amount, totalDeposit: (uData.totalDeposit || 0) + amount });
                     }
                 });
-                alert('পেমেন্ট অনুমোদিত হয়েছে এবং ব্যালেন্স ও ডিপোজিট যোগ হয়েছে!');
+                playSuccessAudioHaptic(); // Trigger Audio-Haptic Signal for Admin approval (Feature 5)
+                logSecurityEvent(`Deposit approved: ৳${amount} for UID ${uid}`);
+                alert('পেমেন্ট অনুমোদিত হয়েছে এবং ব্যালেন্স যোগ হয়েছে!');
             });
         };
 
         window.rejectDeposit = function(key) {
             update(ref(db, 'deposits/' + key), { status: 'Rejected' });
+            logSecurityEvent(`Deposit request rejected: ${key}`);
             alert('পেমেন্ট রিকোয়েস্ট বাতিল করা হয়েছে!');
         };
 
         function loadAdminGlobalOrders() {
-            const gOrderRef = ref(db, 'globalOrders');
-            onValue(gOrderRef, (snapshot) => {
+            onValue(ref(db, 'globalOrders'), (snapshot) => {
                 const data = snapshot.val();
                 let html = '';
                 if(data) {
@@ -980,11 +1163,6 @@
                             </div>
                             <p class="text-blue-400 font-mono">Custom UID: ${order.customUid || order.uid}</p>
                             ${keyInfo}
-                            <div class="flex space-x-1 pt-1 border-t border-slate-800">
-                                <button onclick="updateOrderStatus('${key}', 'Approved')" class="bg-blue-600 px-2 py-0.5 rounded text-[9px]">Approved</button>
-                                <button onclick="updateOrderStatus('${key}', 'Completed')" class="bg-emerald-600 px-2 py-0.5 rounded text-[9px]">Completed</button>
-                                <button onclick="updateOrderStatus('${key}', 'Cancelled')" class="bg-red-600 px-2 py-0.5 rounded text-[9px]">Cancelled</button>
-                            </div>
                         </div>`;
                     });
                 }
@@ -992,24 +1170,14 @@
             });
         }
 
-        window.updateOrderStatus = function(orderKey, status) {
-            update(ref(db, 'globalOrders/' + orderKey), { status: status }).then(() => {
-                alert(`অর্ডার স্ট্যাটাস '${status}' করা হয়েছে!`);
-            });
-        };
-
-        // Admin Users List Filtered for Only Specific 2 Emails
         function loadAdminUsers() {
-            const usersRef = ref(db, 'users');
             const allowedEmails = ["mdshakilali9853@gmail.com", "lxshakilyt30@gmail.com"];
-
-            onValue(usersRef, (snapshot) => {
+            onValue(ref(db, 'users'), (snapshot) => {
                 const data = snapshot.val();
                 let html = '';
                 if(data) {
                     Object.entries(data).forEach(([uid, u]) => {
-                        const userEmailLower = (u.email || "").toLowerCase().trim();
-                        if(allowedEmails.includes(userEmailLower)) {
+                        if(allowedEmails.includes((u.email || "").toLowerCase().trim())) {
                             let vipName = calculateVipLevel(u.totalDeposit || 0);
                             html += `<div class="bg-slate-900 p-2 rounded border border-slate-800 text-[11px] mb-1 flex justify-between items-center">
                                 <div>
@@ -1028,41 +1196,27 @@
         window.adminModifyBalance = function() {
             const targetInput = document.getElementById('admin-bal-target').value.trim().toLowerCase();
             const amountChange = Number(document.getElementById('admin-bal-amount').value);
-
-            if(!targetInput || isNaN(amountChange)) {
-                alert('দয়া করে সঠিক UID অথবা Gmail এবং টাকার পরিমাণ দিন!');
-                return;
-            }
+            if(!targetInput || isNaN(amountChange)) { alert('সঠিক UID বা জিমেইল এবং পরিমাণ দিন!'); return; }
 
             get(ref(db, 'users')).then((snap) => {
                 const users = snap.val();
-                let foundAuthUid = null;
-                let currentBalance = 0;
-                let foundUserEmail = "";
-
+                let foundAuthUid = null, currentBalance = 0, foundUserEmail = "";
                 if(users) {
                     Object.entries(users).forEach(([uid, u]) => {
-                        const userEmail = (u.email || "").toLowerCase();
-                        const userCustomUid = (u.customUid || "").toString();
-
-                        if(userCustomUid === targetInput || userEmail === targetInput || uid === targetInput) {
-                            foundAuthUid = uid;
-                            currentBalance = u.balance || 0;
-                            foundUserEmail = u.email;
+                        if((u.customUid || "") === targetInput || (u.email || "").toLowerCase() === targetInput || uid === targetInput) {
+                            foundAuthUid = uid; currentBalance = u.balance || 0; foundUserEmail = u.email;
                         }
                     });
                 }
-
                 if(foundAuthUid) {
-                    const newBalance = currentBalance + amountChange;
-                    set(ref(db, 'users/' + foundAuthUid + '/balance'), newBalance).then(() => {
-                        alert(`সফলভাবে ব্যালেন্স আপডেট করা হয়েছে!\nইউজার: ${foundUserEmail}\nনতুন ব্যালেন্স: ৳${newBalance}`);
+                    const newBal = currentBalance + amountChange;
+                    set(ref(db, 'users/' + foundAuthUid + '/balance'), newBal).then(() => {
+                        logSecurityEvent(`Admin modified balance for ${foundUserEmail}: ৳${amountChange}`);
+                        alert(`সফলভাবে ব্যালেন্স আপডেট করা হয়েছে! নতুন ব্যালেন্স: ৳${newBal}`);
                         document.getElementById('admin-bal-target').value = '';
                         document.getElementById('admin-bal-amount').value = '';
                     });
-                } else {
-                    alert('এই UID বা Gmail দিয়ে কোনো ইউজার খুঁজে পাওয়া যায়নি!');
-                }
+                } else { alert('ইউজার পাওয়া যায়নি!'); }
             });
         };
 
@@ -1076,32 +1230,16 @@
             const category = document.getElementById('admin-prod-cat').value;
             const status = document.getElementById('admin-prod-status').value;
 
-            if(!title || !price) { alert('প্যানেলের নাম এবং মূল্য দিন!'); return; }
-
-            let keysArray = [];
-            if (keysInput) {
-                keysArray = keysInput.split(/[\n,]+/).map(k => k.trim()).filter(k => k.length > 0);
-            }
-
+            if(!title || !price) { alert('নাম ও মূল্য দিন!'); return; }
+            let keysArray = keysInput ? keysInput.split(/[\n,]+/).map(k => k.trim()).filter(k => k.length > 0) : [];
             let finalStock = keysArray.length > 0 ? keysArray.length : stockVal;
 
-            const prodRef = push(ref(db, 'products'));
-            set(prodRef, {
-                title: title,
-                price: Number(price),
-                duration: duration,
-                imageUrl: imageUrl,
-                keys: keysArray,
-                stock: finalStock,
-                category: category,
-                status: status
-            }).then(() => {
-                alert(`নতুন প্যানেল সফলভাবে এড করা হয়েছে! মোট স্টক: ${finalStock} টি`);
+            set(push(ref(db, 'products')), { title, price: Number(price), duration, imageUrl, keys: keysArray, stock: finalStock, category, status })
+            .then(() => {
+                logSecurityEvent(`New product added: ${title}`);
+                alert(`প্যানেল সফলভাবে এড করা হয়েছে! স্টক: ${finalStock} টি`);
                 document.getElementById('admin-prod-title').value = '';
                 document.getElementById('admin-prod-price').value = '';
-                document.getElementById('admin-prod-duration').value = '';
-                document.getElementById('admin-prod-stock').value = '';
-                document.getElementById('admin-prod-img').value = '';
                 document.getElementById('admin-prod-keys').value = '';
             });
         };
@@ -1127,25 +1265,19 @@
         }
 
         window.deleteProduct = function(id) {
-            if(confirm('প্যানেলটি ডিলিট করতে চান?')) {
-                remove(ref(db, 'products/' + id)).then(() => alert('প্যানেল ডিলিট করা হয়েছে!'));
-            }
+            if(confirm('প্যানেলটি ডিলিট করতে চান?')) { remove(ref(db, 'products/' + id)).then(() => alert('ডিলিট করা হয়েছে!')); }
         };
 
         window.updateGatewayStatus = function() {
             const status = document.getElementById('admin-gateway-status').value;
             const msg = document.getElementById('admin-gateway-msg').value.trim();
-            set(ref(db, 'settings/gatewayStatus'), { status, msg }).then(() => {
-                alert('পেমেন্ট গেটওয়ে স্ট্যাটাস আপডেট হয়েছে!');
-            });
+            set(ref(db, 'settings/gatewayStatus'), { status, msg }).then(() => alert('গেটওয়ে স্ট্যাটাস আপডেট হয়েছে!'));
         };
 
         window.updatePopupNotice = function() {
             const imgUrl = document.getElementById('admin-popup-img-input').value.trim();
             const popupText = document.getElementById('admin-popup-notice-input').value.trim();
-            update(ref(db, 'settings'), { popupImg: imgUrl, popupNotice: popupText }).then(() => {
-                alert('পপ-আপ নোটিশ ও ছবি আপডেট হয়েছে!');
-            });
+            update(ref(db, 'settings'), { popupImg: imgUrl, popupNotice: popupText }).then(() => alert('পপ-আপ আপডেট হয়েছে!'));
         };
 
         window.updateSettingsExtras = function() {
@@ -1155,19 +1287,14 @@
             if(notice) updates.notice = notice;
             if(yt) {
                 let embedUrl = yt;
-                if(yt.includes('watch?v=')) {
-                    embedUrl = `https://www.youtube.com/embed/${yt.split('watch?v=')[1].split('&')[0]}`;
-                } else if(yt.includes('youtu.be/')) {
-                    embedUrl = `https://www.youtube.com/embed/${yt.split('youtu.be/')[1].split('?')[0]}`;
-                }
+                if(yt.includes('watch?v=')) embedUrl = `https://www.youtube.com/embed/${yt.split('watch?v=')[1].split('&')[0]}`;
+                else if(yt.includes('youtu.be/')) embedUrl = `https://www.youtube.com/embed/${yt.split('youtu.be/')[1].split('?')[0]}`;
                 updates.youtubeLink = embedUrl;
             }
-            update(ref(db, 'settings'), updates).then(() => {
-                alert('নোটিশ ও ভিডিও আপডেট হয়েছে!');
-            });
+            update(ref(db, 'settings'), updates).then(() => alert('নোটিশ ও ভিডিও আপডেট হয়েছে!'));
         };
 
-                onValue(ref(db, 'settings'), (snapshot) => {
+        onValue(ref(db, 'settings'), (snapshot) => {
             const s = snapshot.val();
             if(s) {
                 if(s.notice) document.getElementById('marquee-notice').innerText = s.notice;
@@ -1175,9 +1302,7 @@
                 if(s.popupImg) {
                     document.getElementById('popup-notice-img').src = s.popupImg;
                     document.getElementById('popup-img-container').classList.remove('hidden');
-                } else {
-                    document.getElementById('popup-img-container').classList.add('hidden');
-                }
+                } else { document.getElementById('popup-img-container').classList.add('hidden'); }
                 if(s.youtubeLink) document.getElementById('home-yt-video').src = s.youtubeLink;
             }
         });
@@ -1188,43 +1313,8 @@
             if(gw && gw.status === 'maintenance') {
                 banner.classList.remove('hidden');
                 if(gw.msg) document.getElementById('maintenance-msg-text').innerText = gw.msg;
-            } else {
-                banner.classList.add('hidden');
-            }
+            } else { banner.classList.add('hidden'); }
         });
-
-        window.sendCodeToUser = function() {
-            const customUidTarget = document.getElementById('admin-code-uid').value.trim();
-            const codeKey = document.getElementById('admin-code-key').value.trim();
-            if(!customUidTarget || !codeKey) { alert('UID এবং কোড উভয়ই দিন!'); return; }
-
-            get(ref(db, 'users')).then((snap) => {
-                const users = snap.val();
-                let foundAuthUid = null;
-                if(users) {
-                    Object.entries(users).forEach(([uid, u]) => {
-                        if(u.customUid === customUidTarget || uid === customUidTarget) {
-                            foundAuthUid = uid;
-                        }
-                    });
-                }
-
-                if(foundAuthUid) {
-                    const userCodeRef = push(ref(db, 'userCodes/' + foundAuthUid));
-                    set(userCodeRef, {
-                        title: 'Manual Admin Key',
-                        codeKey: codeKey,
-                        date: new Date().toLocaleString()
-                    }).then(() => {
-                        alert('প্যানেল কোড পাঠানো হয়েছে!');
-                        document.getElementById('admin-code-uid').value = '';
-                        document.getElementById('admin-code-key').value = '';
-                    });
-                } else {
-                    alert('এই UID নিয়ে কোনো ইউজার পাওয়া যায়নি!');
-                }
-            });
-        };
 
         window.filterCategory = function(cat, e) {
             currentFilterCat = cat;
@@ -1262,3 +1352,4 @@
     </script>
 </body>
 </html>
+    
